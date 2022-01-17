@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/17 18:02:21 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/17 18:21:03 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,34 @@ void	ft_check_bash_cmd(t_cmd *cmd)
 	}
 }
 
-void ft_split_input(char *input, int *i, int end, t_cmd **cmd)
+char *ft_handle_space_in_qoutes(char *sub, char *cpart, int *j, int flag)
 {
-	int j;
-	char *sub;
+
+	flag = 1;
+	while (flag != 0 && sub[(*j)] != '\0')
+	{			
+		if (flag == 1 && sub[(*j)] == ' ')
+			flag = 0;
+		else if (sub[(*j)] == '\'' || sub[(*j)] == '"')
+		{
+			if (flag == 1)
+				flag = sub[(*j)];
+			else if (flag == sub[(*j)])
+				flag = 1;
+		}
+		if (flag != 0)
+			cpart = ft_str_join_c(cpart, sub[(*j)]);
+		(*j)++;
+	}
+	return (cpart);
+}
+
+void ft_split_input(char *sub)
+{
+	int	j;
 	char flag;
 	char *cpart;
 	
-	sub = ft_substr(input, (*i), end);
 	j = 0;
 	if (sub[j] == '|')
 		j++;
@@ -94,29 +114,43 @@ void ft_split_input(char *input, int *i, int end, t_cmd **cmd)
 		cpart = NULL;
 		if(sub[j] != ' ')
 		{
-			flag = 1;
-			while (flag != 0 && sub[j] != '\0')
-			{			
-				if (flag == 1 && sub[j] == ' ')
-					flag = 0;
-				else if (sub[j] == '\'' || sub[j] == '"')
-				{
-					if (flag == 1)
-						flag = sub[j];
-					else if (flag == sub[j])
-						flag = 1;
-				}
-				if (flag != 0)
-					cpart = ft_str_join_c(cpart, sub[j]);
-				j++;
-			}
-			ft_generate_cmd(&(*cmd));
-			printf("%s\n", cpart);
+			cpart = ft_handle_space_in_qoutes(sub, cpart, &j, flag);
+			ft_generate_cmd(&(*cmd), );
 			free(cpart);
 		}
 		else
 			j++;
 	}
+	
+}
+
+void ft_handle_input(char *input, int *i, int end, t_cmd **cmd)
+{
+	int j;
+	char *sub;			//substring of the input between pipes |
+	char flag; 			//flag for checking if spcae char is in the qoutes
+	char *cpart;		//comand line part extracted from substr
+
+	sub = ft_substr(input, (*i), end));
+	ft_handle_input(sub);
+
+	//sub = ft_substr(input, (*i), end);
+	// j = 0;
+	// if (sub[j] == '|')
+	// 	j++;
+	// flag = 0;
+	// while (sub[j] != '\0')
+	// {
+	// 	cpart = NULL;
+	// 	if(sub[j] != ' ')
+	// 	{
+	// 		cpart = ft_handle_space_in_qoutes(sub, cpart, &j, flag);
+	// 		ft_generate_cmd(&(*cmd), );
+	// 		free(cpart);
+	// 	}
+	// 	else
+	// 		j++;
+	// }
 	ft_check_bash_cmd(*cmd);
 	printf("---------\n");
 	(*i) = end;
@@ -141,7 +175,7 @@ void ft_validate_quotes(char *input, t_cmd *cmd)
 		else if (flag == 0 && (input[i] == '\'' || input[i] == '"'))
 			flag = (input[i]);
 		if (flag == 0 && (input[i + 1] == '|' || input[i + 1] == '\0'))
-			ft_split_input(input, &start, i + 1, &cmd);
+			ft_handle_input(input, &start, i + 1, &cmd);
 		i++;
 	}
 	if (flag != 0)
