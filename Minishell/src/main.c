@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/17 13:15:03 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/17 13:52:41 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,50 +23,21 @@ int ft_prompt(char **input)
     return (0);
 }
 
-// void ft_validate_quotes(char *input, int i, char *flag)
-// {
-// 	if (input[i] == '\'' && (*flag) == '\'')
-// 		(*flag) = 0;
-// 	else if (input[i] == '"' && (*flag) == '"')
-// 		(*flag) = 0;
-// 	else if ((*flag) == 0 && (input[i] == '\'' || input[i] == '"'))
-// 		(*flag) = (input[i]);
-// }
-
-// char	*ft_str_join_c(char const *str, char const c)
-// {
-	// char arr[1];
-// 
-	// arr[0] = c;
-	//arr[1] = '\0';
-	// return (ft_strjoin(str, arr));
-// }
-
-char	*ft_str_join_c(char const *str, char const c)
+char	*ft_str_join_c( char *str, char const c)
 {
-	int		i;
-	char	*res;
-	i = 0;
-	if (str == NULL)
-		res = (char *)malloc(2 * sizeof(char));
-	else
-		res = (char *) malloc ((ft_strlen(str) + 2) * sizeof(char));
-	if (!res)
-		return (NULL);
-	if (str == NULL)
-		res[i] = c;
-	else
+	char arr[2];
+
+	arr[0] = c;
+	arr[1] = '\0';
+	if (!str)
 	{
-		while (str[i] != '\0')
-		{
-			res[i] = str[i];
-			i++;
-		}
-		res[i] = c;
+		str = (char *) malloc (2 * sizeof(char));
+		if(!str)
+			return (NULL);
+		*str = *arr;
+		return (str);
 	}
-	res[i + 1] = '\0';
-	free((char *)str);
-	return (res);
+	return (ft_strjoin(str, arr));
 }
 
 void ft_split_input(char *input, int *i, int end)
