@@ -1,52 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/18 21:53:45 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/01/18 21:45:27 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/01/18 21:47:00 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void ft_check_struct(t_cmd *cmd)
+int	ft_prompt(char **input)
 {
-	int i;
-	
-	while(cmd)
+	(*input) = readline("Minishell $> ");
+	if (ft_strlen(*input) != 0)
 	{
-		i = 0;
-		while(cmd->argv[i] != NULL)
-		{
-			printf("%s\n", cmd->argv[i]);
-			i++;
-		}
-		cmd = cmd -> next;
-	}
-}
-
-int main ()
-{
-	char *input;
-	t_cmd	*cmd;
-
-	
-	int i;
-	
-	i = 0;
-	while (1)
-	{
-		cmd = NULL;
-		if (ft_prompt(&input))
-		{
-			ft_validate_quotes(input, &cmd);
-			ft_check_struct(cmd);
-			ft_free_all(&cmd);
-			//system("leaks minishell");fscanf(stdin, "c");
-		}
+		add_history(*input);
+		return (1);
 	}
 	return (0);
 }

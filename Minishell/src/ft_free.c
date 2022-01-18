@@ -1,52 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/18 21:53:45 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/01/18 21:42:53 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/01/18 21:44:56 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void ft_check_struct(t_cmd *cmd)
+void	ft_free_2D_arr(char **arr)
 {
-	int i;
-	
-	while(cmd)
+	int	i;
+
+	i = 0;
+	while (arr[i] != NULL)
 	{
-		i = 0;
-		while(cmd->argv[i] != NULL)
-		{
-			printf("%s\n", cmd->argv[i]);
-			i++;
-		}
-		cmd = cmd -> next;
+		free(arr[i]);
+		i++;
 	}
+	free(arr);
 }
 
-int main ()
+void	ft_free_all(t_cmd **cmd)
 {
-	char *input;
-	t_cmd	*cmd;
+	t_cmd	*tmp;
 
-	
-	int i;
-	
-	i = 0;
-	while (1)
+	while ((*cmd))
 	{
-		cmd = NULL;
-		if (ft_prompt(&input))
-		{
-			ft_validate_quotes(input, &cmd);
-			ft_check_struct(cmd);
-			ft_free_all(&cmd);
-			//system("leaks minishell");fscanf(stdin, "c");
-		}
+		tmp = (*cmd);
+		ft_free_2D_arr(tmp->argv);
+		free(tmp);
+		(*cmd) = (*cmd)->next;
 	}
-	return (0);
+	free((*cmd));
 }

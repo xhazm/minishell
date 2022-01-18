@@ -6,11 +6,29 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 17:32:35 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/17 13:50:31 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/18 21:41:56 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+char	*ft_str_join_c( char *str, char const c)
+{
+	char	arr[2];
+
+	arr[0] = c;
+	arr[1] = '\0';
+	if (!str)
+	{
+		str = (char *) malloc (2 * sizeof(char));
+		if (!str)
+			return (NULL);
+		str[0] = arr[0];
+		str[1] = arr[1];
+		return (str);
+	}
+	return (ft_strjoin(str, arr));
+}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
