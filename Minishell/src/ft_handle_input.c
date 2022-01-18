@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:49:38 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/18 21:55:16 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:22:30 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ char	*ft_handle_space_in_qoutes(char *sub, char *cpart, int *j, int flag)
 			if (flag == 1)
 				flag = sub[(*j)];
 			else if (flag == sub[(*j)])
+			{
 				flag = 1;
+				cpart = ft_str_join_c(cpart, sub[(*j)]);
+				(*j)++;
+				return (cpart);
+			}
 		}
 		if (flag != 0)
 			cpart = ft_str_join_c(cpart, sub[(*j)]);
@@ -40,8 +45,6 @@ void	ft_split_input(char *sub, t_cmd **cmd)
 	char	*argv;
 
 	j = 0;
-	if (sub[j] == '|')
-		j++;
 	flag = 0;
 	while (sub[j] != '\0')
 	{
@@ -86,7 +89,7 @@ void	ft_validate_quotes(char *input, t_cmd **cmd)
 			flag = 0;
 		else if (flag == 0 && (input[i] == '\'' || input[i] == '"'))
 			flag = (input[i]);
-		if (flag == 0 && (input[i + 1] == '|' || input[i + 1] == '\0'))
+		if (flag == 0 && (input[i] == '|' || input[i + 1] == '\0'))
 			ft_handle_input(input, &start, i + 1, cmd);
 		i++;
 	}

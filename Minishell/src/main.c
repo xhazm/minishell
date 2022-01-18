@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/18 21:53:45 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:18:30 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,6 @@ int main ()
 	char *input;
 	t_cmd	*cmd;
 
-	
-	int i;
-	
-	i = 0;
 	while (1)
 	{
 		cmd = NULL;

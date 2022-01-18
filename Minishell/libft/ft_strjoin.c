@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 17:32:35 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/18 21:41:56 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/18 22:06:28 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	dest = (char *) malloc ((s1len + s2len + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
-	i = 0;
-	while (i < s1len)
-	{
+	i = -1;
+	while (s1[++i] != '\0')
 		dest[i] = s1[i];
-		i++;
-	}
 	while (i - s1len < s2len)
 	{
 		dest[i] = s2[i - s1len];
