@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:49:38 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/18 22:22:30 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/19 17:48:55 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,46 @@ char	*ft_handle_space_in_qoutes(char *sub, char *cpart, int *j, int flag)
 	return (cpart);
 }
 
-void	ft_split_input(char *sub, t_cmd **cmd)
-{
-	int		j;
-	char	flag;
-	char	*argv;
+// void	ft_split_input(char *sub, t_cmd **cmd)
+// {
+// 	int		j;
+// 	char	flag;
+// 	char	*argv;
 
+// 	j = 0;
+// 	flag = 0;
+// 	while (sub[j] != '\0')
+// 	{
+// 		argv = NULL;
+// 		if (sub[j] != ' ')
+// 		{
+// 			argv = ft_handle_space_in_qoutes(sub, argv, &j, flag);
+// 			(*cmd)->argc++;
+// 			ft_store_cmd_argv(cmd, argv);
+// 			free(argv);
+// 		}
+// 		else
+// 			j++;
+// 	}
+// }
+
+void ft_split_input(char *sub, t_cmd *cmd)
+{
+	int	j;
+	char flag;
+	char *argv;
+	
 	j = 0;
+	if (sub[j] == '|')
+		j++;
 	flag = 0;
 	while (sub[j] != '\0')
 	{
 		argv = NULL;
-		if (sub[j] != ' ')
+		if(sub[j] != ' ')
 		{
 			argv = ft_handle_space_in_qoutes(sub, argv, &j, flag);
-			(*cmd)->argc++;
+			cmd->argc++;
 			ft_store_cmd_argv(cmd, argv);
 			free(argv);
 		}
@@ -61,14 +86,36 @@ void	ft_split_input(char *sub, t_cmd **cmd)
 	}
 }
 
-void	ft_handle_input(char *input, int *i, int end, t_cmd **cmd)
+// void	ft_handle_input(char *input, int *i, int end, t_cmd **cmd)
+// {
+// 	char	*sub;
+// 	t_cmd	*node;
+
+// 	node = *cmd;
+// node= node->next;
+// 	sub = ft_substr(input, (*i), end);
+// 	ft_generate_cmd(node);
+// 	ft_split_input(sub, node);
+// 	(*i) = end;
+// 	free(sub);
+// }
+
+void ft_handle_input(char *input, int *i, int end, t_cmd **cmd)
 {
 	char	*sub;
+	t_cmd	*node;
 
+	node = NULL;
+	if (*cmd != NULL)
+		node = *cmd;
 	sub = ft_substr(input, (*i), end);
 	ft_generate_cmd(cmd);
-	ft_split_input(sub, cmd);
-	(*i) = end;
+	while ((*cmd)->next != NULL)
+		*cmd = (*cmd)->next;
+	ft_split_input(sub, *cmd);
+	if (node != NULL)
+		*cmd = node;
+	*i = end;
 	free(sub);
 }
 

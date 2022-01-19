@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/18 22:18:30 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/19 17:35:07 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void ft_check_struct(t_cmd *cmd)
 			printf("%s\n", cmd->argv[i]);
 			i++;
 		}
+		printf("--------- NEW NODE ----------\n");
 		cmd = cmd -> next;
 	}
 }
@@ -40,8 +41,8 @@ int main ()
 		{
 			ft_validate_quotes(input, &cmd);
 			ft_check_struct(cmd);
-			ft_free_all(&cmd);
-			//system("leaks minishell");fscanf(stdin, "c");
+			ft_free_all(&cmd, &input);
+			system("leaks minishell");fscanf(stdin, "c");
 		}
 	}
 	return (0);

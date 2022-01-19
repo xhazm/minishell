@@ -6,13 +6,13 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 17:32:35 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/18 22:06:28 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/19 13:39:01 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_str_join_c( char *str, char const c)
+char	*ft_str_join_c(char *str, char const c)
 {
 	char	arr[2];
 
