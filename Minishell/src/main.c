@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/19 17:35:07 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/19 18:26:48 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int main ()
 		if (ft_prompt(&input))
 		{
 			ft_validate_quotes(input, &cmd);
+			if (cmd != NULL)
+				cmd = cmd->head;
 			ft_check_struct(cmd);
 			ft_free_all(&cmd, &input);
 			system("leaks minishell");fscanf(stdin, "c");

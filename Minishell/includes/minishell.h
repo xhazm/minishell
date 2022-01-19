@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/19 17:24:22 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/19 18:02:42 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct	s_cmd
 	char	*test;
 
 	int				pipes[2];
+	
+	struct s_cmd 	*head;
 	struct s_cmd 	*next;
 	struct s_cmd	*prev;
 }	t_cmd;
