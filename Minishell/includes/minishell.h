@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/19 21:48:21 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:27:48 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -45,4 +46,12 @@ int		ft_prompt(char **input);
 void	ft_validate_quotes(char *input, t_cmd **cmd);
 void	ft_split_input(char *sub, t_cmd *cmd);
 int		ft_store_cmd_argv(t_cmd *cmd, char *argv);
+t_list		**ft_garbage_lst_ptr(void *ptr);
+t_list		**ft_garbage_collector(void *ptr);
+void		*ft_malloc(size_t size);
+void		*ft_free(t_list	**malloced);
+
+
+
+
 #endif
