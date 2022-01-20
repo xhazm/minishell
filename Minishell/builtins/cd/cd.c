@@ -6,71 +6,108 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/18 22:08:12 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:10:14 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t			i;
+	unsigned char	*src1;
+	unsigned char	*src2;
+
+	i = 0;
+	src1 = (unsigned char *)s1;
+	src2 = (unsigned char *)s2;
+	while (i < n && (src1[i] != '\0' || src2[i] != '\0'))
+	{
+		if (src1[i] != src2[i])
+			return ((unsigned char)src1[i] - (unsigned char)src2[i]);
+		i++;
+	}
+	return (0);
+}
+
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (s[i] != '\0')
+	{
+		if (j == 0)
+			j++;
+		if (s[i] == ' ')
+			j++;
+		i++;
+	}
+	return (j);
+}
+
 int	pwd(int argc, char **argv)
 {
 	char	*pwd;
-	//protect against multiple arguments in pwd
+
 	pwd = NULL;
 	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
 	if (pwd != NULL)
 	{
+		printf("%s\n", pwd);
 		free(pwd);
-		return (FAIL);
+		return (SUCCESS);
 	}
-	return (SUCCESS);
+	else
+		return (FAIL);
 }
 
 int	cd(int argc, char **argv)
 {
-	//check for more than 2 args
-	int ret_val;
+	char	*error;
 
-	ret_val = 0;
-	ret_val = access(argv[0], X_OK);
-	if (ret_val == -1)
-	{
-		printf("cd: permission denied\n");
-		return (FAIL);
-		//write permission denied error
-	}
+	// tilde == home implementation??
+	error = NULL;
 	if (chdir(argv[0]) == -1)
 	{
-		// errormessage
+		error = strerror(errno);
+		if (error != NULL)
+			printf("cd: %s: %s\n", argv[0], error);
 		return (FAIL);
 	}
-	//change dir in env 
+	//change working dir in env
+	//git - for 
 	return (SUCCESS);
 }
 
 int main(int argc, char **argv)
 {
- 	// char *args = "/Users/lpfleide/Documents/vse/tests/minishell/hi";
 	char *input;
 	char *di;
 	int retval;
-
-	//if (argv[1] == "echo") // strncmp
-	// printf("printf does it automatically %s\n", argv[2]);
-	// pwd(argc - 2, &argv[2]);
+	int	len;
 
 	while(1)
 	{
 		input = readline("Minishell $> ");
-		printf("%s should work\n", input);
-		di = &input[2];
-		if (input[0] == '1')
-			cd(1, &di);
-		if (input[0] == '2')
-			pwd(1, &input);
+		//printf("%s should work\n", input);
+		len = ft_strlen(input);
+		printf("strlen %d\n", len);
+		if (ft_strncmp(&input[0], "cd", 2) == 0)
+		{
+			di = &input[3];
+			cd(len - 1, &di);
+		}
+		if (ft_strncmp(&input[0], "pwd", 3) == 0)
+		{
+			di = &input[4];
+			pwd(len - 1, &di);
+		}
 	}
-//	system("leaks minishell");
+	system("leaks minishell");
 	// echo(argc - 2, &argv[2]);
 	return (0);
 }
