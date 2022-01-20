@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:37:14 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/19 18:17:40 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/20 14:54:23 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_cmd	*ft_new_cmd(void)
 		return (NULL);
 	new->argv[0] = NULL;
 	new->next = NULL;
-	new->test = "test";
 	return (new);
 }
 

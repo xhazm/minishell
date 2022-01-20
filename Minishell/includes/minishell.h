@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/19 18:02:42 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/19 21:48:21 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,21 @@
 
 # define SINGLE_QUOTES = 0
 # define DOUBLE_QUOTES = 1
+# define ARG = 0
+# define FLAG = 1
 
 typedef struct	s_cmd
 {
 	int				argc;
 	char			**argv;
+
 	int				type;
-
-	char	*test;
-
 	int				pipes[2];
+	
+
 	
 	struct s_cmd 	*head;
 	struct s_cmd 	*next;
-	struct s_cmd	*prev;
 }	t_cmd;
 
 void	ft_generate_cmd(t_cmd **cmd);
