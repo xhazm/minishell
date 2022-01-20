@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/20 15:10:14 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:10:25 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	cd(int argc, char **argv)
 		return (FAIL);
 	}
 	//change working dir in env
-	//git - for 
+	//git - for $OLDPWD implement
 	return (SUCCESS);
 }
 
