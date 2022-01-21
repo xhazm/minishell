@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/20 17:27:48 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/21 17:01:17 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
-# define SINGLE_QUOTES = 0
-# define DOUBLE_QUOTES = 1
-# define ARG = 0
-# define FLAG = 1
+# define SUCCESS 1
+# define FAIL 0
 
 typedef struct	s_cmd
 {
@@ -39,6 +37,15 @@ typedef struct	s_cmd
 	struct s_cmd 	*head;
 	struct s_cmd 	*next;
 }	t_cmd;
+
+typedef struct	s_env
+{
+	int				num;
+	int				set;
+	char			*name;
+	char			*arg;
+	struct s_env	*next;
+}				t_env;
 
 void	ft_generate_cmd(t_cmd **cmd);
 void	ft_free_all(t_cmd **cmd, char **input);

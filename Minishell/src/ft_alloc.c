@@ -6,11 +6,11 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:13:17 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/20 17:07:31 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/21 17:48:33 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 static t_list	*ft_add_node(t_list *lst, void *content)
 {
@@ -68,7 +68,7 @@ void	*ft_malloc(size_t size)
 	return (ptr);
 }
 
-void	*ft_free(t_list	**malloced)
+void	*ft_free_garbage(t_list	**malloced)
 {
 	t_list	*temp;
 	
