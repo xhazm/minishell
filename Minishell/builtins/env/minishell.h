@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/20 18:24:08 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/21 16:16:12 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ typedef struct	s_cmd
 
 typedef struct	s_env
 {
-	int		num;
-	char	*name;
-	char	*arg;
-	struct s_cmd *next;
-}	t_cmd;
+	int				num;
+	int				set;
+	char			*name;
+	char			*arg;
+	struct s_env	*next;
+}				t_env;
 
 
 #endif

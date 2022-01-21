@@ -18,7 +18,7 @@ SRC_DIR = ./
 OBJ_DIR = ./
 
 # Source files and object files
-SRC_FILES = cd.c
+SRC_FILES = env.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
