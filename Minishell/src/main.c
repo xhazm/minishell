@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 20:32:03 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/21 20:36:01 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,7 @@ int main ()
 			ft_var_expand(cmd);
 			ft_check_struct(cmd);
 			ft_free_all(&cmd, &input);
-<<<<<<< Updated upstream
 			free (input);
-=======
-			system("leaks minishell");fscanf(stdin, "c");
->>>>>>> Stashed changes
 		}
 		else
 			break ;
