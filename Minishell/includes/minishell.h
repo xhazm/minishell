@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 20:20:11 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/21 20:31:50 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ void	ft_validate_quotes(char *input, t_cmd **cmd);
 void	ft_split_input(char *sub, t_cmd *cmd);
 int		ft_store_cmd_argv(t_cmd *cmd, char *argv);
 void	ft_var_expand(t_cmd *cmd);
-void	ft_check_closing_qoutes(char c, char *flag);
+char	ft_check_closing_qoutes(char c, char flag);
 
 #endif

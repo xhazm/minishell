@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_handle_input.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:49:38 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 20:12:18 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/21 20:31:58 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	ft_validate_quotes(char *input, t_cmd **cmd)
 	start = 0;
 	while (input[i] != '\0')
 	{
-		ft_check_closing_qoutes(input[i], &flag);
+		flag = ft_check_closing_qoutes(input[i], flag);
 		if (flag == 0 && (input[i] == '|' || input[i + 1] == '\0'))
 			ft_handle_input(input, &start, i + 1, cmd);
 		i++;

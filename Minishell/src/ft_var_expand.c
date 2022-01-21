@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:56:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 17:18:03 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/21 19:40:47 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ void ft_search_for_money(char **str)
 	flag = 0;
 	while ((*str)[i] != '\0')
 	{
-		ft_check_closing_qoutes((*str)[i], &flag);
+		flag = ft_check_closing_qoutes((*str)[i], flag);
 		if (flag != '\'' && (*str)[i] == '$')
 		{
 			if ((*str)[i + 1] == '?')
-				printf("the exit status of the most recently executed foregroundpipeline\n");
+				printf("the exit status of the most recently executed foreground pipeline\n");
 			else if ((*str)[i + 1] == ' ' || (*str)[i + 1] == '\0')
 				printf("$\n");
 			else
