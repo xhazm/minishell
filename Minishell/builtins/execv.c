@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   execv.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/15 13:41:24 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 16:49:09 by lpfleide         ###   ########.fr       */
+/*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
+/*   Updated: 2022/01/18 16:05:00 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstadd_front(t_list **lst, void *content)
+int main(void)
 {
-	t_list	*new;
+	char *args[4];
+	int ret;
+	args[0] = "cat";
+	args[1] = "-t";
+	args[2] = "Makefile";
+	args[3] = NULL;
 
-	new = ft_lstnew(content);
-	new->next = *lst;
-	*lst = new;
+	printf("%s", args[0]);
+	ret = execve("/bin/cat", args, NULL);
+	printf("%d \n", ret);
+	return (0);
 }
