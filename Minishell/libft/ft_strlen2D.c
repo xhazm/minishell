@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_strlen2D.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/15 15:25:28 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/20 15:20:12 by lpfleide         ###   ########.fr       */
+/*   Created: 2022/01/18 21:13:23 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/01/18 21:16:04 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+int	ft_strlen2D(char **str)
 {
-	t_list	*ls;
+	int	i;
 
-	if (*lst)
-	{
-		ls = ft_lstlast(*lst);
-		ls -> next = new;
-	}
-	else
-		*lst = new;
+	i = 0;
+	while (str[i] != NULL)
+		i++;
+	return (i);
 }
