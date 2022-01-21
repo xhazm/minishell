@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 17:32:35 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/19 13:39:01 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/21 19:57:07 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_str_join_c(char *str, char const c)
 	arr[1] = '\0';
 	if (!str)
 	{
-		str = (char *) malloc (2 * sizeof(char));
+		str = (char *) ft_malloc (2 * sizeof(char));
 		if (!str)
 			return (NULL);
 		str[0] = arr[0];
@@ -41,7 +41,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	s1len = ft_strlen(s1);
 	s2len = ft_strlen(s2);
-	dest = (char *) malloc ((s1len + s2len + 1) * sizeof(char));
+	dest = (char *) ft_malloc ((s1len + s2len + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
 	i = -1;
@@ -53,6 +53,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	dest[i] = '\0';
-	free ((char *) s1);
+	ft_free ((char *) s1);
 	return (dest);
 }

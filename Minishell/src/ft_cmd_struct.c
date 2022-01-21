@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:37:14 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/20 17:06:16 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/21 19:26:02 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ int ft_store_cmd_argv(t_cmd *cmd, char *argv)
 	
 	char	**tmp;
 
-	tmp = (char **)malloc(sizeof(char *) * (cmd->argc));
+	tmp = (char **)ft_malloc(sizeof(char *) * (cmd->argc));
 	if (!tmp)
 		return (0);
 	ft_strdup2D(cmd->argv, tmp);
-	free(cmd->argv);
+	ft_free(cmd->argv);
 	cmd->argv = (char **)ft_malloc(sizeof(char *) * (cmd->argc + 1));
 	if (!cmd->argv)
 		return (0);
 	ft_strdup2D(tmp, cmd->argv);
-	free(tmp);
+	ft_free(tmp);
 	cmd->argv[cmd->argc - 1] = ft_strdup(argv);
 	cmd->argv[cmd->argc] = NULL;
 	return (1);

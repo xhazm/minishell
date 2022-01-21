@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_handle_input.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:49:38 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 17:23:06 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/21 20:12:18 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void ft_split_input(char *sub, t_cmd *cmd)
 			argv = ft_handle_space_in_qoutes(sub, argv, &j, flag);
 			cmd->argc++;
 			ft_store_cmd_argv(cmd, argv);
-			free(argv);
+			ft_free(argv);
 		}
 		else
 			j++;
@@ -91,7 +91,7 @@ void ft_handle_input(char *input, int *i, int end, t_cmd **cmd)
 	ft_generate_cmd(cmd);
 	ft_split_input(sub, *cmd);
 	*i = end;
-	free(sub);
+	ft_free(sub);
 }
 
 void	ft_validate_quotes(char *input, t_cmd **cmd)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 17:22:47 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/21 20:12:29 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,13 @@ int main ()
 			ft_var_expand(cmd);
 			ft_check_struct(cmd);
 			ft_free_all(&cmd, &input);
-			//system("leaks minishell");fscanf(stdin, "c");
+			free (input);
 		}
+		else
+			break ;
 	}
+	ft_free_garbage(ft_garbage_lst_ptr(&cmd));
+	ft_garbage_lst_ptr(NULL);
+	system("leaks minishell");fscanf(stdin, "c");
 	return (0);
 }

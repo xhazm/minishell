@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_alloc.c                                         :+:      :+:    :+:   */
+/*   ft_garbage_collector.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:13:17 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/20 17:07:31 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/21 20:18:09 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-static t_list	*ft_add_node(t_list *lst, void *content)
+#include "libft.h"
+static t_list	*ft_add_node(t_list **lst, void *content)
 {
 	t_list	*new;
-	
+
 	new = ft_lstnew(content);
 	if (new == NULL)
 		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
-	lst->next = new;
+	new->next = *lst;
+	*lst = new;
 	return (new);
 }
 
@@ -34,7 +32,7 @@ t_list	**ft_garbage_lst_ptr(void *ptr)
 	return (&malloced);
 }
 
-t_list	**ft_garbage_collector(void *ptr)
+static t_list	**ft_garbage_collector(void *ptr)
 {
 	t_list	**malloced;
 	t_list	not_null;
@@ -50,7 +48,7 @@ t_list	**ft_garbage_collector(void *ptr)
 	}
 	else
 	{
-		if (ft_add_node(*malloced, ptr) == NULL)
+		if (ft_add_node(malloced, ptr) == NULL)
 			return (NULL);
 	}
 	return (malloced);
@@ -68,24 +66,39 @@ void	*ft_malloc(size_t size)
 	return (ptr);
 }
 
-void	*ft_free(t_list	**malloced)
+void	*ft_free_garbage(t_list	**malloced)
 {
 	t_list	*temp;
 	
 	if ((*malloced) == NULL)
 		return (NULL);
-	while ((*malloced)->next != NULL)
+	while ((*malloced) != NULL)
 	{
 		temp = (*malloced)->next;
-		free((*malloced)->content);
+		if ((*malloced)->content != NULL)
+			free((*malloced)->content);
 		free(*malloced);
 		*malloced = temp;
 	}
-	if ((*malloced)->next == NULL && (*malloced) != NULL)
-	{
-		free((*malloced)->content);
-		free(*malloced);
-	}
 	malloced = NULL;
 	return (malloced);
+}
+
+void	ft_free(void *ptr)
+{
+	t_list	**lst;
+	t_list	*head;
+
+	lst = ft_garbage_lst_ptr(ft_garbage_collector(NULL));
+	head = *lst;
+	while ((*lst) != NULL)
+	{
+		if ((*lst)->content == ptr)
+		{
+			free((*lst)->content);
+			(*lst)->content = NULL;
+		}
+		*lst = (*lst)->next;
+	}
+	*lst = head;
 }

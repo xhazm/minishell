@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_free_OUTDATED.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/08 16:43:03 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 19:57:13 by lpfleide         ###   ########.fr       */
+/*   Created: 2022/01/18 21:42:53 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/01/21 18:58:32 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void	ft_free_2D_arr(char **arr)
 {
-	size_t	i;
-	char	*dest;
+	int	i;
 
 	i = 0;
-	if (!s)
-		return (NULL);
-	if (ft_strlen(s) < start)
-		len = 0;
-	dest = (char *) ft_malloc((len + 1) * sizeof(char));
-	if (!dest)
-		return (0);
-	while (i + start < len)
+	while (arr[i] != NULL)
 	{
-		dest[i] = s[i + start];
+		ft_free(&arr[i]);
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	ft_free(&arr);
+}
+
+void	ft_free_all(t_cmd **cmd, char **input)
+{
+	t_cmd	*tmp;
+
+	while ((*cmd))
+	{
+		tmp = (*cmd);
+		ft_free_2D_arr(tmp->argv);
+		ft_free(&tmp);
+		(*cmd) = (*cmd)->next;
+	}
+	ft_free(&(*cmd));
+	ft_free(&(*input));
 }

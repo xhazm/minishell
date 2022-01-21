@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:45:27 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/20 17:31:37 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/21 19:04:30 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_prompt(char **input)
 	{
 		//write exit in minishell line
 		printf("\rexit\n");
-		exit (0);
+		return (0);
 	}
 	return (0);
 }

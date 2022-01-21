@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 16:53:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 17:16:26 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/21 20:14:59 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 typedef struct s_list
 {
@@ -69,4 +70,12 @@ int		ft_strlen2D(char **str);
 char	**ft_strdup2D(char **str1, char **str2);
 char	*ft_str_join_c( char *str, char const c);
 int		ft_strcmp(const char *s1, const char *s2);
+
+void	ft_free(void *ptr);
+void	*ft_malloc(size_t size);
+void	*ft_free_garbage(t_list	**malloced);
+t_list	**ft_garbage_lst_ptr(void *ptr);
+
+
+
 #endif
