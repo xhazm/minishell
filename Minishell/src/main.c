@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/20 17:31:57 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/21 17:22:47 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int main ()
 			ft_validate_quotes(input, &cmd);
 			if (cmd != NULL)
 				cmd = cmd->head;
+			ft_var_expand(cmd);
 			ft_check_struct(cmd);
 			ft_free_all(&cmd, &input);
 			//system("leaks minishell");fscanf(stdin, "c");

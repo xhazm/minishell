@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/20 17:27:48 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/21 17:18:35 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ t_list		**ft_garbage_lst_ptr(void *ptr);
 t_list		**ft_garbage_collector(void *ptr);
 void		*ft_malloc(size_t size);
 void		*ft_free(t_list	**malloced);
-
-
-
+void	ft_var_expand(t_cmd *cmd);
+void	ft_check_closing_qoutes(char c, char *flag);
 
 #endif

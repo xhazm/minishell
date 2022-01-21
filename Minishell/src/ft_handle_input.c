@@ -6,11 +6,37 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:49:38 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/19 18:21:08 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/21 17:23:06 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// char	*ft_handle_space_in_qoutes(char *sub, char *cpart, int *j, int flag)
+// {
+// 	flag = 1;
+// 	while (flag != 0 && sub[(*j)] != '\0')
+// 	{			
+// 		if (flag == 1 && sub[(*j)] == ' ')
+// 			flag = 0;
+// 		else if (sub[(*j)] == '\'' || sub[(*j)] == '"')
+// 		{
+// 			if (flag == 1)
+// 				flag = sub[(*j)];
+// 			else if (flag == sub[(*j)])
+// 			{
+// 				flag = 1;
+// 				cpart = ft_str_join_c(cpart, sub[(*j)]);
+// 				(*j)++;
+// 				return (cpart);
+// 			}
+// 		}
+// 		if (flag != 0)
+// 			cpart = ft_str_join_c(cpart, sub[(*j)]);
+// 		(*j)++;
+// 	}
+// 	return (cpart);
+// }
 
 char	*ft_handle_space_in_qoutes(char *sub, char *cpart, int *j, int flag)
 {
@@ -24,15 +50,9 @@ char	*ft_handle_space_in_qoutes(char *sub, char *cpart, int *j, int flag)
 			if (flag == 1)
 				flag = sub[(*j)];
 			else if (flag == sub[(*j)])
-			{
 				flag = 1;
-				cpart = ft_str_join_c(cpart, sub[(*j)]);
-				(*j)++;
-				return (cpart);
-			}
 		}
-		if (flag != 0)
-			cpart = ft_str_join_c(cpart, sub[(*j)]);
+		cpart = ft_str_join_c(cpart, sub[(*j)]);
 		(*j)++;
 	}
 	return (cpart);
@@ -85,12 +105,7 @@ void	ft_validate_quotes(char *input, t_cmd **cmd)
 	start = 0;
 	while (input[i] != '\0')
 	{
-		if (input[i] == '\'' && flag == '\'')
-			flag = 0;
-		else if (input[i] == '"' && flag == '"')
-			flag = 0;
-		else if (flag == 0 && (input[i] == '\'' || input[i] == '"'))
-			flag = (input[i]);
+		ft_check_closing_qoutes(input[i], &flag);
 		if (flag == 0 && (input[i] == '|' || input[i + 1] == '\0'))
 			ft_handle_input(input, &start, i + 1, cmd);
 		i++;

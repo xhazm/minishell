@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 16:53:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/18 21:38:24 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/21 17:16:26 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_strlen2D(char **str);
 char	**ft_strdup2D(char **str1, char **str2);
 char	*ft_str_join_c( char *str, char const c);
-
+int		ft_strcmp(const char *s1, const char *s2);
 #endif

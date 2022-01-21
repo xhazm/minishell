@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_check_closing_qoutes.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/07 12:57:14 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 17:15:32 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/01/21 17:07:45 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/01/21 17:18:18 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	ft_check_closing_qoutes(char c, char *flag)
 {
-	size_t			i;
-	unsigned char	*src1;
-	unsigned char	*src2;
-
-	i = 0;
-	src1 = (unsigned char *)s1;
-	src2 = (unsigned char *)s2;
-	while (i < n && (src1[i] != '\0' || src2[i] != '\0'))
-	{
-		if (src1[i] != src2[i])
-			return ((unsigned char)src1[i] - (unsigned char)src2[i]);
-		i++;
-	}
-	return (0);
+	if (c == '\'' && (*flag) == '\'')
+		(*flag) = 0;
+	else if (c == '"' && (*flag) == '"')
+		(*flag) = 0;
+	else if ((*flag) == 0 && (c == '\'' || c == '"'))
+		(*flag) = (c);
 }

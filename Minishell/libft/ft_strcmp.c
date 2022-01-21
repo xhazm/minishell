@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/07 12:57:14 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 17:15:32 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/01/20 21:33:00 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/01/20 21:33:57 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t			i;
 	unsigned char	*src1;
@@ -21,7 +21,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	i = 0;
 	src1 = (unsigned char *)s1;
 	src2 = (unsigned char *)s2;
-	while (i < n && (src1[i] != '\0' || src2[i] != '\0'))
+	while (src1[i] != '\0' || src2[i] != '\0')
 	{
 		if (src1[i] != src2[i])
 			return ((unsigned char)src1[i] - (unsigned char)src2[i]);
