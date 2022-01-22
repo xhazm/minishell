@@ -6,11 +6,17 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/22 20:44:05 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/22 21:15:56 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_list	*ft_envp_pointer(void)
+{
+	static	t_list *envp;
+	return (&envp);
+}
 
 void	*ft_set_envp_node(char *orig_envp, t_env *envp_node)
 {
@@ -69,7 +75,7 @@ int	ft_handle_envp(char **orig_envp)
 
 	i = 0;
 	env_len = ft_strlen2D(orig_envp);
-	new_envp = ft_malloc(sizeof(t_list *) * env_len);
+	new_envp = ft_envp_pointer(0);
 	while (i < env_len)
 	{
 		if (ft_parse_envp(new_envp, orig_envp[i]) == NULL)
@@ -87,10 +93,13 @@ int	ft_handle_envp(char **orig_envp)
 	return (SUCCESS);
 }
 
+// void	ft_print_envp()
+
 int main(int argc, char **argv, char **envp)
 {
 	// ENVP NODES NOT GARBAGE  COLLECTED!!!!
 	ft_handle_envp(envp);
+	// ft_print_envp()
 	//system("leaks minishell");
 	return (0);
 }
