@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 20:31:50 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/22 19:27:22 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,8 @@ typedef struct	s_cmd
 
 typedef struct	s_env
 {
-	int				num;
-	int				set;
 	char			*name;
 	char			*arg;
-	struct s_env	*next;
 }				t_env;
 
 void	ft_generate_cmd(t_cmd **cmd);

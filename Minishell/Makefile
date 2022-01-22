@@ -9,7 +9,7 @@ YELLOW	= \033[33m
 BLUE	= \033[34m
 
 # Compiling flags
-FLAGS = -Wall -Wextra -Werror
+FLAGS = #-Wall -Wextra -Werror
 LFLAGS = -L$$HOME/.brew/opt/readline/lib -lreadline
 CPFLAGS = -I$$HOME/.brew/opt/readline/include
 
@@ -20,7 +20,7 @@ INC_DIR = ./includes/
 LIBFT_DIR = ./libft/
 
 # Source files and object files
-SRC_FILES = main.c ft_cmd_struct.c ft_free.c ft_prompt.c ft_handle_input.c ft_var_expand.c ft_check_closing_qoutes.c
+SRC_FILES = env.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
