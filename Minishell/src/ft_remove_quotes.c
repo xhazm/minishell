@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 19:23:42 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/24 15:39:03 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/24 18:21:49 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_search_for_quotes_2be_removed(char **str)
 		{
 			flag = ft_check_closing_quotes((*str)[i], flag);
 			(*str) = ft_remove_quotes((*str), i);
+			i--;
 		}
 		i++;
 	}

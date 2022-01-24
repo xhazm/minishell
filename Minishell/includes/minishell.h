@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/24 15:08:14 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/24 20:55:46 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,37 @@
 # define SUCCESS 1
 # define FAIL 0
 
+typedef struct s_cpart
+{
+	char	*argv;
+	int		flag;
+	struct	s_cpart	*head;
+	struct	s_cpart	*next;
+}	t_cpart;
+
+
 typedef struct	s_cmd
 {
 	int				argc;
 	char			**argv;
-
+	
 	int				type;
 	int				pipes[2];
-	
-
-	
+	t_cpart			*cpart;
 	struct s_cmd 	*head;
 	struct s_cmd 	*next;
 }	t_cmd;
 
 typedef struct	s_env
 {
-	int				num;
-	int				set;
 	char			*name;
 	char			*arg;
-	struct s_env	*next;
 }				t_env;
+
+/* BUILTINS */
+int		ft_handle_envp(char **orig_envp);
+t_list	**ft_envp_pointer(void);
+
 
 void	ft_generate_cmd(t_cmd **cmd);
 void	ft_free_all(t_cmd **cmd, char **input);

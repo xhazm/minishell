@@ -6,58 +6,36 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:56:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 21:35:31 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/24 19:06:41 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char *ft_var_data(char *str)
-{
-	int i;
-	char *var_name_list[4][2];
-
-	var_name_list[0][0] = "HOME";
-	var_name_list[1][0] = "USER";
-	var_name_list[2][0] = "USERHOME";
-	var_name_list[3][0] = NULL;
-
-	var_name_list[0][1] = "/Users/vmiseiki";
-	var_name_list[1][1] = "vmiseiki";
-	var_name_list[2][1] = "/src/bin/some/random/shit";
-
-	i = 0;
-	while (var_name_list[i][0] != NULL)
-	{
-		if (ft_strcmp(var_name_list[i][0], str) == 0)
-			return (var_name_list[i][1]);
-	 	i++;
-	}
-	return(NULL);
-}
-
 int	ft_insert_str(char **str1, char *str2, int start, int end)
 {
 	int		i;
 	int		len;
-	int		strlen;
+	int		str2len;
 	char	*tmp;
 
-	strlen = ft_strlen(str2);
-	len = ft_strlen((*str1)) - (end - start) + strlen;
+	if (!str2)
+		str2len = 0;
+	else
+		str2len = ft_strlen(str2) - 1;
+	len = ft_strlen((*str1)) - (end - start) + str2len;
 	tmp = ft_strdup((*str1));
-
 	ft_free((*str1));
 	(*str1) = (char *)ft_malloc(sizeof(char *) * (len + 1));
 	if (!str1)
-		return (0);
+		return (FAIL);
 	i = 0;
 	while (i < len)
 	{
 		if (i < start)
 			(*str1)[i] = tmp[i];
-		else if (start <= i && (i - start) < strlen)
-			(*str1)[i] = str2[i - start];
+		else if (start <= i && (i - start) < str2len )
+			(*str1)[i] = str2[i - start + 1];
 		else
 		{
 			(*str1)[i] = tmp[end];
@@ -67,7 +45,25 @@ int	ft_insert_str(char **str1, char *str2, int start, int end)
 	}
 	(*str1)[i] = '\0';
 	ft_free(tmp);
-	return (1);
+	return (SUCCESS);
+}
+
+char	*ft_var_data(t_list **envp, char *varName)
+{
+	t_env	*envp_node;
+	t_list	*temp;
+
+	temp = (*envp);
+
+	while (temp != NULL)
+	{
+		envp_node = temp->content;
+		printf("Env %s VarNAme %s \n", envp_node->name, varName);
+		if (ft_strcmp(envp_node->name, varName) == 0)
+			return (envp_node->arg);
+		temp = temp->next;
+	}
+	return (NULL);
 }
 
 void	ft_check_var_name(char **str, int i)
@@ -81,9 +77,11 @@ void	ft_check_var_name(char **str, int i)
 	while ((*str)[i] != ' ' && (*str)[i] != '\'' && (*str)[i] != '"' && (*str)[i] != '\0')
 		i++;
 	varName = ft_substr((*str), start + 1, i);
-	varValue = ft_var_data(varName);
+	varValue = ft_var_data(ft_envp_pointer(), varName);
 	if (varValue != NULL)
 		ft_insert_str(str, varValue, start, i);
+	else
+		ft_insert_str(str, NULL, start, i);
 	if (varName)
 		ft_free(varName);
 	
