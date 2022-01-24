@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 20:36:01 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/24 15:10:05 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,16 @@ int main ()
 			if (cmd != NULL)
 				cmd = cmd->head;
 			ft_var_expand(cmd);
+			ft_rm_quotes(cmd);
 			ft_check_struct(cmd);
 			ft_free_all(&cmd, &input);
-			free (input);
+			free(input);
 		}
 		else
 			break ;
 	}
 	ft_free_garbage(ft_garbage_lst_ptr(&cmd));
 	ft_garbage_lst_ptr(NULL);
-	system("leaks minishell");fscanf(stdin, "c");
+	//system("leaks minishell");fscanf(stdin, "c");
 	return (0);
 }

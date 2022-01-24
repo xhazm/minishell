@@ -6,13 +6,13 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:07:45 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 19:39:49 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/21 21:26:58 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	ft_check_closing_qoutes(char c, char flag)
+char	ft_check_closing_quotes(char c, char flag)
 {
 	if (c == '\'' && flag == '\'')
 		flag = 0;

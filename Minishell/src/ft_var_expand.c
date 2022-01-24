@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:56:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 19:40:47 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/21 21:35:31 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	ft_insert_str(char **str1, char *str2, int start, int end)
 	len = ft_strlen((*str1)) - (end - start) + strlen;
 	tmp = ft_strdup((*str1));
 
-	free((*str1));
-	(*str1) = (char *)malloc(sizeof(char *) * (len + 1));
+	ft_free((*str1));
+	(*str1) = (char *)ft_malloc(sizeof(char *) * (len + 1));
 	if (!str1)
 		return (0);
 	i = 0;
@@ -66,7 +66,7 @@ int	ft_insert_str(char **str1, char *str2, int start, int end)
 		i++;
 	}
 	(*str1)[i] = '\0';
-	free(tmp);
+	ft_free(tmp);
 	return (1);
 }
 
@@ -85,7 +85,7 @@ void	ft_check_var_name(char **str, int i)
 	if (varValue != NULL)
 		ft_insert_str(str, varValue, start, i);
 	if (varName)
-		free(varName);
+		ft_free(varName);
 	
 }
 
@@ -98,7 +98,7 @@ void ft_search_for_money(char **str)
 	flag = 0;
 	while ((*str)[i] != '\0')
 	{
-		flag = ft_check_closing_qoutes((*str)[i], flag);
+		flag = ft_check_closing_quotes((*str)[i], flag);
 		if (flag != '\'' && (*str)[i] == '$')
 		{
 			if ((*str)[i + 1] == '?')
