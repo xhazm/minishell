@@ -6,11 +6,28 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:49:38 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/25 21:43:14 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:27:26 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int ft_set_redirection_flag(char *str)
+{
+	if (str[0] == '>')
+	{
+		if (str[1] == '>')
+			return (51);
+		return (50);
+	}
+	if (str[0] == '<')
+	{
+		if(str[1] == '<')
+			return (53);
+		return (52);
+	}
+	return (FAIL);
+}
 
 int	ft_set_cmd_flags(t_cmd *cmd)
 {
@@ -19,18 +36,28 @@ int	ft_set_cmd_flags(t_cmd *cmd)
 	cmd->flags = (int *)ft_malloc(sizeof(int) * cmd->argc + 1);
 	if (!cmd->flags)
 		return (FAIL);
+	//Redirections can be the first cmd comand instead of simple
+	//command and they need to be processed diferentlyy.. i think.... 
+	//Should flga for the first elem still be 1 if its redirection?
 	cmd->flags[0] = 1;
 	i = 1;
 	while (cmd->argv[i] != NULL && cmd->argv[i][0] == '-' && cmd->argv[i][1] != '\0')
 	{
-		cmd->flags[i] = 2;
+		cmd->flags[i] = ft_set_redirection_flag(cmd->argv[i]);
+		if (cmd->flags[i] == 0)
+			cmd->flags[i] = 2;
 		i++;
 	}
 	while (cmd->argv[i] != NULL )
 	{
-		cmd->flags[i] = 3;
-		if (cmd->argv[i][0] == '|')
-			cmd->flags[i] = 4;
+		cmd->flags[i] = ft_set_redirection_flag(cmd->argv[i]);
+		if (cmd->flags[i] == 0)
+		{
+			if (cmd->argv[i][0] == '|')
+				cmd->flags[i] = 4;
+			else
+				cmd->flags[i] = 3;
+		}
 		i++;
 	}
 	cmd->flags[i] = '\0';
@@ -41,6 +68,30 @@ char	*ft_handle_space_in_qoutes(char *sub, char *cpart, int *j)
 {
 	char flag;
 	
+	if (sub[(*j)] == '>')
+	{
+		if (sub[(*j) + 1] == '>')
+		{
+			cpart = ft_strdup(">>");
+			(*j) = (*j) + 2;
+			return (cpart);
+		}
+		cpart = ft_strdup(">");
+		(*j)++;
+		return (cpart);
+	}
+	if (sub[(*j)] == '<')
+	{
+		if (sub[(*j) + 1] == '<')
+		{
+			cpart = ft_strdup("<<");
+			(*j) = (*j) + 2;
+			return (cpart);
+		}
+		cpart = ft_strdup("<");
+		(*j)++;
+		return (cpart);
+	}
 	if (sub[(*j)] == '|')
 	{
 		cpart = ft_strdup(&sub[(*j)]);
@@ -50,7 +101,7 @@ char	*ft_handle_space_in_qoutes(char *sub, char *cpart, int *j)
 	flag = 1;
 	while (sub[(*j)] != '\0')
 	{			
-		if (flag == 1 && (sub[(*j)] == ' ' || sub[(*j)] == '|'))
+		if (flag == 1 && (sub[(*j)] == ' ' || sub[(*j)] == '|' || sub[(*j)] == '<' || sub[(*j)] == '>'))
 			return (cpart);
 		else if (sub[(*j)] == '\'' || sub[(*j)] == '"')
 		{

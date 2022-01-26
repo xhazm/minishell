@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/25 21:43:35 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:49:19 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct	s_cmd
 	int				argc;
 	char			**argv;
 	int				*flags;
-	
 	int				type;
 	int				pipes[2];
 	struct s_cmd 	*head;

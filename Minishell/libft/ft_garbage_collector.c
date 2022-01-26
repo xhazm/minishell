@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:13:17 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/21 21:55:30 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/26 18:32:00 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	*ft_malloc(size_t size)
 void	*ft_free_garbage(t_list	**malloced)
 {
 	t_list	*temp;
-	
+
 	if ((*malloced) == NULL)
 		return (NULL);
 	while ((*malloced) != NULL)

@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 15:25:28 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/24 16:03:27 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/26 18:31:30 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*ft_lstadd_back(t_list **lst, void *content)
 {
 	t_list	*ls;
 	t_list	*head;
-	
+
 	if (*lst)
 	{
 		head = *lst;
