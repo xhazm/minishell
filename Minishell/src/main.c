@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/24 20:56:22 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/26 18:16:16 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void ft_check_struct(t_cmd *cmd)
 {
 	int i;
 	
+	printf("\n\n--------- CMD STRUCT ----------\n");
 	while(cmd)
 	{
 		i = 0;
@@ -37,11 +38,6 @@ void ft_check_struct(t_cmd *cmd)
 			printf("%s\n", cmd->argv[i]);
 			i++;
 		}
-		// while(cmd->cpart != NULL)
-		// {
-		// 	printf("%s\n", cmd->cpart->argv);
-		// 	cmd->cpart = cmd->cpart->next;
-		// }
 		printf("--------- NEW NODE ----------\n");
 		cmd = cmd -> next;
 	}
@@ -59,11 +55,11 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 		cmd = NULL;
 		if (ft_prompt(&input))
 		{
-			ft_validate_quotes(input, &cmd);
+			ft_lexer(input, &cmd);
 			if (cmd != NULL)
 				cmd = cmd->head;
 			ft_var_expand(cmd);
-			ft_rm_quotes(cmd);
+			ft_rm_quotes(cmd);	
 			ft_check_struct(cmd);
 			ft_free_all(&cmd, &input);
 			free(input);

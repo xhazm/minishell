@@ -6,11 +6,28 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:56:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/24 19:06:41 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/26 14:08:13 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	*ft_var_data(t_list **envp, char *varName)
+{
+	t_env	*envp_node;
+	t_list	*temp;
+
+	temp = (*envp);
+
+	while (temp != NULL)
+	{
+		envp_node = temp->content;
+		if (ft_strcmp(envp_node->name, varName) == 0)
+			return (envp_node->arg);
+		temp = temp->next;
+	}
+	return (NULL);
+}
 
 int	ft_insert_str(char **str1, char *str2, int start, int end)
 {
@@ -48,24 +65,6 @@ int	ft_insert_str(char **str1, char *str2, int start, int end)
 	return (SUCCESS);
 }
 
-char	*ft_var_data(t_list **envp, char *varName)
-{
-	t_env	*envp_node;
-	t_list	*temp;
-
-	temp = (*envp);
-
-	while (temp != NULL)
-	{
-		envp_node = temp->content;
-		printf("Env %s VarNAme %s \n", envp_node->name, varName);
-		if (ft_strcmp(envp_node->name, varName) == 0)
-			return (envp_node->arg);
-		temp = temp->next;
-	}
-	return (NULL);
-}
-
 void	ft_check_var_name(char **str, int i)
 {
 					
@@ -73,18 +72,19 @@ void	ft_check_var_name(char **str, int i)
 	char	*varName;
 	char	*varValue;
 
+
 	start = i;
-	while ((*str)[i] != ' ' && (*str)[i] != '\'' && (*str)[i] != '"' && (*str)[i] != '\0')
+	i++;
+	while ((*str)[i] != ' ' && (*str)[i] != '\'' && (*str)[i] != '"' && (*str)[i] != '\0' && (*str)[i] != '$')
 		i++;
 	varName = ft_substr((*str), start + 1, i);
 	varValue = ft_var_data(ft_envp_pointer(), varName);
+
 	if (varValue != NULL)
 		ft_insert_str(str, varValue, start, i);
 	else
 		ft_insert_str(str, NULL, start, i);
-	if (varName)
-		ft_free(varName);
-	
+	ft_free(varName);
 }
 
 void ft_search_for_money(char **str)
@@ -100,13 +100,23 @@ void ft_search_for_money(char **str)
 		if (flag != '\'' && (*str)[i] == '$')
 		{
 			if ((*str)[i + 1] == '?')
+			{
 				printf("the exit status of the most recently executed foreground pipeline\n");
+				i++;
+			}
 			else if ((*str)[i + 1] == ' ' || (*str)[i + 1] == '\0')
-				printf("$\n");
+				i++;
+			else if ((*str)[i + 1] == '$')
+			{
+				printf("$$ is the process ID of the current shell instance. Not necesery for mandatory part.\n");
+				i++;
+				i++;
+			}
 			else
 				ft_check_var_name(str, i);
 		}
-		i++;
+		else
+			i++;
 	}
 }
 

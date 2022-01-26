@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:37:14 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/24 20:54:58 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/25 20:23:29 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_cmd	*ft_new_cmd(void)
 	if (!new->argv)
 		return (NULL);
 	new->argv[0] = NULL;
-	new->cpart = NULL;
 	new->next = NULL;
 	return (new);
 }
@@ -46,41 +45,6 @@ void	ft_generate_cmd(t_cmd **cmd)
 		head = (*cmd)->head;
 		*cmd = (*cmd)->next;
 		(*cmd)->head = head;
-	}
-}
-
-t_cpart	*ft_new_cpart(void)
-{
-	t_cpart	*new;
-	
-	new = (t_cpart *)ft_malloc(sizeof(t_cpart));
-	if (!new)
-		return (NULL);
-	new->argv = (char *)ft_malloc(sizeof(char *));
-	if (!new->argv)
-		return (NULL);
-	new->argv = NULL;
-	new->next = NULL;
-	return (new);
-}
-
-void	ft_generate_cmd_part(t_cpart **cpart)
-{
-	t_cpart	*head;
-
-	if (*cpart == NULL)
-	{
-		*cpart = ft_new_cpart();
-		(*cpart)->head = *cpart;
-	}
-	else
-	{
-		while ((*cpart)->next != NULL)
-			*cpart = (*cpart)->next;
-		(*cpart)->next = ft_new_cpart();
-		head = (*cpart)->head;
-		*cpart = (*cpart)->next;
-		(*cpart)->head = head;
 	}
 }
 
