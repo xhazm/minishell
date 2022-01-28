@@ -77,12 +77,9 @@ void ft_split_input(char *sub, t_cmd *cmd)
 		if(sub[j] != ' ')
 		{
 			argv = ft_split_conditions(sub, argv, &j);
-			if (argv[0] != '|')
-			{
-				cmd->argc++;
-				ft_generate_cmd_part(&cmd->part);
-				cmd->part->prev->argv = ft_strdup(argv);
-			}
+			cmd->argc++;
+			ft_generate_cmd_part(&cmd->part);
+			cmd->part->prev->argv = ft_strdup(argv);
 			ft_free(argv);
 		}
 		else

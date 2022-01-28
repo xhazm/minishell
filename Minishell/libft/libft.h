@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 16:53:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/26 18:30:12 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/28 21:11:29 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ void	ft_free(void *ptr);
 void	*ft_malloc(size_t size);
 void	*ft_free_garbage(t_list	**malloced);
 t_list	**ft_garbage_lst_ptr(void *ptr);
+t_list	*ft_unprotected_lstnew(void *content);
 
 #endif

@@ -50,14 +50,14 @@ int	ft_set_cmd_flags(t_cmd *cmd)
 	return(SUCCESS);
 }
 
-void	ft_loop_for_all(t_cmd **cmd)
-{
-	t_cmd	*tmp;
+// void	ft_loop_for_all(t_cmd **cmd)
+// {
+// 	t_cmd	*tmp;
 
-	tmp = (*cmd);
-	while(tmp)
-	{
-		ft_set_cmd_flags(tmp);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = (*cmd);
+// 	while(tmp)
+// 	{
+// 		ft_set_cmd_flags(tmp);
+// 		tmp = tmp->next;
+// 	}
+// }

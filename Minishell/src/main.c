@@ -16,24 +16,21 @@ int	ft_print_envp(t_list **envp)
 void ft_get_cmd_command_for_exec(t_cmd *cmd)
 {
 	int i;
-	while (cmd)
+
+	if (cmd->argc > 0)
 	{
-		if (cmd->argc > 0)
+		cmd->argv = (char **)ft_malloc(sizeof(char *) * (cmd->argc + 1));
+		cmd->flags = (int *)ft_malloc(sizeof(int) * (cmd->argc + 1));
+		i = 0;
+		while (i < cmd->argc)
 		{
-			cmd->argv = (char **)ft_malloc(sizeof(char *) * (cmd->argc + 1));
-			cmd->flags = (int *)ft_malloc(sizeof(int) * (cmd->argc + 1));
-			i = 0;
-			while (i < cmd->argc)
-			{
-				cmd->argv[i] = cmd->part->argv;
-				cmd->flags[i] = cmd->part->flag;
-				cmd->part = cmd->part->next;
-				i++;
-			}
-			cmd->argv[i] = NULL;
-			cmd->flags[i] = '\0';
+			cmd->argv[i] = cmd->part->argv;
+			cmd->flags[i] = cmd->part->flag;
+			cmd->part = cmd->part->next;
+			i++;
 		}
-		cmd = cmd->next;
+		cmd->argv[i] = NULL;
+		cmd->flags[i] = '\0';
 	}
 }
 
@@ -62,12 +59,31 @@ void ft_check_struct(t_cmd *cmd)
 	}
 }
 
+int	ft_parcer(t_cmd *cmd, char **envp)
+{
+	t_cmd	*tmp;
+
+	tmp = cmd;
+	while(tmp)
+	{
+		if (tmp->part == NULL)
+			return (ERROR);
+		ft_handle_envp(envp);
+		ft_var_expand(tmp);
+		ft_set_cmd_flags(tmp);
+		ft_rm_quotes(tmp);
+		ft_get_cmd_command_for_exec(tmp);
+		tmp = tmp->next;
+	}
+	return (SUCCESS);
+}
+
 int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[], 
 	char **envp)
 {
 	char *input;
 	t_cmd	*cmd;
-	ft_handle_envp(envp);
+
 	//ft_print_envp(ft_envp_pointer());
 	while (1)
 	{
@@ -77,14 +93,8 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 			ft_lexer(input, &cmd);
 			if (cmd != NULL)
 				cmd = cmd->head;
-			ft_var_expand(cmd);
-
-			ft_loop_for_all(&cmd);//temp function created just for testing
-			ft_rm_quotes(cmd);
-			ft_get_cmd_command_for_exec(cmd);
-
+			ft_parcer(cmd, envp);
 			ft_check_struct(cmd);
-			ft_free_all(&cmd, &input);
 			free(input);
 		}
 		else

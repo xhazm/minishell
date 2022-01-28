@@ -113,30 +113,23 @@ void ft_search_for_money(char **str)
 void	ft_var_expand(t_cmd *cmd)
 {
 	int		i;
-	t_cmd	*tmp;
 	t_part	*del;
 
-	tmp = cmd;
-	
-	while (tmp)
+	i = 0;
+	while (i < cmd->argc)
 	{
-		i = 0;
-		while (i < tmp->argc)
+		ft_search_for_money(&cmd->part->argv);
+		if (ft_strcmp(cmd->part->argv, "") == 0)
 		{
-			ft_search_for_money(&tmp->part->argv);
-			if (ft_strcmp(tmp->part->argv, "") == 0)
-			{
-				del = tmp->part;
-				tmp->part->prev->next = tmp->part->next;
-				tmp->part->next->prev = tmp->part->prev;
-				tmp->part = tmp->part->prev;
-				tmp->argc--;
-				i--;
-				ft_free(del);
-			}
-			tmp->part = tmp->part->next;
-			i++;
+			del = cmd->part;
+			cmd->part->prev->next = cmd->part->next;
+			cmd->part->next->prev = cmd->part->prev;
+			cmd->part = cmd->part->prev;
+			cmd->argc--;
+			i--;
+			ft_free(del);
 		}
-		tmp = tmp->next;
+		cmd->part = cmd->part->next;
+		i++;
 	}
 }

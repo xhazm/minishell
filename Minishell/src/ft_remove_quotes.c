@@ -50,18 +50,12 @@ void	ft_search_for_quotes_2be_removed(char **str)
 void	ft_rm_quotes(t_cmd *cmd)
 {
 	int		i;
-	t_cmd	*tmp;
 
-	tmp = cmd;
-	while (tmp)
+	i = 0;
+	while (i < cmd->argc)
 	{
-		i = 0;
-		while (i < tmp->argc)
-		{
-			ft_search_for_quotes_2be_removed(&tmp->part->argv);
-			tmp->part = tmp->part->next;
-			i++;
-		}
-		tmp = tmp->next;
+		ft_search_for_quotes_2be_removed(&cmd->part->argv);
+		cmd->part = cmd->part->next;
+		i++;
 	}
 }
