@@ -1,18 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_remove_quotes.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 19:23:42 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/24 18:21:49 by vmiseiki         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
-
-
 
 char	*ft_remove_quotes(char *str, int index)
 {
@@ -70,9 +56,10 @@ void	ft_rm_quotes(t_cmd *cmd)
 	while (tmp)
 	{
 		i = 0;
-		while (tmp->argv[i] != NULL)
+		while (i < tmp->argc)
 		{
-			ft_search_for_quotes_2be_removed(&tmp->argv[i]);
+			ft_search_for_quotes_2be_removed(&tmp->part->argv);
+			tmp->part = tmp->part->next;
 			i++;
 		}
 		tmp = tmp->next;

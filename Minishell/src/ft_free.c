@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:42:53 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 19:35:42 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/28 19:14:46 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	ft_free_all(t_cmd **cmd, char **input)
 	while ((*cmd))
 	{
 		tmp = (*cmd);
-		ft_free_2D_arr(tmp->argv);
+		if(tmp->argv)
+			ft_free_2D_arr(tmp->argv);
 		ft_free(tmp);
 		(*cmd) = (*cmd)->next;
 	}

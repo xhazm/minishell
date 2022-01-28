@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/26 20:49:19 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/28 19:24:46 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@
 
 # define SUCCESS 1
 # define FAIL 0
+# define ERROR -1
+
+typedef struct s_part
+{
+	char			*argv;
+	int				flag;
+	struct s_part	*head;
+	struct s_part	*next;
+	struct s_part	*prev;
+}	t_part;
 
 typedef struct	s_cmd
 {
@@ -31,6 +41,8 @@ typedef struct	s_cmd
 	int				*flags;
 	int				type;
 	int				pipes[2];
+
+	t_part			*part;
 	struct s_cmd 	*head;
 	struct s_cmd 	*next;
 }	t_cmd;
@@ -56,4 +68,9 @@ void	ft_var_expand(t_cmd *cmd);
 char	ft_check_closing_quotes(char c, char flag);
 void	ft_rm_quotes(t_cmd *cmd);
 
+
+//storing everything to the list
+void	ft_generate_cmd_part(t_part **part);
+int		ft_set_cmd_flags(t_cmd *cmd);
+void	ft_loop_for_all(t_cmd **cmd); 	//temp function created just for testing
 #endif

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_var_expand.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 14:56:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/26 14:08:13 by vmiseiki         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 char	*ft_var_data(t_list **envp, char *varName)
@@ -101,6 +89,7 @@ void ft_search_for_money(char **str)
 		{
 			if ((*str)[i + 1] == '?')
 			{
+				//Needs to be done
 				printf("the exit status of the most recently executed foreground pipeline\n");
 				i++;
 			}
@@ -108,6 +97,7 @@ void ft_search_for_money(char **str)
 				i++;
 			else if ((*str)[i + 1] == '$')
 			{
+				//Maybe needs to be done
 				printf("$$ is the process ID of the current shell instance. Not necesery for mandatory part.\n");
 				i++;
 				i++;
@@ -124,14 +114,27 @@ void	ft_var_expand(t_cmd *cmd)
 {
 	int		i;
 	t_cmd	*tmp;
+	t_part	*del;
 
 	tmp = cmd;
+	
 	while (tmp)
 	{
 		i = 0;
-		while (tmp->argv[i] != NULL)
+		while (i < tmp->argc)
 		{
-			ft_search_for_money(&tmp->argv[i]);
+			ft_search_for_money(&tmp->part->argv);
+			if (ft_strcmp(tmp->part->argv, "") == 0)
+			{
+				del = tmp->part;
+				tmp->part->prev->next = tmp->part->next;
+				tmp->part->next->prev = tmp->part->prev;
+				tmp->part = tmp->part->prev;
+				tmp->argc--;
+				i--;
+				ft_free(del);
+			}
+			tmp->part = tmp->part->next;
 			i++;
 		}
 		tmp = tmp->next;

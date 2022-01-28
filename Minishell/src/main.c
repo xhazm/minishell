@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 16:56:43 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/26 20:49:44 by vmiseiki         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 int	ft_print_envp(t_list **envp)
@@ -25,9 +13,34 @@ int	ft_print_envp(t_list **envp)
 	return (SUCCESS);
 }
 
+void ft_get_cmd_command_for_exec(t_cmd *cmd)
+{
+	int i;
+	while (cmd)
+	{
+		if (cmd->argc > 0)
+		{
+			cmd->argv = (char **)ft_malloc(sizeof(char *) * (cmd->argc + 1));
+			cmd->flags = (int *)ft_malloc(sizeof(int) * (cmd->argc + 1));
+			i = 0;
+			while (i < cmd->argc)
+			{
+				cmd->argv[i] = cmd->part->argv;
+				cmd->flags[i] = cmd->part->flag;
+				cmd->part = cmd->part->next;
+				i++;
+			}
+			cmd->argv[i] = NULL;
+			cmd->flags[i] = '\0';
+		}
+		cmd = cmd->next;
+	}
+}
+
 void ft_check_struct(t_cmd *cmd)
 {
 	int i;
+
 	
 	printf("\n\n--------- CMD STRUCT ----------\n");
 	while(cmd)
@@ -35,9 +48,15 @@ void ft_check_struct(t_cmd *cmd)
 		i = 0;
 		while(cmd->argv[i] != NULL)
 		{
-			printf("%s\n", cmd->argv[i]);
+			printf("%s  FLAGS %d\n", cmd->argv[i], cmd->flags[i]);
 			i++;
 		}
+		// while (i < cmd->argc)
+		// {
+		// 	printf("%s %d\n", cmd->part->argv, cmd->part->flag);
+		// 	cmd->part = cmd->part->next;
+		// 	i++;
+		// }
 		printf("--------- NEW NODE ----------\n");
 		cmd = cmd -> next;
 	}
@@ -59,7 +78,11 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 			if (cmd != NULL)
 				cmd = cmd->head;
 			ft_var_expand(cmd);
-			ft_rm_quotes(cmd);	
+
+			ft_loop_for_all(&cmd);//temp function created just for testing
+			ft_rm_quotes(cmd);
+			ft_get_cmd_command_for_exec(cmd);
+
 			ft_check_struct(cmd);
 			ft_free_all(&cmd, &input);
 			free(input);

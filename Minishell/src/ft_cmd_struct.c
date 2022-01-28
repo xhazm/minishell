@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_cmd_struct.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 21:37:14 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/25 20:23:29 by vmiseiki         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
@@ -20,11 +9,9 @@ t_cmd	*ft_new_cmd(void)
 	if (!new)
 		return (NULL);
 	new->argc = 0;
-	new->argv = (char **)ft_malloc(sizeof(char *));
-	if (!new->argv)
-		return (NULL);
-	new->argv[0] = NULL;
+	new->argv = NULL;
 	new->next = NULL;
+	new->part = NULL;
 	return (new);
 }
 
@@ -48,22 +35,56 @@ void	ft_generate_cmd(t_cmd **cmd)
 	}
 }
 
-int ft_store_cmd_argv(t_cmd *cmd, char *argv)
+t_part	*ft_new_cmd_part(void)
 {
-	
-	char	**tmp;
+	t_part	*new;
 
-	tmp = (char **)ft_malloc(sizeof(char *) * (cmd->argc));
-	if (!tmp)
-		return (0);
-	ft_strdup2D(cmd->argv, tmp);
-	ft_free(cmd->argv);
-	cmd->argv = (char **)ft_malloc(sizeof(char *) * (cmd->argc + 1));
-	if (!cmd->argv)
-		return (0);
-	ft_strdup2D(tmp, cmd->argv);
-	ft_free(tmp);
-	cmd->argv[cmd->argc - 1] = ft_strdup(argv);
-	cmd->argv[cmd->argc] = NULL;
-	return (1);
+	new = (t_part *)ft_malloc(sizeof(t_part));
+	if (!new)
+		return (NULL);
+	new->argv = NULL;
+	new->flag = 0;
+	new->next = new;
+	new->prev = new;
+	return (new);
 }
+
+void	ft_generate_cmd_part(t_part **part)
+{
+	t_part	*new;
+
+	if ((*part) == NULL)
+	{
+		(*part) = ft_new_cmd_part();
+		(*part)->head = (*part);
+	}
+	else
+	{
+		new = ft_new_cmd_part();
+		new->head = (*part)->head;
+		(*part)->prev->next = new;
+		new->prev = (*part)->prev;
+		new->next = (*part);
+		(*part)->prev = new;
+		
+	}
+}
+
+// int ft_store_cmd_argv(t_cmd *cmd, char *argv)
+// {
+// 	char	**tmp;
+
+// 	tmp = (char **)ft_malloc(sizeof(char *) * (cmd->argc));
+// 	if (!tmp)
+// 		return (0);
+// 	ft_strdup2D(cmd->argv, tmp);
+// 	ft_free(cmd->argv);
+// 	cmd->argv = (char **)ft_malloc(sizeof(char *) * (cmd->argc + 1));
+// 	if (!cmd->argv)
+// 		return (0);
+// 	ft_strdup2D(tmp, cmd->argv);
+// 	ft_free(tmp);
+// 	cmd->argv[cmd->argc - 1] = ft_strdup(argv);
+// 	cmd->argv[cmd->argc] = NULL;
+// 	return (1);
+// }
