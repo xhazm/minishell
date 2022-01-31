@@ -20,7 +20,7 @@ INC_DIR = ./includes/
 LIBFT_DIR = ./libft/
 
 # Source files and object files
-SRC_FILES = env.c
+SRC_FILES = execv.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

@@ -1,21 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/28 20:40:32 by lpfleide         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 t_list	**ft_envp_pointer(void)
 {
 	static	t_list *envp;
 	return (&envp);
+}
+
+void	ft_print_perror(char *argv, char *cmd)
+{
+	char	*error;
+
+	// tilde == home implementation??
+	error = NULL;
+	error = strerror(errno);
+	if (error != NULL)
+		printf("%s: %s: %s\n", cmd, argv, error);
 }
 
 static int	ft_valid_env_name(char *str)
@@ -79,6 +78,7 @@ void	*ft_parse_envp(t_list **envp, char *orig_envp)
 		return (NULL);
 	if (ft_set_env_node(orig_envp, env_node) == NULL)
 		return (NULL);
+
 	if (ft_lstadd_back(envp, env_node) == NULL)
 		return (NULL);
 	return (env_node);
@@ -122,13 +122,74 @@ static int	ft_print_env(t_list **envp)
 	return (SUCCESS);
 }
 
+t_env	*ft_iterate_env(t_list *envp, char *str)
+{
+	t_env	*env_node;
+
+	while (envp != NULL)
+	{
+		env_node = envp->content;
+		if (ft_strncmp(env_node->name, str, ft_strlen(str)) == 0)
+			break ;
+		envp = envp->next;
+	}
+	return (env_node);
+}
+
+char	**ft_get_path(t_list **envp)
+{
+	int		i;
+	char	**path;
+	t_env	*env_node;
+
+	i = 0;
+	path = NULL;
+	env_node = ft_iterate_env(*envp, "PATH");
+	path = ft_split(&env_node->arg[1], ':');
+	if (path == NULL)
+		return (NULL);
+	while (path[i] != NULL)
+	{
+		path[i] = ft_str_join_c(path[i], '/');
+		i++;
+	}
+	return (path);
+}
+
+int		ft_handle_execv(int argc, char **argv)
+{
+	int		i;
+	char	**path;
+	char	*tmp;
+
+	i = 0;
+	tmp = NULL;
+	path = ft_get_path(ft_envp_pointer());
+	// ft_tolower the COMMAND!!!!
+	tmp = ft_strmapi(argv[0], ft_tolower);
+	if (tmp == NULL)
+		return (NULL);
+	while (path[i] != NULL)
+	{
+		if (access(ft_strjoin(path[i], tmp), X_OK) == 0)
+		{
+			if (execv(ft_strjoin(path[i], tmp), argv) == -1)
+				ft_print_perror(argv[1], argv[0]);
+			break ;
+		}
+		i++;
+		// if path[i] = null == error?
+	}
+	ft_free(tmp);
+	// free path. for the lulz
+	// ft_strjoin()
+	// while(i != )
+}
+
 int main(int argc, char **argv, char **orig_envp)
 {
 	ft_set_envp(orig_envp);
-	// ft_handle_env(ft_envp_pointer(), argc - 1, &argv[1]);
-//	ft_handle_unset(ft_envp_pointer(), argc, argv);
-//	ft_print_export(ft_envp_pointer());
-	ft_print_env(ft_envp_pointer());
-	//system("leaks minishell");
+	ft_handle_execv(argc - 1, &argv[1]);
+	// ft_print_env(ft_envp_pointer());
 	return (0);
 }

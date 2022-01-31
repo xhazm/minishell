@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:13:17 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/21 20:20:32 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/28 20:51:17 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ static t_list	*ft_add_node(t_list **lst, void *content)
 {
 	t_list	*new;
 
-	new = ft_lstnew(content);
+	new = ft_unprotected_lstnew(content);
 	if (new == NULL)
 		return (NULL);
 	new->next = *lst;
@@ -42,7 +42,7 @@ static t_list	**ft_garbage_collector(void *ptr)
 	malloced = ft_garbage_lst_ptr(ptr);
 	if (*malloced == NULL)
 	{
-		*malloced = ft_lstnew(ptr);
+		*malloced = ft_unprotected_lstnew(ptr);
 		if (*malloced == NULL)
 			return (NULL);
 	}
@@ -88,17 +88,23 @@ void	ft_free(void *ptr)
 {
 	t_list	**lst;
 	t_list	*head;
+	int		listed;
 
 	lst = ft_garbage_lst_ptr(ft_garbage_collector(NULL));
 	head = *lst;
+	listed = 0;
 	while ((*lst) != NULL)
 	{
 		if ((*lst)->content == ptr)
 		{
 			free((*lst)->content);
 			(*lst)->content = NULL;
+			listed = 1;
+			break ;
 		}
 		*lst = (*lst)->next;
 	}
+	if (listed == 0)
+		free(ptr);
 	*lst = head;
 }

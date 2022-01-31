@@ -6,19 +6,37 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/22 21:15:56 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/27 17:03:09 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_list	*ft_envp_pointer(void)
+t_list	**ft_envp_pointer(void)
 {
 	static	t_list *envp;
 	return (&envp);
 }
 
-void	*ft_set_envp_node(char *orig_envp, t_env *envp_node)
+static int	ft_valid_env_name(char *str)
+{
+	int i;
+
+	if (ft_isalpha(str[0]) == FAIL)
+		return (FAIL);
+	i = 1;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '=')
+			return (SUCCESS);
+		if (ft_isalnum(str[i]) == FAIL)
+			return (FAIL);
+		i++;
+	}
+	return (SUCCESS);
+}
+
+void	*ft_set_env_node(char *orig_envp, t_env *env_node)
 {
 	int	i;
 	int	start;
@@ -29,8 +47,11 @@ void	*ft_set_envp_node(char *orig_envp, t_env *envp_node)
 	{
 		if ((orig_envp[i] == '=' && i > 0) || (orig_envp[i + 1] == '\0' && i > 0))
 		{
-			envp_node->name = ft_substr(orig_envp, start, (i - start));
-			if (envp_node->name == NULL)
+			if (orig_envp[i + 1] == '\0' && orig_envp[i] != '=')
+				env_node->name = ft_substr(orig_envp, start, (i - start + 1));
+			else
+				env_node->name = ft_substr(orig_envp, start, (i - start));
+			if (env_node->name == NULL)
 				return (NULL);
 			break ;
 		}
@@ -40,66 +61,77 @@ void	*ft_set_envp_node(char *orig_envp, t_env *envp_node)
 	{
 		start = i;
 		i = ft_strlen(orig_envp);
-		envp_node->arg = ft_substr(orig_envp, start, i);
-		if (envp_node->arg == NULL)
+		env_node->arg = ft_substr(orig_envp, start, i);
+		if (env_node->arg == NULL)
 			return (NULL);
 	}
+	else
+		env_node->arg = NULL;
 	return (orig_envp);
 }
 
 void	*ft_parse_envp(t_list **envp, char *orig_envp)
 {
-	int		i;
-	int		start;
-	t_env	*envp_node;
+	t_env	*env_node;
 
-	i = 0;
-	start = 0;
-	envp_node = ft_malloc(sizeof(t_env) * 1);
-	if (envp_node == NULL)
+	env_node = ft_malloc(sizeof(t_env) * 1);
+	if (env_node == NULL)
 		return (NULL);
-	if (ft_set_envp_node(orig_envp, envp_node) == NULL)
+	if (ft_set_env_node(orig_envp, env_node) == NULL)
 		return (NULL);
-	if (ft_lstadd_back(envp, envp_node) == NULL)
+	if (ft_lstadd_back(envp, env_node) == NULL)
 		return (NULL);
-	return (envp_node);
+	return (env_node);
 }
 
-int	ft_handle_envp(char **orig_envp)
+int	ft_set_envp(char **orig_envp)
 {
 	int		i;
 	int		env_len;
 	t_list	**new_envp;
-	t_env	*try;
-
 
 	i = 0;
 	env_len = ft_strlen2D(orig_envp);
-	new_envp = ft_envp_pointer(0);
+	new_envp = ft_envp_pointer();
 	while (i < env_len)
 	{
 		if (ft_parse_envp(new_envp, orig_envp[i]) == NULL)
 			return (FAIL);
 		i++;
 	}
-	i = 0;
-	// while ((*new_envp) != NULL)
-	// {
-	// 	try = (*new_envp)->content;
-	// 	printf("name %s\n", try->name);
-	// 	printf("arg %s\n", try->arg);
-	// 	*new_envp = (*new_envp)->next;
-	// }
 	return (SUCCESS);
 }
 
-// void	ft_print_envp()
+static int	ft_print_env(t_list **envp)
+{
+	t_env	*env_node;
 
-int main(int argc, char **argv, char **envp)
+	while ((*envp) != NULL)
+	{
+		env_node = (*envp)->content;
+		if (env_node->name == NULL || env_node->arg == NULL)
+		{
+			*envp = (*envp)->next;
+			continue ;
+		}
+		ft_putstr_fd(env_node->name, 1);
+		ft_putstr_fd(env_node->arg, 1);
+		write(1, "\n", 1);
+		*envp = (*envp)->next;
+	}
+	return (SUCCESS);
+}
+
+int main(int argc, char **argv, char **orig_envp)
 {
 	// ENVP NODES NOT GARBAGE  COLLECTED!!!!
-	ft_handle_envp(envp);
-	// ft_print_envp()
+	// env functioning needed
+	// connect env with unset
+	ft_set_envp(orig_envp);
+	ft_handle_env(ft_envp_pointer(), argc - 1, &argv[1]);
+//	ft_handle_unset(ft_envp_pointer(), argc, argv);
+//	ft_print_export(ft_envp_pointer());
+	ft_print_export(ft_envp_pointer());
 	//system("leaks minishell");
 	return (0);
 }
