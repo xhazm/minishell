@@ -22,7 +22,7 @@ void ft_get_cmd_command_for_exec(t_cmd *cmd)
 		cmd->argv = (char **)ft_malloc(sizeof(char *) * (cmd->argc + 1));
 		cmd->flags = (int *)ft_malloc(sizeof(int) * (cmd->argc + 1));
 		i = 0;
-		while (i < cmd->argc)
+		while (i < cmd->argc && cmd->part->flag != 4)
 		{
 			cmd->argv[i] = cmd->part->argv;
 			cmd->flags[i] = cmd->part->flag;
@@ -43,23 +43,23 @@ void ft_check_struct(t_cmd *cmd)
 	while(cmd)
 	{
 		i = 0;
-		while(cmd->argv[i] != NULL)
-		{
-			printf("%s  FLAGS %d\n", cmd->argv[i], cmd->flags[i]);
-			i++;
-		}
-		// while (i < cmd->argc)
+		// while(cmd->argv[i] != NULL)
 		// {
-		// 	printf("%s %d\n", cmd->part->argv, cmd->part->flag);
-		// 	cmd->part = cmd->part->next;
+		// 	printf("%s  FLAGS %d\n", cmd->argv[i], cmd->flags[i]);
 		// 	i++;
 		// }
+		while (i < cmd->argc)
+		{
+			printf("%s %d\n", cmd->part->argv, cmd->part->flag);
+			cmd->part = cmd->part->next;
+			i++;
+		}
 		printf("--------- NEW NODE ----------\n");
 		cmd = cmd -> next;
 	}
 }
 
-int	ft_parcer(t_cmd *cmd, char **envp)
+int	ft_parcer(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 
@@ -68,11 +68,14 @@ int	ft_parcer(t_cmd *cmd, char **envp)
 	{
 		if (tmp->part == NULL)
 			return (ERROR);
-		ft_handle_envp(envp);
+
 		ft_var_expand(tmp);
 		ft_set_cmd_flags(tmp);
 		ft_rm_quotes(tmp);
 		ft_get_cmd_command_for_exec(tmp);
+
+		ft_handle_execv(tmp->argv);
+
 		tmp = tmp->next;
 	}
 	return (SUCCESS);
@@ -84,6 +87,9 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 	char *input;
 	t_cmd	*cmd;
 
+	ft_set_envp(envp);
+ 	 // argv[0] = cmd 
+
 	//ft_print_envp(ft_envp_pointer());
 	while (1)
 	{
@@ -93,9 +99,10 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 			ft_lexer(input, &cmd);
 			if (cmd != NULL)
 				cmd = cmd->head;
-			ft_parcer(cmd, envp);
+			ft_parcer(cmd);
 			ft_check_struct(cmd);
 			free(input);
+			
 		}
 		else
 			break ;

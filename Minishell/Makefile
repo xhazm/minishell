@@ -22,7 +22,7 @@ LIBFT_DIR = ./libft/
 
 # Source files and object files
 SRC_FILES = main.c ft_cmd_struct.c ft_free.c ft_prompt.c ft_lexer.c ft_var_expand.c ft_check_closing_quotes.c \
-			ft_remove_quotes.c ft_set_flags.c\
+			ft_remove_quotes.c ft_set_flags.c execv.c\
 			../builtins/env/env.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)

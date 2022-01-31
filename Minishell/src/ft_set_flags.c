@@ -1,16 +1,46 @@
 #include "../includes/minishell.h"
 
+// int ft_set_redirection_flag(char *str)
+// {
+// 	if (str[0] == '>')
+// 	{
+// 		if (str[1] == '>')
+// 			return (51);
+// 		return (50);
+// 	}
+// 	if (str[0] == '<')
+// 	{
+// 		if(str[1] == '<')
+// 			return (53);
+// 		return (52);
+// 	}
+// 	return (FAIL);
+// }
+
 int ft_set_redirection_flag(char *str)
 {
-	if (str[0] == '>')
+	int i;
+	int size;
+
+	i = 0;
+	size = ft_strlen(str);
+	while(i < size)
 	{
-		if (str[1] == '>')
+		if (str[i] == '<' || str[i] == '>')
+			break ;
+		if (!ft_isdigit(str[i]))
+			return (FAIL);
+		i++;
+	}
+	if (str[i] == '>')
+	{
+		if (str[i + 1] == '>')
 			return (51);
 		return (50);
 	}
-	if (str[0] == '<')
+	if (str[i] == '<')
 	{
-		if(str[1] == '<')
+		if(str[i + 1] == '<')
 			return (53);
 		return (52);
 	}
@@ -49,15 +79,3 @@ int	ft_set_cmd_flags(t_cmd *cmd)
 	}
 	return(SUCCESS);
 }
-
-// void	ft_loop_for_all(t_cmd **cmd)
-// {
-// 	t_cmd	*tmp;
-
-// 	tmp = (*cmd);
-// 	while(tmp)
-// 	{
-// 		ft_set_cmd_flags(tmp);
-// 		tmp = tmp->next;
-// 	}
-// }

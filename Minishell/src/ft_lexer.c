@@ -6,29 +6,43 @@ char	*ft_redirection_found(char *sub, char *cpart, int *j)
 	{
 		if (sub[(*j) + 1] == '>')
 		{
-			cpart = ft_strdup(">>");
-			(*j) = (*j) + 2;
-			return (cpart);
+			cpart = ft_str_join_c(cpart, sub[(*j)]);
+			(*j)++;
 		}
-		cpart = ft_strdup(">");
+		cpart = ft_str_join_c(cpart, sub[(*j)]);
 		(*j)++;
-		return (cpart);
+		return (cpart);	
 	}
 	else
 	{
 		if (sub[(*j) + 1] == '<')
 		{
-			cpart = ft_strdup("<<");
-			(*j) = (*j) + 2;
-			return (cpart);
+			cpart = ft_str_join_c(cpart, sub[(*j)]);
+			(*j)++;
 		}
-		cpart = ft_strdup("<");
+		cpart = ft_str_join_c(cpart, sub[(*j)]);
 		(*j)++;
-		return (cpart);
+		return (cpart);	
 	}
 }
 
-char	*ft_redirection_or_pipe_found(char *sub, char *cpart, int *j)
+int	ft_only_numbers(char *cpart)
+{
+	int	i;
+	int	size;
+
+	i = 0;
+	size = ft_strlen(cpart);
+	while (i < size)
+	{
+		if (!ft_isdigit(cpart[i]))
+			return (FAIL);
+		i++;
+	}
+	return (SUCCESS);
+}
+
+char	*ft_pipe_or_redirection_found(char *sub, char *cpart, int *j)
 {
 	if (sub[(*j)] == '|')
 	{
@@ -44,13 +58,17 @@ char	*ft_split_conditions(char *sub, char *cpart, int *j)
 {
 	char flag;
 	
-	if (sub[(*j)] == '>' || sub[(*j)] == '<' || sub[(*j)] == '|')
-		return (ft_redirection_or_pipe_found(sub, cpart, j));
+	if (sub[(*j)] == '|' || sub[(*j)] == '>' || sub[(*j)] == '<')
+		return (ft_pipe_or_redirection_found(sub, cpart, j));
 	flag = 1;
 	while (sub[(*j)] != '\0')
 	{			
-		if (flag == 1 && (sub[(*j)] == ' ' || sub[(*j)] == '|' || sub[(*j)] == '<' || sub[(*j)] == '>'))
-			return (cpart);
+		if (flag == 1 && (sub[(*j)] == ' ' || sub[(*j)] == '|' || sub[(*j)] == '>' || sub[(*j)] == '<'))
+		{
+			if ((sub[(*j)] == '>' || sub[(*j)] == '<') && cpart != NULL && ft_only_numbers(cpart))
+				return (ft_redirection_found(sub, cpart, j));
+			return(cpart);
+		}
 		else if (sub[(*j)] == '\'' || sub[(*j)] == '"')
 		{
 			if (flag == 1)

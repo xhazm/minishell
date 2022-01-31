@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/28 19:24:46 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:31:24 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <termios.h>
+# include <fcntl.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -41,7 +43,9 @@ typedef struct	s_cmd
 	int				*flags;
 	int				type;
 	int				pipes[2];
-
+	int				std_in;
+	int				std_out;
+	
 	t_part			*part;
 	struct s_cmd 	*head;
 	struct s_cmd 	*next;
@@ -56,6 +60,9 @@ typedef struct	s_env
 /* BUILTINS */
 int		ft_handle_envp(char **orig_envp);
 t_list	**ft_envp_pointer(void);
+int		ft_handle_execv(char **argv);
+int		ft_set_envp(char **orig_envp);
+
 
 
 void	ft_generate_cmd(t_cmd **cmd);
@@ -67,6 +74,7 @@ int		ft_store_cmd_argv(t_cmd *cmd, char *argv);
 void	ft_var_expand(t_cmd *cmd);
 char	ft_check_closing_quotes(char c, char flag);
 void	ft_rm_quotes(t_cmd *cmd);
+
 
 
 //storing everything to the list
