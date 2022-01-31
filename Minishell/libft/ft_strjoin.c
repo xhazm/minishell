@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 17:32:35 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/26 18:30:42 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/01/31 20:25:53 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+char	*ft_strjoin_c_end(char const c, char *str)
+{
+	char	arr[2];
+
+	arr[0] = c;
+	arr[1] = '\0';
+	if (!str)
+	{
+		str = (char *) ft_malloc (2 * sizeof(char));
+		if (!str)
+			return (NULL);
+		str[0] = arr[0];
+		str[1] = arr[1];
+		return (str);
+	}
+	return (ft_strjoin(arr, str));
+}
 
 char	*ft_str_join_c(char *str, char const c)
 {
@@ -48,15 +66,18 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	dest = (char *) ft_malloc ((s1len + s2len + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
-	i = -1;
-	while (s1[++i] != '\0')
+	i = 0;
+	while (s1[i] != '\0')
+	{
 		dest[i] = s1[i];
+		i++;
+	}
 	while (i - s1len < s2len)
 	{
 		dest[i] = s2[i - s1len];
 		i++;
 	}
 	dest[i] = '\0';
-	ft_free ((char *) s1);
+	// ft_free ((char *) s1);
 	return (dest);
 }

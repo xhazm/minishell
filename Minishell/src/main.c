@@ -73,9 +73,8 @@ int	ft_parcer(t_cmd *cmd)
 		ft_set_cmd_flags(tmp);
 		ft_rm_quotes(tmp);
 		ft_get_cmd_command_for_exec(tmp);
-
-		ft_handle_execv(tmp->argv);
-
+		if (ft_handle_builtins(tmp->argv) == FAIL)
+			ft_handle_execv(tmp->argv);
 		tmp = tmp->next;
 	}
 	return (SUCCESS);
@@ -102,7 +101,6 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 			ft_parcer(cmd);
 			ft_check_struct(cmd);
 			free(input);
-			
 		}
 		else
 			break ;

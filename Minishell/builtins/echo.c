@@ -6,21 +6,11 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/19 21:36:59 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/01/31 20:55:38 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
+#include "../includes/minishell.h"
 
 int	ft_is_option(char *arg, char option)
 {
@@ -45,58 +35,44 @@ int	ft_is_option(char *arg, char option)
 	return (opt);
 }
 
-int	ft_check_option(int argc, char **argv, int *option)
+static int	ft_check_option(char **argv, int *option)
 {
 	int	i;
 
 	i = 0;
-	while (i < argc && ft_is_option(argv[i], 'n') == 1)
+	while (argv[i] != NULL && ft_is_option(argv[i], 'n') == 1)
 	{
 		*option = 1;
 		i++;
 	}
-	if (ft_is_option(argv[i], 'n') == 0 && option == 0)
+	if (argv[i] != NULL && ft_is_option(argv[i], 'n') == 0 && option == 0)
 		i++;
 	return (i);
 }
 
-int	echo(int argc, char **argv)
+int	ft_builtin_echo(int argc, char **argv)
 {
 	int	i;
 	int	option;
 	int	opt_check;
 	int	ret;
 	
+	i = 0;
 	ret = 1;
 	option = 0;
 	opt_check = 0;
-	i = ft_check_option(argc, argv, &option);
-	while (i < argc)
+	if (argc != 0)
 	{
-		printf("%s", argv[i]);
-		if (i + 1 != argc)
-			printf(" ");
-		i++;
+		i = ft_check_option(argv, &option);
+		while (argv[i] != NULL)
+		{
+			printf("%s", argv[i]);
+			if (i + 1 != argc)
+				printf(" ");
+			i++;
+		}
 	}
 	if (option == 0)
 		printf("\n");
-	return (0);
-}
-
-int main(int argc, char **argv)
-{
- 	// char *args[4];
-	// int ret;
-	// args[0] = "echo";
-	// args[1] = "-n";
-	// args[2] = "Makefile";
-	// args[3] = NULL;
-
-	
-	//if (argv[1] == "echo") // strncmp
-	// printf("printf does it automatically %s\n", argv[2]);
-	echo(argc - 2, &argv[2]);
-//	system("leaks minishell");
-	// echo(argc - 2, &argv[2]);
 	return (0);
 }
