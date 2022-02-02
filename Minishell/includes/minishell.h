@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/31 20:05:11 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/02 15:17:05 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # define SUCCESS 1
 # define FAIL 0
 # define ERROR -1
+# define ACTIVATE 0
+# define DEACTIVATE 0
+
+int	exit_status;
 
 typedef struct s_part
 {

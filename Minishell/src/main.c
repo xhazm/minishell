@@ -88,7 +88,7 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 
 	ft_set_envp(envp);
  	 // argv[0] = cmd 
-
+	exit_status = 0;
 	//ft_print_envp(ft_envp_pointer());
 	while (1)
 	{
