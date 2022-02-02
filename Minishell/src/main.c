@@ -31,6 +31,7 @@ void ft_get_cmd_command_for_exec(t_cmd *cmd)
 		}
 		cmd->argv[i] = NULL;
 		cmd->flags[i] = '\0';
+		cmd->part = cmd->part->head;
 	}
 }
 
@@ -59,27 +60,92 @@ void ft_check_struct(t_cmd *cmd)
 	}
 }
 
+void ft_pipes(int in, int out, char	**cmd)
+{
+	int	pid;
+
+	pid = fork();
+	if(pid == 0)
+	{
+		if (in != 0)
+		{
+			dup2(in, 0);
+			close(in);
+		}
+		if (out != 1)
+		{
+			dup2(out, 1);
+			close(out);
+		}
+		if (ft_handle_builtins(cmd) == FAIL)
+			ft_handle_execv(cmd);
+	}
+}
+
+void	ft_fork(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+	int		pid;
+	int		in;
+	int		fd[2];
+
+	in = 0;
+	tmp = cmd;
+	while(tmp->next != NULL)
+	{
+		pipe(fd);
+		ft_pipes(in, fd[1], cmd->argv);
+		close(fd[1]);
+		in = fd[0];
+		// if (ft_handle_builtins(tmp->argv) == FAIL)
+		// 	ft_handle_execv(tmp->argv);
+		tmp = tmp ->next;
+	}
+	if (in != 0)
+		dup2(in, 0);
+	if (ft_handle_builtins(tmp->argv) == FAIL)
+		ft_handle_execv(tmp->argv);	
+}
+
+void ft_exec(t_cmd *cmd)
+{
+	int pid;
+	int fd[2];
+
+	pipe(fd);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		ft_fork(cmd);
+	}
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid, NULL, 0);
+}
+
 int	ft_parcer(t_cmd *cmd)
 {
 	t_cmd	*tmp;
-
+	int		i;
+	i = 0;
 	tmp = cmd;
 	while(tmp)
 	{
 		if (tmp->part == NULL)
 			return (ERROR);
-
 		ft_var_expand(tmp);
 		ft_set_cmd_flags(tmp);
 		ft_rm_quotes(tmp);
 		ft_get_cmd_command_for_exec(tmp);
-		if (ft_handle_builtins(tmp->argv) == FAIL)
-			ft_handle_execv(tmp->argv);
 		tmp = tmp->next;
+		i++;
 	}
 	return (SUCCESS);
 }
 
+// WE need to implement exit Minishell on exit command
 int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[], 
 	char **envp)
 {
@@ -97,16 +163,18 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 		{
 			ft_lexer(input, &cmd);
 			if (cmd != NULL)
+			{
 				cmd = cmd->head;
-			ft_parcer(cmd);
-			ft_check_struct(cmd);
+				ft_parcer(cmd);
+				ft_exec(cmd);
+				//ft_check_struct(cmd);
+			}
 			free(input);
 		}
 		else
-			break ;
+			break;
 	}
 	ft_free_garbage(ft_garbage_lst_ptr(&cmd));
 	ft_garbage_lst_ptr(NULL);
-	//system("leaks minishell");fscanf(stdin, "c");
 	return (0);
 }

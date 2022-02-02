@@ -63,7 +63,7 @@ void	ft_check_var_name(char **str, int i)
 
 	start = i;
 	i++;
-	while ((*str)[i] != ' ' && (*str)[i] != '\'' && (*str)[i] != '"' && (*str)[i] != '\0' && (*str)[i] != '$')
+	while ((*str)[i] != ' ' && (*str)[i] != '\'' && (*str)[i] != '"' && (*str)[i] != '\0' && (*str)[i] != '$' && (*str)[i] != '?')
 		i++;
 	varName = ft_substr((*str), start + 1, i);
 	varValue = ft_var_data(ft_envp_pointer(), varName);

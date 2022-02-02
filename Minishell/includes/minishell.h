@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/02 15:17:05 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:49:58 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,17 @@ typedef struct s_part
 {
 	char			*argv;
 	int				flag;
+	
 	struct s_part	*head;
 	struct s_part	*next;
 	struct s_part	*prev;
 }	t_part;
+
+
+typedef struct s_main
+{
+	int		pipe[2];
+}	t_main;
 
 typedef struct	s_cmd
 {
@@ -48,7 +55,9 @@ typedef struct	s_cmd
 	char			**argv;
 	int				*flags;
 	int				type;
-	int				pipes[2];
+	int				pipe[2];
+	int				pid;
+	
 	int				std_in;
 	int				std_out;
 	

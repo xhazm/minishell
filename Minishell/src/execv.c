@@ -30,8 +30,8 @@ int		ft_handle_execv(char **argv)
 	tmp = NULL;
 	path = ft_get_path(ft_envp_pointer());
 	tmp = ft_strmapi(argv[0], ft_tolower);
-	if (tmp == NULL)
-		return (FAIL);
+	// if (tmp == NULL)
+	// 	return (FAIL);
 	while (path[i] != NULL)
 	{
 		if (access(ft_strjoin(path[i], tmp), X_OK) == 0)
@@ -43,11 +43,14 @@ int		ft_handle_execv(char **argv)
 		i++;
 		// if path[i] = null == error?
 	}
+	// printf("Something else \n");
 	if (tmp != NULL)
 		ft_free(tmp);
 	// free path. for the lulz
 	// ft_strjoin()
 	// while(i != )
+
+	exit(1);
 	return (SUCCESS);
 }
 
