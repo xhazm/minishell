@@ -1,16 +1,17 @@
 #include "../includes/minishell.h"
 
-int	ft_print_envp(t_list **envp)
+static void	ft_waitpid(int pid)
 {
-	t_env	*envp_node;
+	int	status;
 
-	while ((*envp) != NULL)
+	waitpid(pid, &status, 0);
+	exit_status = status;
+	if (WIFSIGNALED(status))
 	{
-		envp_node = (*envp)->content;
-		printf("%s%s\n", envp_node->name, envp_node->arg);
-		*envp = (*envp)->next;
+		if (WTERMSIG(status) == SIGQUIT)
+			write(STDERR_FILENO, "Quit: 3\n", 8);
+		exit_status = 128 + status;
 	}
-	return (SUCCESS);
 }
 
 void ft_get_cmd_command_for_exec(t_cmd *cmd)
@@ -122,7 +123,7 @@ void ft_exec(t_cmd *cmd)
 	}
 	close(fd[0]);
 	close(fd[1]);
-	waitpid(pid, NULL, 0);
+	ft_waitpid(pid);
 }
 
 int	ft_parcer(t_cmd *cmd)
@@ -146,7 +147,7 @@ int	ft_parcer(t_cmd *cmd)
 }
 
 // WE need to implement exit Minishell on exit command
-
+// Print error message when incorect command is executed
 int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[], 
 	char **envp)
 {
@@ -154,7 +155,7 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 	t_cmd	*cmd;
 
 	ft_set_envp(envp);
- 	 // argv[0] = cmd exit
+ 	// argv[0] = cmd exit
 	exit_status = 0;
 	//ft_print_envp(ft_envp_pointer());
 	while (1)
@@ -167,7 +168,7 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 			{
 				cmd = cmd->head;
 				ft_parcer(cmd);
-				
+
 				ft_exec(cmd);
 				ft_check_struct(cmd);
 			}

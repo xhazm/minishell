@@ -90,7 +90,7 @@ void ft_search_for_money(char **str)
 			if ((*str)[i + 1] == '?')
 			{
 				//Needs to be done
-				printf("the exit status of the most recently executed foreground pipeline\n");
+				printf("%d\n", exit_status);
 				i++;
 			}
 			else if ((*str)[i + 1] == ' ' || (*str)[i + 1] == '\0')
