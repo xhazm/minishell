@@ -146,6 +146,7 @@ int	ft_parcer(t_cmd *cmd)
 }
 
 // WE need to implement exit Minishell on exit command
+
 int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[], 
 	char **envp)
 {
@@ -153,7 +154,7 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 	t_cmd	*cmd;
 
 	ft_set_envp(envp);
- 	 // argv[0] = cmd 
+ 	 // argv[0] = cmd exit
 	exit_status = 0;
 	//ft_print_envp(ft_envp_pointer());
 	while (1)
@@ -166,8 +167,9 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 			{
 				cmd = cmd->head;
 				ft_parcer(cmd);
+				
 				ft_exec(cmd);
-				//ft_check_struct(cmd);
+				ft_check_struct(cmd);
 			}
 			free(input);
 		}

@@ -12,22 +12,22 @@ int	ft_perrno(char *argv, char *cmd)
 	return (FAIL);
 }
 
-int	ft_redirect(char **argv)
+int	ft_redirect(t_cmd *cmd)
 {
 	int		fd[2];
-	int		flag;
 
+	
 	if (flag == APPEND)
 		fd[0] = open(argv[1], O_RDWR | O_CREAT | O_APPEND, 0666);
 	else if (flag == REDIRECT)
 		fd[0] = open(argv[1], O_RDWR | O_CREAT, 0666);
 	if (fd[0] == -1)
 		return (ft_perrno(argv[0]), "open"));
-	fd[1] = open(argv[2], O_RDONLY);
+	fd[1] = open(argv[1], O_RDONLY);
 	if (fd[1] == -1)
-		return (ft_perrno(argv[0]), "open"));
+		return (ft_perrno(argv[1]), "open"));
 	// close in error fd????
-	dup2(fd[1], fd[2]);
+	dup2(fd[0], fd[1]);
 	return (SUCCESS);
 }
 

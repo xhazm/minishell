@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/02 17:49:58 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:41:41 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,17 @@
 # define FAIL 0
 # define ERROR -1
 # define ACTIVATE 0
-# define DEACTIVATE 0
+# define DEACTIVATE 1
+# define CMD 1
+# define OPT 2
+# define ARG 3
+# define PIPE 4
+# define REDIRECT_IN 50
+# define APPEND 51
+# define REDIRECT_OUT 52
+# define HEREDOC 53
+# define RED_FILE 6
+
 
 int	exit_status;
 
@@ -44,10 +54,10 @@ typedef struct s_part
 }	t_part;
 
 
-typedef struct s_main
-{
-	int		pipe[2];
-}	t_main;
+// typedef struct s_main
+// {
+// 	int		pipe[2];
+// }	t_main;
 
 typedef struct	s_cmd
 {
@@ -61,6 +71,7 @@ typedef struct	s_cmd
 	int				std_in;
 	int				std_out;
 	
+	t_part			*redirections;
 	t_part			*part;
 	struct s_cmd 	*head;
 	struct s_cmd 	*next;
