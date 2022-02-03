@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/02 18:41:41 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:16:35 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <termios.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <sys/ioctl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <readline/readline.h>
@@ -30,6 +31,8 @@
 # define ERROR -1
 # define ACTIVATE 0
 # define DEACTIVATE 1
+# define PARENT 0
+# define CHILD 1
 # define CMD 1
 # define OPT 2
 # define ARG 3
@@ -92,7 +95,7 @@ int		ft_builtin_pwd(void);
 int		ft_builtin_echo(int argc, char **argv);
 int		ft_builtin_cd(char **argv);
 int		ft_handle_builtins(char **argv);
-void	ft_print_perrno(char *argv, char *cmd);
+int		ft_print_perrno(char *argv, char *cmd);
 int		ft_builtin_export(t_list **envp, char **argv);
 void	*ft_set_envp_node(char *orig_envp, t_env *envp_node);
 void	*ft_parse_envp(t_list **envp, char *orig_envp);
@@ -101,8 +104,13 @@ int		ft_builtin_unset(t_list **envp, char **argv);
 int		ft_valid_env_name(char *str);
 t_env	*ft_iterate_env(t_list *envp, char *str);
 
+int		ft_redirect(t_cmd *cmd);
+
+int		ft_signal_handling(int process);
+
 
 void	ft_generate_cmd(t_cmd **cmd);
+void	ft_terminal_echoctl(int echo_status);
 void	ft_free_all(t_cmd **cmd, char **input);
 int		ft_prompt(char **input);
 void	ft_lexer(char *input, t_cmd **cmd);

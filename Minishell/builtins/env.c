@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/31 20:08:25 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/02 20:09:27 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_list	**ft_envp_pointer(void)
 	return (&envp);
 }
 
-void	ft_print_perrno(char *argv, char *cmd)
+int	ft_print_perrno(char *argv, char *cmd)
 {
 	char	*error;
 
@@ -26,6 +26,7 @@ void	ft_print_perrno(char *argv, char *cmd)
 	error = strerror(errno);
 	if (error != NULL)
 		printf("%s: %s: %s\n", cmd, argv, error);
+	return (FAIL);
 }
 
 t_env	*ft_iterate_env(t_list *envp, char *str)
@@ -35,7 +36,6 @@ t_env	*ft_iterate_env(t_list *envp, char *str)
 	while (envp != NULL)
 	{
 		env_node = envp->content;
-		// if (ft_strncmp(env_node->name, str, ft_strlen(str)) == 0)
 		if (ft_strcmp(env_node->name, str) == 0)
 			break ;
 		envp = envp->next;

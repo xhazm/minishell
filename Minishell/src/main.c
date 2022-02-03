@@ -13,6 +13,22 @@ int	ft_print_envp(t_list **envp)
 	return (SUCCESS);
 }
 
+static void	ft_waitpid(int pid)
+{
+	int	status;
+
+	waitpid(pid, &status, 0);
+	exit_status = status;
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			write(STDERR_FILENO, "\rQuit: 3\n", 9);
+		if (WTERMSIG(status) == SIGINT)
+			write(STDERR_FILENO, "\n", 1);
+		exit_status = 128 + status;
+	}
+}
+
 void ft_get_cmd_command_for_exec(t_cmd *cmd)
 {
 	int i;
@@ -77,9 +93,9 @@ void ft_pipes(int in, int out, char	**cmd)
 			dup2(out, 1);
 			close(out);
 		}
-		if (ft_handle_builtins(cmd) == FAIL)
-			ft_handle_execv(cmd);
 	}
+	if (ft_handle_builtins(cmd) == FAIL)
+		ft_handle_execv(cmd);
 }
 
 void	ft_fork(t_cmd *cmd)
@@ -97,23 +113,24 @@ void	ft_fork(t_cmd *cmd)
 		ft_pipes(in, fd[1], cmd->argv);
 		close(fd[1]);
 		in = fd[0];
-		// if (ft_handle_builtins(tmp->argv) == FAIL)
-		// 	ft_handle_execv(tmp->argv);
 		tmp = tmp ->next;
 	}
 	if (in != 0)
 		dup2(in, 0);
 	if (ft_handle_builtins(tmp->argv) == FAIL)
-		ft_handle_execv(tmp->argv);	
+		ft_handle_execv(tmp->argv);
 }
 
-void ft_exec(t_cmd *cmd)
+int ft_exec(t_cmd *cmd)
 {
 	int pid;
 	int fd[2];
 
 	pipe(fd);
 	pid = fork();
+	ft_terminal_echoctl(ACTIVATE);
+	if (ft_signal_handling(CHILD) == FAIL)
+		return (FAIL);
 	if (pid == 0)
 	{
 		close(fd[0]);
@@ -122,7 +139,8 @@ void ft_exec(t_cmd *cmd)
 	}
 	close(fd[0]);
 	close(fd[1]);
-	waitpid(pid, NULL, 0);
+	ft_waitpid(pid);
+	return (SUCCESS);
 }
 
 int	ft_parcer(t_cmd *cmd)
@@ -167,9 +185,9 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 			{
 				cmd = cmd->head;
 				ft_parcer(cmd);
-				
-				ft_exec(cmd);
-				ft_check_struct(cmd);
+				if (ft_exec(cmd) == FAIL)
+					return (FAIL);
+				// ft_check_struct(cmd);
 			}
 			free(input);
 		}

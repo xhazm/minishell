@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 16:53:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/31 20:13:23 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/02 20:40:51 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,7 @@ void	*ft_malloc(size_t size);
 void	*ft_free_garbage(t_list	**malloced);
 t_list	**ft_garbage_lst_ptr(void *ptr);
 t_list	*ft_unprotected_lstnew(void *content);
+int		ft_free2darr(void **arr);
+
 
 #endif

@@ -1,40 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirections.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
+/*   Updated: 2022/02/02 20:25:34 by lpfleide         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-int	ft_perrno(char *argv, char *cmd)
+static int	ft_open_fd_with_oflag(t_part *list)
 {
-	char	*error;
+	int	fd;
 
-	// tilde == home implementation??
-	error = NULL;
-	error = strerror(errno);
-	if (error != NULL)
-		printf("%s: %s: %s\n", cmd, argv, error);
-	return (FAIL);
+	fd = 0;
+	if (list->flag == APPEND)
+		fd = open(list->argv, O_RDWR | O_CREAT | O_APPEND, 0666);
+	else if (list->flag == REDIRECT_IN)
+		fd = open(list->argv, O_RDWR | O_CREAT, 0666);
+	else if (list->flag == REDIRECT_OUT)
+		fd = open(list->argv, O_RDONLY, 0666);
+	return (fd);
 }
 
 int	ft_redirect(t_cmd *cmd)
 {
-	int		fd[2];
+	int		fd;
+	t_part	*list;
 
-	
-	if (flag == APPEND)
-		fd[0] = open(argv[1], O_RDWR | O_CREAT | O_APPEND, 0666);
-	else if (flag == REDIRECT)
-		fd[0] = open(argv[1], O_RDWR | O_CREAT, 0666);
-	if (fd[0] == -1)
-		return (ft_perrno(argv[0]), "open"));
-	fd[1] = open(argv[1], O_RDONLY);
-	if (fd[1] == -1)
-		return (ft_perrno(argv[1]), "open"));
-	// close in error fd????
-	dup2(fd[0], fd[1]);
+	if (cmd->redirections == NULL)
+		return (FAIL);
+	list = cmd->redirections->head;
+	while (1)
+	{
+		fd = ft_open_fd_with_oflag(list);
+		if (fd == -1)
+			return (ft_print_perrno(list->argv, "open"));
+		list = list->next;
+		if (list->flag == APPEND || list->flag == REDIRECT_IN)
+			cmd->std_in = fd;
+		else if (list->flag == REDIRECT_OUT)
+			cmd->std_out = fd;
+		if (list == cmd->redirections->head)
+			break ;
+		close(fd);
+	}
 	return (SUCCESS);
-}
-
-int main(int argc, char **argv)
-{
-	if (ft_redirect(argv) == FAIL)
-		return (1);
-	// go for heere docs go for heeere docs! gooooo foooo r heeeere docs!
-	return (0);
 }

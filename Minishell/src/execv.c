@@ -43,21 +43,14 @@ int		ft_handle_execv(char **argv)
 		i++;
 		// if path[i] = null == error?
 	}
-	// printf("Something else \n");
+	if (i == ft_strlen2D(path))
+	{
+		ft_putstr_fd(argv[0], 2);
+		write(2, ": command not found\n", 20);
+	}
+	ft_free2darr((void **)path);
 	if (tmp != NULL)
 		ft_free(tmp);
-	// free path. for the lulz
-	// ft_strjoin()
-	// while(i != )
-
-	exit(1);
+	exit (1);
 	return (SUCCESS);
 }
-
-// int main(int argc, char **argv, char **orig_envp)
-// {
-// 	ft_set_envp(orig_envp);
-// 	ft_handle_execv(argc - 1, &argv[1]);
-// 	// ft_print_env(ft_envp_pointer());
-// 	return (0);
-// }
