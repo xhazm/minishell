@@ -9,20 +9,6 @@ static void	ft_waitpid(int pid)
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
-			write(STDERR_FILENO, "Quit: 3\n", 8);
-		exit_status = 128 + status;
-	}
-}
-
-static void	ft_waitpid(int pid)
-{
-	int	status;
-
-	waitpid(pid, &status, 0);
-	exit_status = status;
-	if (WIFSIGNALED(status))
-	{
-		if (WTERMSIG(status) == SIGQUIT)
 			write(STDERR_FILENO, "\rQuit: 3\n", 9);
 		if (WTERMSIG(status) == SIGINT)
 			write(STDERR_FILENO, "\n", 1);
@@ -94,9 +80,9 @@ void ft_pipes(int in, int out, char	**cmd)
 			dup2(out, 1);
 			close(out);
 		}
+		if (ft_handle_builtins(cmd) == FAIL)
+			ft_handle_execv(cmd);
 	}
-	if (ft_handle_builtins(cmd) == FAIL)
-		ft_handle_execv(cmd);
 }
 
 void	ft_fork(t_cmd *cmd)
@@ -111,7 +97,7 @@ void	ft_fork(t_cmd *cmd)
 	while(tmp->next != NULL)
 	{
 		pipe(fd);
-		ft_pipes(in, fd[1], cmd->argv);
+		ft_pipes(in, fd[1], tmp->argv);
 		close(fd[1]);
 		in = fd[0];
 		tmp = tmp ->next;
@@ -119,7 +105,7 @@ void	ft_fork(t_cmd *cmd)
 	if (in != 0)
 		dup2(in, 0);
 	if (ft_handle_builtins(tmp->argv) == FAIL)
-		ft_handle_execv(tmp->argv);
+		ft_handle_execv(tmp->argv);	
 }
 
 int ft_exec(t_cmd *cmd)
@@ -148,6 +134,7 @@ int	ft_parcer(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 	int		i;
+
 	i = 0;
 	tmp = cmd;
 	while(tmp)
@@ -165,15 +152,15 @@ int	ft_parcer(t_cmd *cmd)
 }
 
 // WE need to implement exit Minishell on exit command
-// Print error message when incorect command is executed
+
 int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[], 
 	char **envp)
 {
-	char *input;
+	char	*input;
 	t_cmd	*cmd;
 
 	ft_set_envp(envp);
- 	// argv[0] = cmd exit
+ 	 // argv[0] = cmd exit
 	exit_status = 0;
 	//ft_print_envp(ft_envp_pointer());
 	while (1)
@@ -186,8 +173,9 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 			{
 				cmd = cmd->head;
 				ft_parcer(cmd);
+				
 				if (ft_exec(cmd) == FAIL)
-					return (FAIL);
+					return (FAIL) ;
 				// ft_check_struct(cmd);
 			}
 			free(input);
