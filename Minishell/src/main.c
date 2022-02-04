@@ -30,17 +30,17 @@ void ft_check_struct(t_cmd *cmd)
 	while(cmd)
 	{
 		i = 0;
-		// while(cmd->argv[i] != NULL)
-		// {
-		// 	printf("%s  FLAGS %d\n", cmd->argv[i], cmd->flags[i]);
-		// 	i++;
-		// }
-		while (i < cmd->argc)
+		while(cmd->argv != NULL && cmd->argv[i] != NULL)
 		{
-			printf("%s %d\n", cmd->part->argv, cmd->part->flag);
-			cmd->part = cmd->part->next;
+			printf("-->%s<--\n", cmd->argv[i]);
 			i++;
 		}
+		// while (i < cmd->argc)
+		// {
+		// 	printf("%s %d\n", cmd->part->argv, cmd->part->flag);
+		// 	cmd->part = cmd->part->next;
+		// 	i++;
+		// }
 		printf("--------- NEW NODE ----------\n");
 		cmd = cmd -> next;
 	}
@@ -88,9 +88,9 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 			{
 				cmd = cmd->head;
 				ft_parcer(cmd);
-				if (ft_exec(cmd) == FAIL)
+				if (cmd->argv != NULL && ft_exec(cmd) == FAIL)
 					return (FAIL);
-				// ft_check_struct(cmd);
+				//ft_check_struct(cmd);
 			}
 			free(input);
 		}

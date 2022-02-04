@@ -11,7 +11,7 @@ char	*ft_var_data(t_list **envp, char *varName)
 	{
 		envp_node = temp->content;
 		if (ft_strcmp(envp_node->name, varName) == 0)
-			return (envp_node->arg);
+			return (ft_substr(envp_node->arg, 1, ft_strlen(envp_node->arg)));
 		temp = temp->next;
 	}
 	return (NULL);
@@ -24,10 +24,11 @@ int	ft_insert_str(char **str1, char *str2, int start, int end)
 	int		str2len;
 	char	*tmp;
 
-	if (!str2)
+	
+	if (str2 == NULL)
 		str2len = 0;
 	else
-		str2len = ft_strlen(str2) - 1;
+		str2len = ft_strlen(str2);		
 	len = ft_strlen((*str1)) - (end - start) + str2len;
 	tmp = ft_strdup((*str1));
 	ft_free((*str1));
@@ -39,8 +40,8 @@ int	ft_insert_str(char **str1, char *str2, int start, int end)
 	{
 		if (i < start)
 			(*str1)[i] = tmp[i];
-		else if (start <= i && (i - start) < str2len )
-			(*str1)[i] = str2[i - start + 1];
+		else if (start <= i && (i - start) < str2len)
+			(*str1)[i] = str2[i - start];
 		else
 		{
 			(*str1)[i] = tmp[end];
@@ -67,7 +68,6 @@ void	ft_check_var_name(char **str, int i)
 		i++;
 	varName = ft_substr((*str), start + 1, i);
 	varValue = ft_var_data(ft_envp_pointer(), varName);
-
 	if (varValue != NULL)
 		ft_insert_str(str, varValue, start, i);
 	else
@@ -89,8 +89,7 @@ void ft_search_for_money(char **str)
 		{
 			if ((*str)[i + 1] == '?')
 			{
-				//Needs to be done
-				printf("%d\n", exit_status);
+				ft_insert_str(str, ft_itoa(exit_status), i, i + 2);
 				i++;
 			}
 			else if ((*str)[i + 1] == ' ' || (*str)[i + 1] == '\0')
