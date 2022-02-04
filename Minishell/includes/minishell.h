@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/03 15:16:35 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/04 13:19:46 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,13 @@ typedef struct s_part
 }	t_part;
 
 
-// typedef struct s_main
-// {
-// 	int		pipe[2];
-// }	t_main;
-
 typedef struct	s_cmd
 {
 	int				argc;
 	char			**argv;
 	int				*flags;
 	int				type;
-	int				pipe[2];
+	int				fd[2];
 	int				pid;
 	
 	int				std_in;
@@ -119,7 +114,7 @@ int		ft_store_cmd_argv(t_cmd *cmd, char *argv);
 void	ft_var_expand(t_cmd *cmd);
 char	ft_check_closing_quotes(char c, char flag);
 void	ft_rm_quotes(t_cmd *cmd);
-
+int		ft_exec(t_cmd *cmd);
 
 
 //storing everything to the list

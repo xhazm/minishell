@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 19:08:45 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/01 20:44:09 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/03 21:56:12 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int	ft_handle_builtins(char **argv)
 		return (FAIL);
 	if (tmp != NULL)
 		ft_free(tmp);
-	exit(1);
+	//exit(1);
 	return (SUCCESS);
 }
