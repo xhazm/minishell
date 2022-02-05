@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:45:27 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/03 15:21:57 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:41:20 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	ft_prompt(char **input)
 	(*input) = readline("Minishell $> ");
 	if ((*input) != NULL)
 	{
-		add_history(*input);
+		if(ft_strlen((*input)) > 0)
+			add_history(*input);
 		return (1);
 	}
 	else

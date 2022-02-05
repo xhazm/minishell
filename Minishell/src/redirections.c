@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/03 15:22:38 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/04 18:24:12 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	ft_redirect(t_cmd *cmd)
 	int		fd;
 	t_part	*list;
 
-	if (cmd->redirections == NULL)
+	if (cmd->redi == NULL)
 		return (FAIL);
-	list = cmd->redirections->head;
+	list = cmd->redi->head;
 	while (1)
 	{
 		fd = ft_open_fd_with_oflag(list);
@@ -44,7 +44,7 @@ int	ft_redirect(t_cmd *cmd)
 			cmd->std_in = fd;
 		else if (list->flag == REDIRECT_OUT)
 			cmd->std_out = fd;
-		if (list == cmd->redirections->head)
+		if (list == cmd->redi->head)
 			break ;
 		close(fd);
 	}

@@ -92,15 +92,15 @@ void ft_search_for_money(char **str)
 				ft_insert_str(str, ft_itoa(exit_status), i, i + 2);
 				i++;
 			}
+			// else if ((*str)[i + 1] == '$')
+			// {
+			// 	//Maybe needs to be done
+			// 	printf("$$ is the process ID of the current shell instance. Not necesery for mandatory part.\n");
+			// 	i++;
+			// 	i++;
+			// }
 			else if ((*str)[i + 1] == ' ' || (*str)[i + 1] == '\0')
 				i++;
-			else if ((*str)[i + 1] == '$')
-			{
-				//Maybe needs to be done
-				printf("$$ is the process ID of the current shell instance. Not necesery for mandatory part.\n");
-				i++;
-				i++;
-			}
 			else
 				ft_check_var_name(str, i);
 		}

@@ -26,22 +26,6 @@ char	*ft_redirection_found(char *sub, char *cpart, int *j)
 	}
 }
 
-int	ft_only_numbers(char *cpart)
-{
-	int	i;
-	int	size;
-
-	i = 0;
-	size = ft_strlen(cpart);
-	while (i < size)
-	{
-		if (!ft_isdigit(cpart[i]))
-			return (FAIL);
-		i++;
-	}
-	return (SUCCESS);
-}
-
 char	*ft_pipe_or_redirection_found(char *sub, char *cpart, int *j)
 {
 	if (sub[(*j)] == '|')
@@ -64,11 +48,7 @@ char	*ft_split_conditions(char *sub, char *cpart, int *j)
 	while (sub[(*j)] != '\0')
 	{			
 		if (flag == 1 && (sub[(*j)] == ' ' || sub[(*j)] == '|' || sub[(*j)] == '>' || sub[(*j)] == '<'))
-		{
-			if ((sub[(*j)] == '>' || sub[(*j)] == '<') && cpart != NULL && ft_only_numbers(cpart))
-				return (ft_redirection_found(sub, cpart, j));
 			return(cpart);
-		}
 		else if (sub[(*j)] == '\'' || sub[(*j)] == '"')
 		{
 			if (flag == 1)
@@ -103,7 +83,6 @@ void ft_split_input(char *sub, t_cmd *cmd)
 		else
 			j++;
 	}
-	// ft_set_cmd_flags(cmd);
 }
 
 void ft_handle_input(char *input, int *start, int end, t_cmd **cmd)
@@ -122,7 +101,7 @@ void ft_handle_input(char *input, int *start, int end, t_cmd **cmd)
 	}
 }
 
-void	ft_lexer(char *input, t_cmd **cmd)
+int	ft_lexer(char *input, t_cmd **cmd)
 {
 	int		i;
 	int		start;
@@ -139,5 +118,9 @@ void	ft_lexer(char *input, t_cmd **cmd)
 		i++;
 	}
 	if (flag != 0)
+	{
 		printf("Error: argument\n");
+		return (FAIL);
+	}
+	return (SUCCESS);
 }

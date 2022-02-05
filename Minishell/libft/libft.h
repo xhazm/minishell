@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 16:53:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/02 20:40:51 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/04 20:53:22 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct s_part
+{
+	char			*argv;
+	int				flag;
+	
+	struct s_part	*head;
+	struct s_part	*next;
+	struct s_part	*prev;
+}	t_part;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -77,6 +87,6 @@ void	*ft_free_garbage(t_list	**malloced);
 t_list	**ft_garbage_lst_ptr(void *ptr);
 t_list	*ft_unprotected_lstnew(void *content);
 int		ft_free2darr(void **arr);
-
-
+int		ft_attache_node(t_part **list, t_part *attache_node);
+int		ft_detache_node(t_part **list, t_part *detache_node);
 #endif

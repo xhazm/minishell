@@ -1,79 +1,73 @@
 #include "../includes/minishell.h"
 
-// int ft_set_redirection_flag(char *str)
-// {
-// 	if (str[0] == '>')
-// 	{
-// 		if (str[1] == '>')
-// 			return (51);
-// 		return (50);
-// 	}
-// 	if (str[0] == '<')
-// 	{
-// 		if(str[1] == '<')
-// 			return (53);
-// 		return (52);
-// 	}
-// 	return (FAIL);
-// }
-
 int ft_set_redirection_flag(char *str)
 {
-	int i;
-	int size;
-
-	i = 0;
-	size = ft_strlen(str);
-	while(i < size)
+	if (str[0] == '>')
 	{
-		if (str[i] == '<' || str[i] == '>')
-			break ;
-		if (!ft_isdigit(str[i]))
-			return (FAIL);
-		i++;
-	}
-	if (str[i] == '>')
-	{
-		if (str[i + 1] == '>')
+		if (str[1] == '>')
 			return (51);
 		return (50);
 	}
-	if (str[i] == '<')
+	if (str[0] == '<')
 	{
-		if(str[i + 1] == '<')
+		if(str[1] == '<')
 			return (53);
 		return (52);
 	}
 	return (FAIL);
 }
 
+// int	ft_set_cmd_flags(t_cmd *cmd)
+// {
+// 	int i;
+
+// 	if (cmd->part->argv[0] == '|')
+// 		cmd->part->flag = PIPE;
+// 	else
+// 	{
+// 		cmd->part->flag = ft_set_redirection_flag(cmd->part->argv);
+// 		if (cmd->part->flag == 0)
+// 			cmd->part->flag = CMD;
+// 	}
+// 	i = 1;
+// 	cmd->part = cmd->part->next;
+// 	while (i < cmd->argc && cmd->part->argv[0] == '-' && cmd->part->argv[1] != '\0')
+// 	{
+// 		cmd->part->flag = ft_set_redirection_flag(cmd->part->argv);
+// 		if (cmd->part->flag == 0)
+//  			cmd->part->flag = OPT;
+// 		cmd->part = cmd->part->next;
+// 		i++;
+// 	}
+// 	while (i < cmd->argc)
+// 	{
+// 		cmd->part->flag = ft_set_redirection_flag(cmd->part->argv);
+// 		if (cmd->part->flag == 0)
+// 		{
+// 			if (cmd->part->argv[0] == '|')
+// 				cmd->part->flag = PIPE;
+// 			else
+// 				cmd->part->flag = ARG;
+// 		}
+// 		cmd->part = cmd->part->next;
+// 		i++;
+// 	}
+// 	return(SUCCESS);
+// }
+
 int	ft_set_cmd_flags(t_cmd *cmd)
 {
 	int i;
+	int flag1;
+	int flag2;
 
-	cmd->part->flag = ft_set_redirection_flag(cmd->part->argv);
-		if (cmd->part->flag == 0)
-			cmd->part->flag = 1;
-	i = 1;
-	cmd->part = cmd->part->next;
-	while (i < cmd->argc && cmd->part->argv[0] == '-' && cmd->part->argv[1] != '\0')
+	i = 0;
+	flag1 = 0;
+	flag2 = 0;
+	while(i < cmd->argc)
 	{
-		cmd->part->flag = ft_set_redirection_flag(cmd->part->argv);
-		if (cmd->part->flag == 0)
- 			cmd->part->flag = 2;
-		cmd->part = cmd->part->next;
-		i++;
-	}
-	while (i < cmd->argc)
-	{
-		cmd->part->flag = ft_set_redirection_flag(cmd->part->argv);
-		if (cmd->part->flag == 0)
-		{
-			if (cmd->part->argv[0] == '|')
-				cmd->part->flag = 4;
-			else
-				cmd->part->flag = 3;
-		}
+
+
 		cmd->part = cmd->part->next;
 		i++;
 	}

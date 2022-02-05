@@ -12,6 +12,7 @@ t_cmd	*ft_new_cmd(void)
 	new->argv = NULL;
 	new->next = NULL;
 	new->part = NULL;
+	new->redi = NULL;
 	return (new);
 }
 
