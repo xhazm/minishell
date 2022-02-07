@@ -16,13 +16,14 @@ static void	ft_waitpid(int pid)
 	}
 }
 
-void	ft_pipes(int in, int out, char	**cmd)
+void	ft_pipes(int in, int out, t_cmd	*cmd)
 {
 	int	pid;
 
 	pid = fork();
 	if (pid == 0)
 	{
+		printf("2cmd: %s fd out: %d\n",cmd->argv[0], cmd->std_out);
 		if (in != 0)
 		{
 			dup2(in, 0);
@@ -33,10 +34,13 @@ void	ft_pipes(int in, int out, char	**cmd)
 			dup2(out, 1);
 			close(out);
 		}
+		dup2(cmd->std_out, 1);
 		if (ft_handle_builtins(cmd) == FAIL)
-			ft_handle_execv(cmd);
+			ft_handle_execv(cmd->argv);
 		else
 			exit(1);
+		// if (cmd->std_out != 1)
+		// 	close(cmd->std_out);
 	}
 }
 
@@ -46,23 +50,30 @@ void	ft_fork(t_cmd *cmd)
 	int		pid;
 	int		in;
 	int		fd[2];
+	int		fd_std;
 
-	in = 0;
+	dup2(fd_std, 1);
+	in = cmd->std_in;
 	tmp = cmd;
 	while (tmp->next != NULL)
 	{
 		pipe(fd);
-		ft_pipes(in, fd[1], tmp->argv);
+		ft_pipes(tmp->std_in, fd[1], tmp);
 		close(fd[1]);
 		in = fd[0];
 		tmp = tmp ->next;
+		dup2(1, fd_std);
 	}
 	if (in != 0)
 		dup2(in, 0);
-	if (ft_handle_builtins(tmp->argv) == FAIL)
+	printf("1cmd: %s fd out: %d\n",tmp->argv[0], tmp->std_out);
+	dup2(tmp->std_out, 1);
+	if (ft_handle_builtins(tmp) == FAIL)
 		ft_handle_execv(tmp->argv);
 	else
 		exit(1);
+	// if (cmd->std_out != 1)
+	// 	close(cmd->std_out);
 }
 
 int	ft_fork_main(t_cmd *cmd)
@@ -94,7 +105,7 @@ int	ft_exec(t_cmd *cmd)
 {
 	if (cmd->next == NULL)
 	{
-		if (ft_handle_builtins(cmd->argv) == FAIL)
+		if (ft_handle_builtins(cmd) == FAIL)
 			ft_fork_main(cmd);
 	}
 	else

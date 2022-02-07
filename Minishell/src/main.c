@@ -32,56 +32,34 @@ void ft_check_struct(t_cmd *cmd)
 	int i;
 
 	printf("\n\n--------- CMD STRUCT ----------\n");
+	//cmd=cmd->head;
 	while(cmd)
 	{
-		i = 0;
-		while(cmd->argv != NULL && cmd->argv[i] != NULL)
-		{
-			printf("-->%s<--\n", cmd->argv[i]);
-			printf("-->%d<--\n", cmd->argc);
-			i++;
-		}
-
-		// while (i < cmd->argc)
+		// i = 0;
+		// while(cmd->argv != NULL && cmd->argv[i] != NULL)
 		// {
-		// 	printf("%s\n", cmd->part->argv);
-		// 	cmd->part = cmd->part->next;
+		// 	printf("-->%s<--\n", cmd->argv[i]);
+		// 	printf("-->%d<--\n", cmd->argc);
 		// 	i++;
 		// }
+		i = 0;
+		while (i < cmd->argc)
+		{
+			printf("%s %d\n", cmd->part->argv, cmd->part->flag);
+			cmd->part = cmd->part->next;
+			i++;
+		}
+		i = 0;
+		while (i < cmd->redc+4 && cmd->redi != NULL)
+		{
+			printf("%s %d\n", cmd->redi->argv, cmd->redi->flag);
+			cmd->redi = cmd->redi->next;
+			i++;
+		}
 		printf("--------- NEW NODE ----------\n");
 		cmd = cmd -> next;
 	}
 }
-// void ft_check_struct(t_cmd *cmd)
-// {
-// 	int i;
-// 	printf("\n\n--------- CMD STRUCT ----------\n");
-// 	while(cmd)
-// 	{
-// 		i = 0;
-// 		// while(cmd->argv[i] != NULL)
-// 		// {
-// 		// 	printf("%s  FLAGS %d\n", cmd->argv[i], cmd->flags[i]);
-// 		// 	i++;
-// 		// }
-// 		while (cmd->argv != NULL && i < cmd->argc)
-// 		{
-// 			printf("%s %d\n", cmd->part->head->argv, cmd->argc);
-// 			cmd->part = cmd->part->next;
-// 			i++;
-// 		}
-// 		i = 0;
-// 		while(cmd->redi != NULL && i < cmd->redc)
-// 		{
-// 			printf("Redi: %s\n", cmd->redi->argv);
-// 			cmd->redi = cmd->redi->next;
-// 			i++;
-// 		}
-
-// 		printf("--------- NEW NODE ----------\n");
-// 		cmd = cmd -> next;
-// 	}
-// }
 
 int	ft_parcer(t_cmd *cmd)
 {
@@ -135,6 +113,7 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 				cmd = cmd->head;
 				if(ft_parcer(cmd))
 				{
+					ft_redirect(cmd);
 					if (cmd->argv != NULL && ft_exec(cmd) == FAIL)
 						return (FAIL);
 				}

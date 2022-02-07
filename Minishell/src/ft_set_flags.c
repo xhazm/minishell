@@ -5,14 +5,14 @@ int ft_set_redirection_flag(char *str)
 	if (str[0] == '>')
 	{
 		if (str[1] == '>')
-			return (51);
-		return (50);
+			return (APPEND);
+		return (REDIRECT_IN);
 	}
 	if (str[0] == '<')
 	{
 		if(str[1] == '<')
-			return (53);
-		return (52);
+			return (HEREDOC);
+		return (REDIRECT_OUT);
 	}
 	return (FAIL);
 }

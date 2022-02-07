@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/05 20:17:01 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:23:37 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		ft_set_envp(char **orig_envp);
 int		ft_builtin_pwd(void);
 int		ft_builtin_echo(int argc, char **argv);
 int		ft_builtin_cd(char **argv);
-int		ft_handle_builtins(char **argv);
+int		ft_handle_builtins(t_cmd *cmd);
 int		ft_print_perrno(char *argv, char *cmd);
 int		ft_builtin_export(t_list **envp, char **argv);
 void	*ft_set_envp_node(char *orig_envp, t_env *envp_node);
@@ -101,6 +101,8 @@ int		ft_valid_env_name(char *str);
 t_env	*ft_iterate_env(t_list *envp, char *str);
 
 int		ft_redirect(t_cmd *cmd);
+int		ft_handle_heredoc(t_cmd *cmd, t_part *list);
+
 
 int		ft_signal_handling(int process);
 

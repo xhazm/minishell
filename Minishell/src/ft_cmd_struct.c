@@ -9,10 +9,13 @@ t_cmd	*ft_new_cmd(void)
 	if (!new)
 		return (NULL);
 	new->argc = 0;
+	new->redc = 0;
 	new->argv = NULL;
 	new->next = NULL;
 	new->part = NULL;
 	new->redi = NULL;
+	new->std_in = 0;
+	new->std_out = 1;
 	return (new);
 }
 
