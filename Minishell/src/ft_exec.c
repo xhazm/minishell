@@ -176,14 +176,12 @@ void	ft_fork(t_cmd *cmd)
 		in = fd[0];
 		tmp = tmp ->next;
 	}
-	// printf("IN %d\n", in);
 	if (in != 0)
 		dup2(in, 0);
 	printf("cmd2: %s fd in: %d\n",tmp->argv[0], tmp->std_in);
 	printf("cmd2: %s fd out: %d\n",tmp->argv[0], tmp->std_out);
 	dup2(tmp->std_out, 1);
 	dup2(tmp->std_in, 0);
-
 	if (ft_handle_builtins(tmp) == FAIL)
 		ft_handle_execv(tmp->argv);
 	else

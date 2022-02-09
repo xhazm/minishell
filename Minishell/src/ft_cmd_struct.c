@@ -5,6 +5,7 @@ t_cmd	*ft_new_cmd(void)
 {
 	t_cmd	*new;
 
+
 	new = (t_cmd *)ft_malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
@@ -16,6 +17,8 @@ t_cmd	*ft_new_cmd(void)
 	new->redi = NULL;
 	new->std_in = 0;
 	new->std_out = 1;
+	new->in = dup(STDIN_FILENO);
+	new->out = dup(STDOUT_FILENO);
 	return (new);
 }
 

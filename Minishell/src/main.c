@@ -117,6 +117,10 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 					ft_redirect(cmd);
 					if (cmd->argv != NULL && ft_exec(cmd) == FAIL)
 						return (FAIL);
+					close(cmd->std_in);
+					close(cmd->std_out);
+					dup2(cmd->out, STDOUT_FILENO);
+					dup2(cmd->in, STDIN_FILENO);
 				}
 				//ft_check_struct(cmd);
 			}

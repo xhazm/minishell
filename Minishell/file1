@@ -1,7 +1,0 @@
-cmd1: cat fd in: 3
-cmd1: cat fd out: 1
-cmd2: echo fd in: 0
-cmd2: echo fd out: 1
-hi
-[?2004hMinishell $> [?2004l
-exit

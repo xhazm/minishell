@@ -1,8 +1,0 @@
-cmd2: cat fd in: 3
-cmd2: cat fd out: 1
-labas
-[?2004hMinishell $> end
-[?2004lcmd2: end fd in: 0
-cmd2: end fd out: 1
-[?2004hMinishell $> [?2004l
-exit
