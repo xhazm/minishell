@@ -181,7 +181,11 @@ void	ft_fork(t_cmd *cmd)
 	printf("cmd2: %s fd in: %d\n",tmp->argv[0], tmp->std_in);
 	printf("cmd2: %s fd out: %d\n",tmp->argv[0], tmp->std_out);
 	dup2(tmp->std_out, 1);
+	if(tmp->std_out != 1)
+		close (tmp->std_out);
 	dup2(tmp->std_in, 0);
+	if(tmp->std_in != 0)
+		close (tmp->std_in);
 	if (ft_handle_builtins(tmp) == FAIL)
 		ft_handle_execv(tmp->argv);
 	else
@@ -214,28 +218,10 @@ int	ft_fork_main(t_cmd *cmd)
 	return (SUCCESS);
 }
 
-static int ft_handle_unforked_builtin(t_cmd *cmd)
-{
-	int		fd_stdout;
-
-	fd_stdout = dup(STDOUT_FILENO);
-	dup2(cmd->std_out, STDOUT_FILENO);
-	if (ft_handle_builtins(cmd) == FAIL)
-	{
-		close(cmd->std_out);
-		dup2(fd_stdout, STDOUT_FILENO);
-		return (FAIL);
-	}
-	close(cmd->std_out);
-	dup2(fd_stdout, STDOUT_FILENO);
-	return (SUCCESS);
-}
-
 int	ft_exec(t_cmd *cmd)
 {
 	if (cmd->next == NULL)
 	{
-		// if (ft_handle_unforked_builtin(cmd) == FAIL)
 		if (ft_handle_builtins(cmd) == FAIL)
 			ft_fork_main(cmd);
 	}
