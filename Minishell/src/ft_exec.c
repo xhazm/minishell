@@ -218,11 +218,28 @@ int	ft_fork_main(t_cmd *cmd)
 	return (SUCCESS);
 }
 
+int	ft_handle_one_builtin(t_cmd *cmd)
+{
+	dup2(cmd->std_out, 1);
+	dup2(cmd->std_in, 0);
+	if (ft_handle_builtins(cmd) == FAIL)
+	{
+		dup2(cmd->out, STDOUT_FILENO);
+		dup2(cmd->in, STDIN_FILENO);
+		return (FAIL);
+	}
+	if(cmd->std_out != 1)
+		close (cmd->std_out);
+	if(cmd->std_in != 0)
+		close (cmd->std_in);
+	return (SUCCESS);
+}
+
 int	ft_exec(t_cmd *cmd)
 {
 	if (cmd->next == NULL)
 	{
-		if (ft_handle_builtins(cmd) == FAIL)
+		if (ft_handle_one_builtin(cmd) == FAIL)
 			ft_fork_main(cmd);
 	}
 	else
