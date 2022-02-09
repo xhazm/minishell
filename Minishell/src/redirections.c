@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/07 18:45:33 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/08 23:30:56 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ft_open_fd_with_oflag(t_part *list)
 	if (list->flag == APPEND)
 		fd = open(list->argv, O_RDWR | O_CREAT | O_APPEND, 0666);
 	else if (list->flag == REDIRECT_IN)
-		fd = open(list->argv, O_TRUNC | O_RDWR | O_CREAT, 0666);  // clear file
+		fd = open(list->argv, O_TRUNC | O_RDWR | O_CREAT, 0666);
 	else if (list->flag == REDIRECT_OUT)
 		fd = open(list->argv, O_RDONLY, 0666);
 	return (fd);
@@ -40,12 +40,13 @@ int	ft_set_cmd_fd(t_cmd *cmd)
 			if (fd == -1 || fd == 0)
 				return (ft_print_perrno(list->argv, "open"));
 			if (list->flag == APPEND || list->flag == REDIRECT_IN)
+			{
 				cmd->std_out = fd;
+			}
 			else if (list->flag == REDIRECT_OUT)
 				cmd->std_in = fd;
 		}
 		list = list->next;
-		printf("FD REDIR %d\n", cmd->std_out);
 		if (list == cmd->redi->head)
 			break ;
 		close(fd); // if stdin and stdout exist, leave both open
@@ -60,10 +61,10 @@ int	ft_redirect(t_cmd *cmd)
 	int		i;
 
 	head = cmd;
-	list = cmd->redi;
 	i = 0;
 	while (cmd != NULL)
 	{
+		list = cmd->redi;
 		while (i < cmd->redc)
 		{
 			if (list->flag == HEREDOC && ft_handle_heredoc(cmd, list) == FAIL)

@@ -35,27 +35,27 @@ void ft_check_struct(t_cmd *cmd)
 	//cmd=cmd->head;
 	while(cmd)
 	{
+		i = 0;
+		while(cmd->argv != NULL && cmd->argv[i] != NULL)
+		{
+			printf("-->%s<--\n", cmd->argv[i]);
+			i++;
+		}
 		// i = 0;
-		// while(cmd->argv != NULL && cmd->argv[i] != NULL)
+		// while (i < cmd->argc)
 		// {
-		// 	printf("-->%s<--\n", cmd->argv[i]);
-		// 	printf("-->%d<--\n", cmd->argc);
+		// 	printf("%s %d\n", cmd->part->argv, cmd->part->flag);
+		// 	cmd->part = cmd->part->next;
 		// 	i++;
 		// }
-		i = 0;
-		while (i < cmd->argc)
-		{
-			printf("%s %d\n", cmd->part->argv, cmd->part->flag);
-			cmd->part = cmd->part->next;
-			i++;
-		}
-		i = 0;
-		while (i < cmd->redc+4 && cmd->redi != NULL)
-		{
-			printf("%s %d\n", cmd->redi->argv, cmd->redi->flag);
-			cmd->redi = cmd->redi->next;
-			i++;
-		}
+		// i = 0;
+		// printf("---REDI--\n");
+		// while (i < cmd->redc && cmd->redi != NULL)
+		// {
+		// 	printf("%s %d\n", cmd->redi->argv, cmd->redi->flag);
+		// 	cmd->redi = cmd->redi->next;
+		// 	i++;
+		// }
 		printf("--------- NEW NODE ----------\n");
 		cmd = cmd -> next;
 	}
@@ -78,6 +78,7 @@ int	ft_parcer(t_cmd *cmd)
 			return(FAIL);
 		// if (!ft_get_cmd_command_for_exec(tmp))
 		// 	return(FAIL);
+
 		tmp = tmp->next;
 		i++;
 	}

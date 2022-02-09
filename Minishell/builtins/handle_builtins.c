@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 19:08:45 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/07 18:13:10 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/08 15:37:17 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_handle_builtins(t_cmd *cmd)
 {
 	char	*tmp;
 	char	**argv;
+
 
 	tmp = NULL;
 	argv = cmd->argv;

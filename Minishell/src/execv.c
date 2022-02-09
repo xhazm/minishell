@@ -28,16 +28,20 @@ int		ft_handle_execv(char **argv)
 
 	i = 0;
 	tmp = NULL;
+	
 	path = ft_get_path(ft_envp_pointer());
 	tmp = ft_strmapi(argv[0], ft_tolower);
+
 	// if (tmp == NULL)
 	// 	return (FAIL);
+
 	while (path[i] != NULL)
 	{
 		if (access(ft_strjoin(path[i], tmp), X_OK) == 0)
 		{
 			if (execv(ft_strjoin(path[i], tmp), argv) == -1)
 				ft_print_perrno(argv[1], argv[0]);
+			
 			break ;
 		}
 		i++;
