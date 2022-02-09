@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/09 16:18:36 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/09 18:48:03 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int		ft_valid_env_name(char *str);
 t_env	*ft_iterate_env(t_list *envp, char *str);
 
 int		ft_redirect(t_cmd *cmd);
-int		ft_handle_heredoc(t_cmd *cmd, t_part *list);
+int		ft_handle_heredoc(t_part *list);
 
 
 int		ft_signal_handling(int process);

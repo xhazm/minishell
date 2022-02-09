@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/09 18:33:12 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/09 18:57:44 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,33 @@ static int	ft_redirect_fd(t_part *list, int flag, int flag2)
 	{
 		if (list->flag == flag || list->flag == flag2)
 		{
+			if (fd != -2)
+				close (fd);
 			if (list->flag == HEREDOC)
-			fd = ft_open_fd_with_oflag(list);
+				fd = ft_handle_heredoc(list);
+			else
+				fd = ft_open_fd_with_oflag(list);
 			if (fd == -1)
 				return (ft_print_perrno(list->argv, "open"));
 		}
 		list = list->next;
 		if (list == list->head)
 			return (fd);
-		close (fd);
 	}
 }
 
-int	ft_set_cmd_fd(t_cmd *cmd)
+static int	ft_set_cmd_fd(t_cmd *cmd)
 {
 	int		fd;
 	t_part	*list;
 
 	list = cmd->redi->head;
-	fd = ft_redirect_fd(list, APPEND, REDIRECT_IN);
+	fd = 0;
+	fd = ft_redirect_fd(cmd->redi->head, APPEND, REDIRECT_IN);
 	if (fd > 0)
 		cmd->std_out = fd;
-	fd = ft_redirect_fd(list, REDIRECT_OUT, -1);
+	fd = 0;
+	fd = ft_redirect_fd(cmd->redi->head, REDIRECT_OUT, HEREDOC);
 	if (fd > 0)
 		cmd->std_in = fd;
 	return (SUCCESS);
@@ -66,34 +71,9 @@ int	ft_redirect(t_cmd *cmd)
 {
 	t_cmd	*head;
 	t_part	*list;
-	int		i;
-	int fd;
 
 	head = cmd;
-	i = 0;
-	while (cmd != NULL)
-	{
-		list = cmd->redi;
-		while (i < cmd->redc)
-		{
-			if (list->flag != 0)
-				printf("%d\n", list->flag);
-			if (list->flag == HEREDOC)
-			{
-			 	fd = ft_handle_heredoc(cmd, list);
-				printf("fd %d\n", fd);
-				if (fd > 0)
-					cmd->std_in = fd;
-
-			}
-				// return (FAIL);
-			list = list->next;
-			i++;
-		}
-		i = 0;
-		cmd = cmd->next;
-	}
-	cmd = head;
+	list = cmd->redi;
 	if (list != NULL)
 		list = list->head;
 	while (cmd != NULL)

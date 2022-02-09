@@ -6,13 +6,13 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 17:33:35 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/09 18:37:27 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/09 18:52:58 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_handle_heredoc(t_cmd *cmd, t_part *list)
+int	ft_handle_heredoc(t_part *list)
 {
 	char	*input;
 	int		fd[2];
