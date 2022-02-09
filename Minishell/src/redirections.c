@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/08 23:30:56 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/09 18:07:46 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,38 @@ static int	ft_open_fd_with_oflag(t_part *list)
 	return (fd);
 }
 
+static int	ft_redirect_fd(t_part *list, int flag, int flag2)
+{
+	int	fd;
+
+	fd = -2;
+	while (1)
+	{
+		if (list->flag == flag || list->flag == flag2)
+		{
+			fd = ft_open_fd_with_oflag(list);
+			if (fd == -1)
+				return (ft_print_perrno(list->argv, "open"));
+		}
+		list = list->next;
+		if (list == list->head)
+			return (fd);
+		close (fd);
+	}
+}
+
 int	ft_set_cmd_fd(t_cmd *cmd)
 {
 	int		fd;
 	t_part	*list;
 
 	list = cmd->redi->head;
-	while (1)
-	{
-		if (list->flag != HEREDOC)
-		{
-			fd = ft_open_fd_with_oflag(list);
-			if (fd == -1 || fd == 0)
-				return (ft_print_perrno(list->argv, "open"));
-			if (list->flag == APPEND || list->flag == REDIRECT_IN)
-			{
-				cmd->std_out = fd;
-			}
-			else if (list->flag == REDIRECT_OUT)
-				cmd->std_in = fd;
-		}
-		list = list->next;
-		if (list == cmd->redi->head)
-			break ;
-		close(fd); // if stdin and stdout exist, leave both open
-	}
+	fd = ft_redirect_fd(list, APPEND, REDIRECT_IN);
+	if (fd > 0)
+		cmd->std_out = fd;
+	fd = ft_redirect_fd(list, REDIRECT_OUT, -1);
+	if (fd > 0)
+		cmd->std_in = fd;
 	return (SUCCESS);
 }
 
