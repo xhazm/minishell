@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/09 18:07:46 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/09 18:24:45 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,13 @@ int	ft_redirect(t_cmd *cmd)
 		list = cmd->redi;
 		while (i < cmd->redc)
 		{
+			if (list->flag != 0)
 			if (list->flag == HEREDOC && ft_handle_heredoc(cmd, list) == FAIL)
 				return (FAIL);
 			list = list->next;
 			i++;
 		}
+		i = 0;
 		cmd = cmd->next;
 	}
 	cmd = head;
