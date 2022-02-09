@@ -220,6 +220,8 @@ int	ft_fork_main(t_cmd *cmd)
 
 int	ft_handle_one_builtin(t_cmd *cmd)
 {
+	if (ft_strcmp(cmd->argv[0], "exit") == 0)
+		ft_handle_exit(cmd);
 	dup2(cmd->std_out, 1);
 	dup2(cmd->std_in, 0);
 	if (ft_handle_builtins(cmd) == FAIL)

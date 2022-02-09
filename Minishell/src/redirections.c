@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/09 18:57:44 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/09 20:47:18 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,6 @@ int	ft_redirect(t_cmd *cmd)
 		}
 		cmd = cmd->next;
 	}
-	return (SUCCESS);
 	cmd = head;
+	return (SUCCESS);
 }
