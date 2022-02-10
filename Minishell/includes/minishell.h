@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/10 15:37:21 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/10 19:14:37 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ typedef struct	s_cmd
 	int				fd[2];
 	int				pid;
 	
-	int				in;
-	int				out;
 	int				std_in;
 	int				std_out;
 	
