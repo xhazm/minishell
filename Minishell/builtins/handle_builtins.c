@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builtins.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 19:08:45 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/08 15:37:17 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:18:42 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,9 @@ int	ft_handle_builtins(t_cmd *cmd)
 		ft_builtin_unset(ft_envp_pointer(), argv);
 	else if (ft_strcmp(tmp, "env") == 0)
 		ft_print_env(ft_envp_pointer());
-	// else if (ft_strcmp(argv[0], "exit") == 0)
-	// 	ft_builtin_exit(argv);
 	else
 		return (FAIL);
 	if (tmp != NULL)
 		ft_free(tmp);
-	//exit(1);
 	return (SUCCESS);
 }

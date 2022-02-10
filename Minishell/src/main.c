@@ -97,30 +97,31 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 	char **envp)
 {
 	char *input;
-	t_cmd	*cmd;
+	t_all	all;
+	all.in = dup(STDIN_FILENO);
+	all.out = dup(STDOUT_FILENO);
 
 	ft_set_envp(envp);
- 	// argv[0] = cmd exit
 	exit_status = 0;
-	//ft_print_envp(ft_envp_pointer());
+	all.cmd_list = NULL;
 	while (1)
 	{
-		cmd = NULL;
+		all.cmd_list = NULL;
 		if (ft_prompt(&input))
 		{
-			ft_lexer(input, &cmd);
-			if (cmd != NULL)
+			ft_lexer(input, &all.cmd_list);
+			if (all.cmd_list != NULL)
 			{
-				cmd = cmd->head;
-				if(ft_parcer(cmd))
+				all.cmd_list= all.cmd_list->head;
+				if(ft_parcer(all.cmd_list))
 				{
-					ft_redirect(cmd);
-					if (cmd->argv != NULL && ft_exec(cmd) == FAIL)
+					ft_redirect(all.cmd_list);
+					if (all.cmd_list->argv != NULL && ft_exec(&all) == FAIL)
 						return (FAIL);
-					close(cmd->std_in);
-					close(cmd->std_out);
-					dup2(cmd->out, STDOUT_FILENO);
-					dup2(cmd->in, STDIN_FILENO);
+					// close(cmd->std_in);
+					// close(cmd->std_out);
+					// dup2(cmd->out, STDOUT_FILENO);
+					// dup2(cmd->in, STDIN_FILENO);
 				}
 				//ft_check_struct(cmd);
 			}
@@ -129,7 +130,9 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 		else
 			break;
 	}
-	ft_free_garbage(ft_garbage_lst_ptr(&cmd));
+	close(all.in);
+	close(all.out);
+	ft_free_garbage(ft_garbage_lst_ptr(&all.cmd_list));
 	ft_garbage_lst_ptr(NULL);
 	return (0);
 }

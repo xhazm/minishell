@@ -17,8 +17,7 @@ t_cmd	*ft_new_cmd(void)
 	new->redi = NULL;
 	new->std_in = 0;
 	new->std_out = 1;
-	new->in = dup(STDIN_FILENO);
-	new->out = dup(STDOUT_FILENO);
+
 	return (new);
 }
 

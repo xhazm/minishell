@@ -20,7 +20,7 @@ char	**ft_get_path(t_list **envp)
 	return (path);
 }
 
-int		ft_handle_execv(char **argv)
+int		ft_handle_execv(t_cmd	*cmd)
 {
 	int		i;
 	char	**path;
@@ -28,10 +28,8 @@ int		ft_handle_execv(char **argv)
 
 	i = 0;
 	tmp = NULL;
-	
 	path = ft_get_path(ft_envp_pointer());
-	tmp = ft_strmapi(argv[0], ft_tolower);
-
+	tmp = ft_strmapi(cmd->argv[0], ft_tolower);
 	// if (tmp == NULL)
 	// 	return (FAIL);
 
@@ -39,8 +37,8 @@ int		ft_handle_execv(char **argv)
 	{
 		if (access(ft_strjoin(path[i], tmp), X_OK) == 0)
 		{
-			if (execv(ft_strjoin(path[i], tmp), argv) == -1)
-				ft_print_perrno(argv[1], argv[0]);
+			if (execv(ft_strjoin(path[i], tmp), cmd->argv) == -1)
+				return(ft_print_perrno(cmd->argv[1], cmd->argv[0]));
 			break ;
 		}
 		i++;
@@ -48,12 +46,11 @@ int		ft_handle_execv(char **argv)
 	}
 	if (i == ft_strlen2D(path))
 	{
-		ft_putstr_fd(argv[0], 2);
+		ft_putstr_fd(cmd->argv[0], 2);
 		write(2, ": command not found\n", 20);
 	}
 	ft_free2darr((void **)path);
 	if (tmp != NULL)
 		ft_free(tmp);
-	exit (1);
 	return (SUCCESS);
 }

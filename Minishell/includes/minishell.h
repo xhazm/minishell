@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/09 20:56:39 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:37:21 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,13 @@ typedef struct	s_cmd
 	struct s_cmd 	*next;
 }	t_cmd;
 
+typedef struct	s_all
+{
+	int				in;
+	int				out;
+	t_cmd			*cmd_list;
+}					t_all;
+
 typedef struct	s_env
 {
 	char			*name;
@@ -87,7 +94,7 @@ typedef struct	s_env
 /* BUILTINS */
 int		ft_handle_envp(char **orig_envp);
 t_list	**ft_envp_pointer(void);
-int		ft_handle_execv(char **argv);
+int		ft_handle_execv(t_cmd *cmd);
 int		ft_set_envp(char **orig_envp);
 int		ft_builtin_pwd(void);
 int		ft_builtin_echo(int argc, char **argv);
@@ -101,7 +108,9 @@ int		ft_print_env(t_list **envp);
 int		ft_builtin_unset(t_list **envp, char **argv);
 int		ft_valid_env_name(char *str);
 t_env	*ft_iterate_env(t_list *envp, char *str);
-void	ft_handle_exit(t_cmd *cmd);
+void	ft_handle_exit(t_all *all);
+void	ft_handle_exec_builtin(t_cmd *cmd, t_all *all);
+
 
 
 int		ft_redirect(t_cmd *cmd);
@@ -121,7 +130,7 @@ int		ft_store_cmd_argv(t_cmd *cmd, char *argv);
 void	ft_var_expand(t_cmd *cmd);
 char	ft_check_closing_quotes(char c, char flag);
 void	ft_rm_quotes(t_cmd *cmd);
-int		ft_exec(t_cmd *cmd);
+int		ft_exec(t_all *all);
 
 
 int	ft_get_redirections(t_cmd *cmd);

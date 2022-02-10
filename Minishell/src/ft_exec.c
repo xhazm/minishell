@@ -16,122 +16,7 @@ static void	ft_waitpid(int pid)
 	}
 }
 
-// void	ft_pipes(int in, int out, t_cmd	*cmd)
-// {
-// 	int	pid;
-
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 	printf("2cmd: %s fd in: %d\n",cmd->argv[0], cmd->std_in);
-// 	printf("2cmd: %s fd out: %d\n",cmd->argv[0], cmd->std_out);
-// 		if (in != 0)
-// 		{
-// 			dup2(in, 0);
-// 			close(in);
-// 		}
-// 		if (out != 1)
-// 		{
-// 			dup2(out, 1);
-// 			close(out);
-// 		}
-// 		dup2(cmd->std_out, 1);
-// 		if (ft_handle_builtins(cmd) == FAIL)
-// 			ft_handle_execv(cmd->argv);
-// 		else
-// 			exit(1);
-// 	}
-// }
-// void	ft_fork(t_cmd *cmd)
-// {
-// 	t_cmd	*tmp;
-// 	int		pid;
-// 	int		in;
-// 	int		fd[2];
-// 	int		fd_std;//in or out here????
-// 	//dup2(fd_std, 1); //tfk?
-// 	tmp = cmd;
-// 	// in = tmp->std_in;
-// 	// dup2(tmp->std_out, 1);
-// 	while (tmp->next != NULL)
-// 	{
-// 		pipe(fd);
-// 		in = tmp->std_in;
-// 		dup2(tmp->std_out, 1);
-// 		//ft_pipes(tmp->std_in, fd[1], tmp);
-// 		ft_pipes(in, fd[1], tmp);
-// 		close(fd[1]);
-// 		in = fd[0];
-// 		tmp = tmp ->next;
-// 		//dup2(1, fd_std); //tfk???
-// 	}
-// 	if (in != 0)
-// 		dup2(in, 0);
-// 	dup2(tmp->std_out, 1);
-// 	printf("1cmd: %s fd in: %d\n",tmp->argv[0], tmp->std_in);
-// 	printf("1cmd: %s fd out: %d\n",tmp->argv[0], tmp->std_out);
-// 	if (ft_handle_builtins(tmp) == FAIL)
-// 		ft_handle_execv(tmp->argv);
-// 	else
-// 		exit(1);
-// 	// if (cmd->std_out != 1)
-// 	// 	close(cmd->std_out);
-// }
-//----------------------------------------------------------------
-// void	ft_pipes(int in, int out, t_cmd	*cmd)
-// {
-// 	int	pid;
-
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 	printf("2cmd: %s fd in: %d\n",cmd->argv[0], cmd->std_in);
-// 	printf("2cmd: %s fd out: %d\n",cmd->argv[0], cmd->std_out);
-// 		if (in != 0)
-// 		{
-// 			dup2(in, 0);
-// 			close(in);
-// 		}
-// 		if (out != 1)
-// 		{
-// 			dup2(out, 1);
-// 			close(out);
-// 		}
-// 		dup2(cmd->std_out, 1);
-// 		if (ft_handle_builtins(cmd) == FAIL)
-// 			ft_handle_execv(cmd->argv);
-// 		else
-// 			exit(1);
-// 	}
-// }
-// void	ft_fork(t_cmd *cmd)
-// {
-// 	t_cmd	*tmp;
-// 	int		pid;
-// 	int		in;
-// 	int		fd[2];
-
-// 	tmp = cmd;
-// 	in = tmp->std_in;
-// 	in = 0;
-// 	while (tmp->next != NULL)
-// 	{
-// 		pipe(fd);
-// 		ft_pipes(in, fd[1], tmp);
-// 		close(fd[1]);
-// 		in = fd[0];
-// 		tmp = tmp ->next;
-// 	}
-// 	if (in != 0)
-// 		dup2(in, 0);
-// 	dup2(tmp->std_out, 1);
-// 	if (ft_handle_builtins(tmp) == FAIL)
-// 		ft_handle_execv(tmp->argv);
-// 	else
-// 		exit(1);
-// }
-//----------------------------------------------------------------
-void	ft_pipes(int in, int out, t_cmd	*cmd)
+void	ft_pipes(int in, int out, t_cmd	*cmd, t_all *all)
 {
 	int	pid;
 
@@ -150,49 +35,33 @@ void	ft_pipes(int in, int out, t_cmd	*cmd)
 			dup2(out, 1);
 			close(out);
 		}
-		dup2(cmd->std_out, 1);
-		if (ft_handle_builtins(cmd) == FAIL)
-			ft_handle_execv(cmd->argv);
-		else
-			exit(1);
+		ft_handle_exec_builtin(cmd, all);
 	}
 	else
 		ft_waitpid(pid);
 }
-void	ft_fork(t_cmd *cmd)
+void	ft_fork(t_all *all)
 {
 	t_cmd	*tmp;
 	int		pid;
 	int		in;
 	int		fd[2];
 
-	tmp = cmd;
-	in = tmp->std_in;
-	while (tmp->next != NULL)
+	in = all->cmd_list->std_in;
+	while (all->cmd_list->next != NULL)
 	{
 		pipe(fd);
-		ft_pipes(in, fd[1], tmp);
+		ft_pipes(in, fd[1], all->cmd_list, all);
 		close(fd[1]);
 		in = fd[0];
-		tmp = tmp ->next;
+		all->cmd_list = all->cmd_list ->next;
 	}
-	if (in != 0)
-		dup2(in, 0);
-	printf("cmd2: %s fd in: %d\n",tmp->argv[0], tmp->std_in);
-	printf("cmd2: %s fd out: %d\n",tmp->argv[0], tmp->std_out);
-	dup2(tmp->std_out, 1);
-	if(tmp->std_out != 1)
-		close (tmp->std_out);
-	dup2(tmp->std_in, 0);
-	if(tmp->std_in != 0)
-		close (tmp->std_in);
-	if (ft_handle_builtins(tmp) == FAIL)
-		ft_handle_execv(tmp->argv);
-	else
-		exit(1);
+	printf("cmd2: %s fd in: %d\n",all->cmd_list->argv[0], all->cmd_list->std_in);
+	printf("cmd2: %s fd out: %d\n",all->cmd_list->argv[0], all->cmd_list->std_out);
+	ft_handle_exec_builtin(all->cmd_list, all);
 }
 
-int	ft_fork_main(t_cmd *cmd)
+int	ft_fork_main(t_all *all)
 {
 	int	pid;
 	int	fd[2];
@@ -206,7 +75,7 @@ int	ft_fork_main(t_cmd *cmd)
 	{
 		close(fd[0]);
 		close(fd[1]);
-		ft_fork(cmd);
+		ft_fork(all);
 	}
 	else
 	{
@@ -218,33 +87,61 @@ int	ft_fork_main(t_cmd *cmd)
 	return (SUCCESS);
 }
 
-int	ft_handle_one_builtin(t_cmd *cmd)
+int	ft_handle_one_builtin(t_all *all)
 {
-	if (ft_strcmp(cmd->argv[0], "exit") == 0)
-		ft_handle_exit(cmd);
-	dup2(cmd->std_out, 1);
-	dup2(cmd->std_in, 0);
-	if (ft_handle_builtins(cmd) == FAIL)
+	if (ft_strcmp(all->cmd_list->argv[0], "exit") == 0)
+		ft_handle_exit(all);
+	dup2(all->cmd_list->std_out, 1);
+	dup2(all->cmd_list->std_in, 0);
+	if (ft_handle_builtins(all->cmd_list) == FAIL)
 	{
-		dup2(cmd->out, STDOUT_FILENO);
-		dup2(cmd->in, STDIN_FILENO);
+		dup2(all->out, STDOUT_FILENO);
+		dup2(all->in, STDIN_FILENO);
 		return (FAIL);
 	}
+	if(all->cmd_list->std_out != 1)
+		close (all->cmd_list->std_out);
+	if(all->cmd_list->std_in != 0)
+		close (all->cmd_list->std_in);
+	close(STDOUT_FILENO);
+	close(STDIN_FILENO);
+	dup2(all->out, STDOUT_FILENO);
+	dup2(all->in, STDIN_FILENO);
+	return (SUCCESS);
+}
+
+void	ft_handle_exec_builtin(t_cmd *cmd, t_all *all)
+{
+	dup2(cmd->std_out, 1);
+	dup2(cmd->std_in, 0);
 	if(cmd->std_out != 1)
 		close (cmd->std_out);
 	if(cmd->std_in != 0)
 		close (cmd->std_in);
-	return (SUCCESS);
+	if (ft_handle_builtins(cmd) == FAIL)
+	{
+		ft_handle_execv(cmd);
+	}
+	if(all->cmd_list->std_out != 1)
+		close (all->cmd_list->std_out);
+	if(all->cmd_list->std_in != 0)
+		close (all->cmd_list->std_in);
+	close(STDOUT_FILENO);
+	close(STDIN_FILENO);
+	dup2(all->out, STDOUT_FILENO);
+	dup2(all->in, STDIN_FILENO);
+	//set_exit_status
+	exit (0);
 }
 
-int	ft_exec(t_cmd *cmd)
+int	ft_exec(t_all *all)
 {
-	if (cmd->next == NULL)
+	if (all->cmd_list->next == NULL)
 	{
-		if (ft_handle_one_builtin(cmd) == FAIL)
-			ft_fork_main(cmd);
+		if (ft_handle_one_builtin(all) == FAIL)
+			ft_fork_main(all);
 	}
 	else
-		ft_fork_main(cmd);
+		ft_fork_main(all);
 	return (SUCCESS);
 }
