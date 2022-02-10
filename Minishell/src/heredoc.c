@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 17:33:35 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/09 18:52:58 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/10 21:12:47 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ int	ft_handle_heredoc(t_part *list)
 	while (1)
 	{
 		if (input != NULL)
-			free (input);
+			ft_free (input);
 		input = readline("> ");
 		if (input == NULL || ft_strcmp(input, list->argv) == 0)
 			break ;
 		else
 		{
+			if (list->flag != HEREDOC_SQ)
+				ft_search_for_money(&input, HEREDOC_SQ);
 			ft_putstr_fd(input, fd[1]);
 			write(fd[1], "\n", 1);
 		}
@@ -45,7 +47,7 @@ int	ft_handle_heredoc(t_part *list)
 	if (input != NULL)
 	{
 		ret_fd = fd[0];
-		free (input);
+		ft_free (input);
 	}
 	else
 		close(fd[0]);

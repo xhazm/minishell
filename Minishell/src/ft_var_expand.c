@@ -75,7 +75,7 @@ void	ft_check_var_name(char **str, int i)
 	ft_free(varName);
 }
 
-void ft_search_for_money(char **str)
+void ft_search_for_money(char **str, int ignore)
 {
 	int i;
 	char flag;
@@ -85,7 +85,7 @@ void ft_search_for_money(char **str)
 	while ((*str)[i] != '\0')
 	{
 		flag = ft_check_closing_quotes((*str)[i], flag);
-		if (flag != '\'' && (*str)[i] == '$')
+		if ((ignore == HEREDOC_SQ || flag != '\'') && (*str)[i] == '$')
 		{
 			if ((*str)[i + 1] == '?')
 			{
@@ -111,13 +111,14 @@ void ft_search_for_money(char **str)
 
 void	ft_var_expand(t_cmd *cmd)
 {
+
 	int		i;
 	t_part	*del;
 
 	i = 0;
 	while (i < cmd->argc)
 	{
-		ft_search_for_money(&cmd->part->argv);
+		ft_search_for_money(&cmd->part->argv, 0);
 		if (ft_strcmp(cmd->part->argv, "") == 0)
 		{
 			del = cmd->part;

@@ -58,4 +58,11 @@ void	ft_rm_quotes(t_cmd *cmd)
 		cmd->part = cmd->part->next;
 		i++;
 	}
+	i = 0;
+	while (i < cmd->redc)
+	{
+		ft_search_for_quotes_2be_removed(&cmd->redi->argv);
+		cmd->redi = cmd->redi->next;
+		i++;
+	}
 }

@@ -34,39 +34,6 @@ void ft_change_head(t_cmd *cmd)
 	}
 
 }
-// int ft_get_redirections(t_cmd *cmd)
-// {
-// 	int		i;
-// 	t_part	*tmp;
-
-
-// 		i = 0;
-// 		while (i < 10)
-// 		{
-// 			if (ft_check_redirection(cmd->part->argv) > 0)
-// 			{
-// 				if (cmd->part->next == cmd->part->head || ft_strcmp(cmd->part->next->argv, "|") == 0 || ft_check_redirection(cmd->part->next->argv) > 0)
-// 				{	
-// 					printf("syntax error near unexpected token\n");
-// 					return(FAIL);
-// 				}
-// 				else
-// 				{
-// 					tmp = cmd->part;
-// 					ft_detache_node(&cmd->part, cmd->part);
-// 					ft_attache_node(&cmd->redi, tmp);
-// 				} 
-// 			}
-// 			else
-// 			{
-// 				cmd->part = cmd->part->next;
-// 				i++;
-// 			}
-// 				i++;
-// 		}
-// 	return (SUCCESS);
-// }
-
 
 void	ft_exchange_two_nodes(t_cmd *cmd, t_part *tmp1, t_part *tmp2)
 {
@@ -119,6 +86,8 @@ int ft_get_redirections(t_cmd *cmd)
 			{
 				cmd->part->flag = 0;
 				cmd->part->next->flag = flag;
+				if (cmd->part->next->argv[0] == '\'')
+					cmd->part->next->flag = HEREDOC_SQ;
 				ft_exchange_two_nodes(cmd, tmp1, tmp2);
 				if (cmd->argc == 0)
 					cmd->part = NULL;
@@ -128,7 +97,6 @@ int ft_get_redirections(t_cmd *cmd)
 		}
 		else
 		{
-			//cmd->part->flag = 0;
 			cmd->part = cmd->part->next;
 			i++;
 		}

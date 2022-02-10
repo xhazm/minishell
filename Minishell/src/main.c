@@ -27,39 +27,39 @@ int ft_get_cmd_command_for_exec(t_cmd *cmd)
 	return (SUCCESS);
 }
 
-void ft_check_struct(t_cmd *cmd)
-{
-	int i;
+// void ft_check_struct(t_cmd *cmd)
+// {
+// 	int i;
 
-	printf("\n\n--------- CMD STRUCT ----------\n");
-	//cmd=cmd->head;
-	while(cmd)
-	{
-		i = 0;
-		while(cmd->argv != NULL && cmd->argv[i] != NULL)
-		{
-			printf("-->%s<--\n", cmd->argv[i]);
-			i++;
-		}
-		// i = 0;
-		// while (i < cmd->argc)
-		// {
-		// 	printf("%s %d\n", cmd->part->argv, cmd->part->flag);
-		// 	cmd->part = cmd->part->next;
-		// 	i++;
-		// }
-		// i = 0;
-		// printf("---REDI--\n");
-		// while (i < cmd->redc && cmd->redi != NULL)
-		// {
-		// 	printf("%s %d\n", cmd->redi->argv, cmd->redi->flag);
-		// 	cmd->redi = cmd->redi->next;
-		// 	i++;
-		// }
-		printf("--------- NEW NODE ----------\n");
-		cmd = cmd -> next;
-	}
-}
+// 	printf("\n\n--------- CMD STRUCT ----------\n");
+// 	//cmd=cmd->head;
+// 	while(cmd)
+// 	{
+// 		i = 0;
+// 		while(cmd->argv != NULL && cmd->argv[i] != NULL)
+// 		{
+// 			printf("-->%s<--\n", cmd->argv[i]);
+// 			i++;
+// 		}
+// 		// i = 0;
+// 		// while (i < cmd->argc)
+// 		// {
+// 		// 	printf("%s %d\n", cmd->part->argv, cmd->part->flag);
+// 		// 	cmd->part = cmd->part->next;
+// 		// 	i++;
+// 		// }
+// 		// i = 0;
+// 		// printf("---REDI--\n");
+// 		// while (i < cmd->redc && cmd->redi != NULL)
+// 		// {
+// 		// 	printf("%s %d\n", cmd->redi->argv, cmd->redi->flag);
+// 		// 	cmd->redi = cmd->redi->next;
+// 		// 	i++;
+// 		// }
+// 		printf("--------- NEW NODE ----------\n");
+// 		cmd = cmd -> next;
+// 	}
+// }
 
 int	ft_parcer(t_cmd *cmd)
 {
@@ -71,14 +71,10 @@ int	ft_parcer(t_cmd *cmd)
 	{
 		if (tmp->part == NULL)
 			return (ERROR);
-		ft_var_expand(tmp);
-		//ft_set_cmd_flags(tmp);
-		ft_rm_quotes(tmp);
 		if (!ft_get_redirections(tmp))
 			return(FAIL);
-		// if (!ft_get_cmd_command_for_exec(tmp))
-		// 	return(FAIL);
-
+		ft_var_expand(tmp);
+		ft_rm_quotes(tmp);
 		tmp = tmp->next;
 		i++;
 	}
@@ -92,7 +88,6 @@ int	ft_parcer(t_cmd *cmd)
 	return (SUCCESS);
 }
 
-// Print error message when incorect command is executed
 int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[], 
 	char **envp)
 {
