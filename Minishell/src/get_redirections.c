@@ -86,8 +86,8 @@ int ft_get_redirections(t_cmd *cmd)
 			{
 				cmd->part->flag = 0;
 				cmd->part->next->flag = flag;
-				if (cmd->part->next->argv[0] == '\'')
-					cmd->part->next->flag = HEREDOC_SQ;
+				if (cmd->part->next->argv[0] == '\'' || cmd->part->next->argv[0] == '"')
+					cmd->part->next->flag = HEREDOC_Q;
 				ft_exchange_two_nodes(cmd, tmp1, tmp2);
 				if (cmd->argc == 0)
 					cmd->part = NULL;

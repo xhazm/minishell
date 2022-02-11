@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/10 21:56:08 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/11 22:16:42 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define APPEND 51
 # define REDIRECT_OUT 52
 # define HEREDOC 53
-# define HEREDOC_SQ 54
+# define HEREDOC_Q 54
 # define RED_FILE 6
 
 int	exit_status;
@@ -107,12 +107,11 @@ int		ft_handle_heredoc(t_part *list);
 int		ft_signal_handling(int process);
 
 
-void	ft_generate_cmd(t_cmd **cmd);
+int		ft_generate_cmd(t_cmd **cmd);
 void	ft_terminal_echoctl(int echo_status);
 void	ft_free_all(t_cmd **cmd, char **input);
 int		ft_prompt(char **input);
 int		ft_lexer(char *input, t_cmd **cmd);
-void	ft_split_input(char *sub, t_cmd *cmd);
 int		ft_store_cmd_argv(t_cmd *cmd, char *argv);
 void	ft_var_expand(t_cmd *cmd);
 char	ft_check_closing_quotes(char c, char flag);
@@ -120,9 +119,7 @@ void	ft_rm_quotes(t_cmd *cmd);
 int		ft_exec(t_all *all);
 void	ft_search_for_money(char **str, int ignore);
 int		ft_get_redirections(t_cmd *cmd);
-
-
-//storing everything to the list
-void	ft_generate_cmd_part(t_part **part);
+int		ft_set_cmd_flags(t_cmd *cmd);
+int		ft_generate_cmd_part(t_part **part);
 int		ft_set_cmd_flags(t_cmd *cmd);
 #endif

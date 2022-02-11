@@ -54,13 +54,34 @@ int	ft_insert_str(char **str1, char *str2, int start, int end)
 	return (SUCCESS);
 }
 
-void	ft_check_var_name(char **str, int i)
+char *ft_builtin_var_expantion(char *varValue, int start)
+{
+	char **temp;
+	char *res;
+	int i;
+
+	i = 0;
+	res = NULL;
+	temp = NULL;
+	temp = ft_split(varValue, ' ');
+	while (temp[i] != NULL)
+	{
+		if (start != 0)
+			res = ft_strjoin(res, " ");
+		if (start == 0 && i != 0)
+			res = ft_strjoin(res, " ");
+		res = ft_strjoin(res, temp[i]);
+		i++;
+	}
+	return(res);
+}
+
+void	ft_check_var_name(char **str, int i, char flag, int flag2)
 {
 					
 	int		start;
 	char	*varName;
 	char	*varValue;
-
 
 	start = i;
 	i++;
@@ -68,14 +89,23 @@ void	ft_check_var_name(char **str, int i)
 		i++;
 	varName = ft_substr((*str), start + 1, i);
 	varValue = ft_var_data(ft_envp_pointer(), varName);
-	if (varValue != NULL)
+	if (varValue != NULL && flag2 != HEREDOC_Q)
+	{
+		if (ft_strchr(varValue, ' ') == NULL || (*str)[i] == '"')
+			ft_insert_str(str, varValue, start, i);
+		else
+			ft_insert_str(str, ft_builtin_var_expantion(varValue, start), start, i);
+	} 
+	else if (varValue != NULL && flag2 == HEREDOC_Q)
+	{
 		ft_insert_str(str, varValue, start, i);
+	}
 	else
 		ft_insert_str(str, NULL, start, i);
 	ft_free(varName);
 }
 
-void ft_search_for_money(char **str, int ignore)
+void ft_search_for_money(char **str, int flag2)
 {
 	int i;
 	char flag;
@@ -85,24 +115,17 @@ void ft_search_for_money(char **str, int ignore)
 	while ((*str)[i] != '\0')
 	{
 		flag = ft_check_closing_quotes((*str)[i], flag);
-		if ((ignore == HEREDOC_SQ || flag != '\'') && (*str)[i] == '$')
+		if ((flag2 == HEREDOC_Q || flag != '\'') && (*str)[i] == '$')
 		{
 			if ((*str)[i + 1] == '?')
 			{
 				ft_insert_str(str, ft_itoa(exit_status), i, i + 2);
 				i++;
 			}
-			// else if ((*str)[i + 1] == '$')
-			// {
-			// 	//Maybe needs to be done
-			// 	printf("$$ is the process ID of the current shell instance. Not necesery for mandatory part.\n");
-			// 	i++;
-			// 	i++;
-			// }
 			else if ((*str)[i + 1] == ' ' || (*str)[i + 1] == '\0')
 				i++;
 			else
-				ft_check_var_name(str, i);
+				ft_check_var_name(str, i, flag, flag2);
 		}
 		else
 			i++;

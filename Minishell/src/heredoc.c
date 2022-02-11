@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 17:33:35 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/10 21:12:47 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/11 18:59:25 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	ft_handle_heredoc(t_part *list)
 			break ;
 		else
 		{
-			if (list->flag != HEREDOC_SQ)
-				ft_search_for_money(&input, HEREDOC_SQ);
+			if (list->flag != HEREDOC_Q)
+				ft_search_for_money(&input, HEREDOC_Q);
 			ft_putstr_fd(input, fd[1]);
 			write(fd[1], "\n", 1);
 		}

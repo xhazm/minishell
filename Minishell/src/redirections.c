@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/10 21:11:48 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:50:51 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	ft_redirect_fd(t_part *list, int flag, int flag2, int flag3)
 		{
 			if (fd != -2)
 				close (fd);
-			if (list->flag == HEREDOC || list->flag == HEREDOC_SQ)
+			if (list->flag == HEREDOC || list->flag == HEREDOC_Q)
 				fd = ft_handle_heredoc(list);
 			else
 				fd = ft_open_fd_with_oflag(list);
@@ -61,7 +61,7 @@ static int	ft_set_cmd_fd(t_cmd *cmd)
 	if (fd > 0)
 		cmd->std_out = fd;
 	fd = 0;
-	fd = ft_redirect_fd(cmd->redi->head, REDIRECT_OUT, HEREDOC, HEREDOC_SQ);
+	fd = ft_redirect_fd(cmd->redi->head, REDIRECT_OUT, HEREDOC, HEREDOC_Q);
 	if (fd > 0)
 		cmd->std_in = fd;
 	return (SUCCESS);

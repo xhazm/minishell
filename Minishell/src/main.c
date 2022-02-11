@@ -4,13 +4,13 @@ int ft_get_cmd_command_for_exec(t_cmd *cmd)
 {
 	int i;
 
-	if (cmd->argc > 0 && cmd->part->argv[0] != '|')
+	if (cmd->argc > 0 && cmd->part->flag != PIPE)
 	{
 		cmd->argv = (char **)ft_malloc(sizeof(char *) * (cmd->argc + 1));
 		if (!cmd->argv)
 			return(FAIL);
 		i = 0;
-		while (i < cmd->argc && cmd->part->argv[0] != '|')
+		while (i < cmd->argc && cmd->part->flag != PIPE)
 		{
 			cmd->argv[i] = ft_strdup(cmd->part->argv);
 			cmd->part = cmd->part->next;
@@ -27,41 +27,41 @@ int ft_get_cmd_command_for_exec(t_cmd *cmd)
 	return (SUCCESS);
 }
 
-// void ft_check_struct(t_cmd *cmd)
-// {
-// 	int i;
+void ft_check_struct(t_cmd *cmd)
+{
+	int i;
 
-// 	printf("\n\n--------- CMD STRUCT ----------\n");
-// 	//cmd=cmd->head;
-// 	while(cmd)
-// 	{
-// 		i = 0;
-// 		while(cmd->argv != NULL && cmd->argv[i] != NULL)
-// 		{
-// 			printf("-->%s<--\n", cmd->argv[i]);
-// 			i++;
-// 		}
-// 		// i = 0;
-// 		// while (i < cmd->argc)
-// 		// {
-// 		// 	printf("%s %d\n", cmd->part->argv, cmd->part->flag);
-// 		// 	cmd->part = cmd->part->next;
-// 		// 	i++;
-// 		// }
-// 		// i = 0;
-// 		// printf("---REDI--\n");
-// 		// while (i < cmd->redc && cmd->redi != NULL)
-// 		// {
-// 		// 	printf("%s %d\n", cmd->redi->argv, cmd->redi->flag);
-// 		// 	cmd->redi = cmd->redi->next;
-// 		// 	i++;
-// 		// }
-// 		printf("--------- NEW NODE ----------\n");
-// 		cmd = cmd -> next;
-// 	}
-// }
+	printf("\n\n--------- CMD STRUCT ----------\n");
+	//cmd=cmd->head;
+	while(cmd)
+	{
+		// i = 0;
+		// while(cmd->argv != NULL && cmd->argv[i] != NULL)
+		// {
+		// 	printf("-->%s<--\n", cmd->argv[i]);
+		// 	i++;
+		// }
+		i = 0;
+		while (i < cmd->argc)
+		{
+			printf("-->%s<-- %d\n", cmd->part->argv, cmd->part->flag);
+			cmd->part = cmd->part->next;
+			i++;
+		}
+		// i = 0;
+		// printf("---REDI--\n");
+		// while (i < cmd->redc && cmd->redi != NULL)
+		// {
+		// 	printf("%s %d\n", cmd->redi->argv, cmd->redi->flag);
+		// 	cmd->redi = cmd->redi->next;
+		// 	i++;
+		// }
+		printf("--------- NEW NODE ----------\n");
+		cmd = cmd -> next;
+	}
+}
 
-int	ft_parcer(t_cmd *cmd)
+int	ft_parser(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 	int		i;
@@ -108,7 +108,7 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 			if (all.cmd_list != NULL)
 			{
 				all.cmd_list= all.cmd_list->head;
-				if(ft_parcer(all.cmd_list))
+				if(ft_parser(all.cmd_list))
 				{
 					ft_redirect(all.cmd_list);
 					if (all.cmd_list->argv != NULL && ft_exec(&all) == FAIL)
@@ -118,7 +118,7 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 					// dup2(cmd->out, STDOUT_FILENO);
 					// dup2(cmd->in, STDIN_FILENO);
 				}
-				//ft_check_struct(cmd);
+				//ft_check_struct(all.cmd_list);
 			}
 			free(input);
 		}

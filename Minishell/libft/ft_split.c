@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 11:55:30 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 19:56:50 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/11 17:07:35 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*ft_sub_arr(char const *s, char c, int i, int strlen)
 
 	start = i;
 	i = i + strlen;
-	arr = (char *) malloc((strlen + 1) * sizeof(char));
+	arr = (char *) ft_malloc((strlen + 1) * sizeof(char));
 	if (!arr)
 		return (0);
 	while (s[start] != c && s[start] != '\0')
@@ -69,7 +69,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	arr = (char **) malloc((ft_count_mem_for_arr(s, c) + 1) * sizeof(char *));
+	arr = (char **) ft_malloc((ft_count_mem_for_arr(s, c) + 1) * sizeof(char *));
 	if (!arr)
 		return (0);
 	i = 0;
