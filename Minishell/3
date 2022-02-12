@@ -1,0 +1,2 @@
+cmd1: file fd in: 0
+cmd1: file fd out: 5

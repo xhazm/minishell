@@ -30,9 +30,6 @@ int		ft_handle_execv(t_cmd	*cmd)
 	tmp = NULL;
 	path = ft_get_path(ft_envp_pointer());
 	tmp = ft_strmapi(cmd->argv[0], ft_tolower);
-	// if (tmp == NULL)
-	// 	return (FAIL);
-
 	while (path[i] != NULL)
 	{
 		if (access(ft_strjoin(path[i], tmp), X_OK) == 0)

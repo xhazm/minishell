@@ -19,6 +19,8 @@ int ft_get_cmd_command_for_exec(t_cmd *cmd)
 		cmd->argv[i] = NULL;
 		cmd->part = cmd->part->head;
 	}
+	else
+		cmd->argv = NULL;
 	if (cmd->argv == NULL && cmd->redc == 0)
 	{
 		printf("syntax error near unexpected token\n");
@@ -116,7 +118,7 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 						dup2(all.in, STDIN_FILENO);
 						continue ;
 					}
-					if (all.cmd_list->argv != NULL && ft_exec(&all) == FAIL)
+					if (ft_exec(&all) == FAIL)
 						return (FAIL);
 					// close(cmd->std_in);
 					// close(cmd->std_out);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 17:33:35 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 18:57:51 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/12 19:24:00 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,15 @@ int	ft_handle_heredoc(t_part *list)
 	}
 	if (input != NULL)
 	{
-		ret_fd = fd[0];
+		if (ret_fd == -3)
+			close(fd[0]);
+		else
+			ret_fd = fd[0];
 		ft_free (input);
 	}
 	else
 		close(fd[0]);
+	close(dup_fd);
 	exit_status = 0;
 	ft_signal_handling(PARENT);
 	return(ret_fd);
