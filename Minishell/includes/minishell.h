@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/12 15:05:43 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:31:10 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	*ft_set_envp_node(t_list **envp, char *orig_envp);
 
 int		ft_builtin_pwd(void);
 int		ft_builtin_echo(int argc, char **argv);
-int		ft_builtin_cd(char **argv);
+int		ft_builtin_cd(char **argv, int argc);
 int		ft_handle_builtins(t_cmd *cmd);
 int		ft_print_perrno(char *argv, char *cmd);
 int		ft_builtin_export(t_list **envp, char **argv);
