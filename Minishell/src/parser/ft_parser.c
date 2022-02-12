@@ -1,25 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/06 10:15:22 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/12 21:05:26 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/02/12 20:27:12 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/02/12 20:37:17 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_parser(t_cmd *cmd)
 {
-	size_t	i;
+	int		i;
+	t_cmd	*tmp;
 
 	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0')
+	tmp = cmd;
+	while (tmp)
+	{
+		if (tmp->part == NULL)
+			return (ERROR);
+		if (!ft_get_redirections(tmp))
+			return (FAIL);
+		ft_var_expand(tmp);
+		ft_rm_quotes(tmp);
+		tmp = tmp->next;
 		i++;
-	return (i);
+	}
+	tmp = cmd->head;
+	while (tmp)
+	{
+		if (!ft_get_cmd_command_for_exec(tmp))
+			return (FAIL);
+		tmp = tmp->next;
+	}
+	return (SUCCESS);
 }

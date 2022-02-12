@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doubly_linked_(*list).c                               :+:      :+:    :+:   */
+/*   doubly_linked_list.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 14:38:48 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/04 20:51:09 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/02/12 21:13:17 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/02/12 21:13:31 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	ft_detache_node(t_part **list, t_part *detache_node)
 		(*list) = next_node;
 	detache_node->next = NULL;
 	detache_node->prev = NULL;
-	if ((*list) != NULL && detache_node != next_node && detache_node != prev_node)
+	if ((*list) != NULL && detache_node
+		!= next_node && detache_node != prev_node)
 	{
 		prev_node->next = next_node;
 		next_node->prev = prev_node;

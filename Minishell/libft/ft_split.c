@@ -6,13 +6,13 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 11:55:30 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/11 17:07:35 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/12 21:19:43 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	ft_count_mem_for_arr(char const *s, char c)
+static size_t	ft_cnt_mem_for_arr(char const *s, char c)
 {
 	int		i;
 	size_t	arrsize;
@@ -69,12 +69,12 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	arr = (char **) ft_malloc((ft_count_mem_for_arr(s, c) + 1) * sizeof(char *));
+	arr = (char **) ft_malloc((ft_cnt_mem_for_arr(s, c) + 1) * sizeof(char *));
 	if (!arr)
 		return (0);
 	i = 0;
 	j = 0;
-	while (j < ft_count_mem_for_arr(s, c))
+	while (j < ft_cnt_mem_for_arr(s, c))
 	{
 		if (s[i] != c && s[i] != '\0')
 		{

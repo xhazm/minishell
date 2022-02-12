@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_check_closing_quotes.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/06 10:15:22 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/12 21:05:26 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/02/12 20:24:40 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/02/12 20:24:41 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-size_t	ft_strlen(const char *s)
+char	ft_check_closing_quotes(char c, char flag)
 {
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	if (c == '\'' && flag == '\'')
+		flag = 0;
+	else if (c == '"' && flag == '"')
+		flag = 0;
+	else if (flag == 0 && (c == '\'' || c == '"'))
+		flag = c;
+	return (flag);
 }

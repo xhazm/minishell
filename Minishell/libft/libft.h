@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 16:53:50 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/04 20:53:22 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/12 21:10:32 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+
+# define SUCCESS 1
+# define FAIL 0
 
 typedef struct s_list
 {
@@ -27,7 +30,6 @@ typedef struct s_part
 {
 	char			*argv;
 	int				flag;
-	
 	struct s_part	*head;
 	struct s_part	*next;
 	struct s_part	*prev;
@@ -89,4 +91,5 @@ t_list	*ft_unprotected_lstnew(void *content);
 int		ft_free2darr(void **arr);
 int		ft_attache_node(t_part **list, t_part *attache_node);
 int		ft_detache_node(t_part **list, t_part *detache_node);
+int		ft_insert_str(char **str1, char *str2, int start, int end);
 #endif

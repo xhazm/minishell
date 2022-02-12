@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/12 18:07:20 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/12 23:06:13 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,16 @@ int		ft_valid_env_name(char *str);
 t_env	*ft_iterate_env(t_list *envp, char *str);
 void	ft_handle_exit(t_all *all);
 void	ft_handle_exec_builtin(t_cmd *cmd, t_all *all);
-
+int		ft_handle_input(char *input, int *start, int end, t_cmd **cmd);
 
 
 int		ft_redirect(t_cmd *cmd);
 int		ft_handle_heredoc(t_part *list);
 
-
+int		ft_get_cmd_command_for_exec(t_cmd *cmd);
 int		ft_signal_handling(int process);
 
-
+int		ft_parser(t_cmd *cmd);
 int		ft_generate_cmd(t_cmd **cmd);
 void	ft_terminal_echoctl(int echo_status);
 void	ft_free_all(t_cmd **cmd, char **input);
@@ -117,7 +117,7 @@ int		ft_lexer(char *input, t_cmd **cmd);
 int		ft_store_cmd_argv(t_cmd *cmd, char *argv);
 void	ft_var_expand(t_cmd *cmd);
 char	ft_check_closing_quotes(char c, char flag);
-void	ft_rm_quotes(t_cmd *cmd);
+int		ft_rm_quotes(t_cmd *cmd);
 int		ft_exec(t_all *all);
 void	ft_search_for_money(char **str, int ignore);
 int		ft_get_redirections(t_cmd *cmd);
