@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 19:53:05 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/31 20:58:51 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:04:07 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_builtin_export(t_list **envp, char **argv)
 	{
 		if (ft_valid_env_name(argv[i]) == SUCCESS)
 		{
-			if (ft_parse_envp(envp, argv[i]) == NULL)
+			if (ft_set_envp_node(envp, argv[i]) == NULL)
 				return (FAIL);
 		}
 		// else

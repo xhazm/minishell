@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/08 15:45:58 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:13:33 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ t_env	*ft_iterate_env(t_list *envp, char *str)
 	{
 		env_node = envp->content;
 		if (ft_strcmp(env_node->name, str) == 0)
-			break ;
+			return (env_node);
 		envp = envp->next;
 	}
-	return (env_node);
+	return (NULL);
 }
 
 int	ft_valid_env_name(char *str)
@@ -61,7 +61,7 @@ int	ft_valid_env_name(char *str)
 	return (SUCCESS);
 }
 
-void	*ft_set_envp_node(char *orig_envp, t_env *envp_node)
+static void	*ft_create_envp_node(char *orig_envp, t_env *envp_node)
 {
 	int	i;
 	int	start;
@@ -90,20 +90,28 @@ void	*ft_set_envp_node(char *orig_envp, t_env *envp_node)
 	return (orig_envp);
 }
 
-void	*ft_parse_envp(t_list **envp, char *orig_envp)
+void	*ft_set_envp_node(t_list **envp, char *orig_envp)
 {
 	int		i;
 	int		start;
 	t_env	*envp_node;
+	t_env	*check_double;
 
 	i = 0;
 	start = 0;
+	check_double = NULL;
 	envp_node = ft_malloc(sizeof(t_env) * 1);
 	if (envp_node == NULL)
 		return (NULL);
-	if (ft_set_envp_node(orig_envp, envp_node) == NULL)
+	if (ft_create_envp_node(orig_envp, envp_node) == NULL)
 		return (NULL);
-	if (ft_lstadd_back(envp, envp_node) == NULL)
+	check_double = ft_iterate_env(*envp, envp_node->name);
+	if (check_double != NULL)
+	{
+		check_double->arg = envp_node->arg;
+		ft_free(envp_node);
+	}
+	else if (ft_lstadd_back(envp, envp_node) == NULL)
 		return (NULL);
 	return (envp_node);
 }
@@ -142,7 +150,7 @@ int	ft_set_envp(char **orig_envp)
 	new_envp = ft_envp_pointer();
 	while (i < env_len)
 	{
-		if (ft_parse_envp(new_envp, orig_envp[i]) == NULL)
+		if (ft_set_envp_node(new_envp, orig_envp[i]) == NULL)
 			return (FAIL);
 		i++;
 	}

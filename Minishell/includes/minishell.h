@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/11 22:16:42 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:05:43 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,14 @@ int		ft_handle_envp(char **orig_envp);
 t_list	**ft_envp_pointer(void);
 int		ft_handle_execv(t_cmd *cmd);
 int		ft_set_envp(char **orig_envp);
+void	*ft_set_envp_node(t_list **envp, char *orig_envp);
+
 int		ft_builtin_pwd(void);
 int		ft_builtin_echo(int argc, char **argv);
 int		ft_builtin_cd(char **argv);
 int		ft_handle_builtins(t_cmd *cmd);
 int		ft_print_perrno(char *argv, char *cmd);
 int		ft_builtin_export(t_list **envp, char **argv);
-void	*ft_set_envp_node(char *orig_envp, t_env *envp_node);
 void	*ft_parse_envp(t_list **envp, char *orig_envp);
 int		ft_print_env(t_list **envp);
 int		ft_builtin_unset(t_list **envp, char **argv);
