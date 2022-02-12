@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 19:08:45 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 15:57:12 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/12 17:50:20 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	ft_handle_builtins(t_cmd *cmd)
 	char	*tmp;
 
 	tmp = NULL;
-	tmp = ft_strmapi(argv[0], ft_tolower);
+	tmp = ft_strmapi(cmd->argv[0], ft_tolower);
 	if (tmp == NULL)
 		return (FAIL);
 	if (ft_strcmp(tmp, "echo") == 0)
-		ft_builtin_echo(ft_strlen2D(argv) - 1, &argv[1]);
+		ft_builtin_echo(ft_strlen2D(cmd->argv) - 1, &cmd->argv[1]);
 	else if (ft_strcmp(tmp, "cd") == 0)
 		ft_builtin_cd(cmd->argv, cmd->argc);
 	else if (ft_strcmp(tmp, "pwd") == 0)
