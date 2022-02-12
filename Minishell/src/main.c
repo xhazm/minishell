@@ -110,7 +110,12 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 				all.cmd_list= all.cmd_list->head;
 				if(ft_parser(all.cmd_list))
 				{
-					ft_redirect(all.cmd_list);
+					if (ft_redirect(all.cmd_list) == FAIL)
+					{
+						ft_free(input);
+						dup2(all.in, STDIN_FILENO);
+						continue ;
+					}
 					if (all.cmd_list->argv != NULL && ft_exec(&all) == FAIL)
 						return (FAIL);
 					// close(cmd->std_in);
@@ -120,7 +125,7 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 				}
 				//ft_check_struct(all.cmd_list);
 			}
-			free(input);
+			ft_free(input);
 		}
 		else
 			break;

@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 15:06:04 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/09 20:59:06 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/12 18:14:44 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	ft_heredoc_signal(int signo)
 	{
 		write(1, "\n", 1);
 		close(STDIN_FILENO);
+		ft_signal_handling(PARENT);
 	}
 	exit_status = signo;
 	return ;
