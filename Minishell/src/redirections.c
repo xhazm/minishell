@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 18:23:25 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/12 18:51:42 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	ft_set_cmd_fd(t_cmd *cmd)
 	fd = ft_redirect_fd(cmd->redi->head, REDIRECT_OUT, HEREDOC, HEREDOC_Q);
 	if (fd > 0)
 		cmd->std_in = fd;
-	else if (fd < 0)
+	else if (fd == -3)
 		return (FAIL);
 	return (SUCCESS);
 }
