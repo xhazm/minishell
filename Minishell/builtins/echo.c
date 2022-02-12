@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/31 20:55:38 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:39:54 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ int	ft_builtin_echo(int argc, char **argv)
 	int	i;
 	int	option;
 	int	opt_check;
-	int	ret;
-	
+
 	i = 0;
-	ret = 1;
 	option = 0;
 	opt_check = 0;
 	if (argc != 0)

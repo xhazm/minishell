@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 19:53:05 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 15:04:07 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:55:47 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static int	ft_print_export(t_list **envp)
 	while ((*envp) != NULL)
 	{
 		env_node = (*envp)->content;
-		if (env_node->name != NULL && !(env_node->name == NULL && env_node->arg == NULL))
+		if (env_node->name != NULL
+			&& !(env_node->name == NULL && env_node->arg == NULL))
 		{
 			write(1, "declare -x ", 11);
 			ft_putstr_fd(env_node->name, 1);
@@ -41,12 +42,12 @@ static int	ft_print_export(t_list **envp)
 
 int	ft_builtin_export(t_list **envp, char **argv)
 {
-	int i;
+	int	i;
 
 	if (argv[1] == NULL)
 	{
 		ft_print_export(ft_envp_pointer());
-		return (SUCCESS) ;
+		return (SUCCESS);
 	}
 	i = 1;
 	while (argv[i] != NULL)
@@ -56,8 +57,8 @@ int	ft_builtin_export(t_list **envp, char **argv)
 			if (ft_set_envp_node(envp, argv[i]) == NULL)
 				return (FAIL);
 		}
-		// else
-			//ERRORMESSAGE not valid env name;
+		else
+			return (ft_print_error(argv[0], argv[i], "not a valid identifier"));
 		i++;
 	}
 	return (SUCCESS);

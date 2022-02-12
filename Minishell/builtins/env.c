@@ -6,99 +6,46 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 15:13:33 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:45:29 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_list	**ft_envp_pointer(void)
-{
-	static	t_list *envp;
-	return (&envp);
-}
-
-int	ft_print_perrno(char *argv, char *cmd)
-{
-	char	*error;
-
-	error = NULL;
-	error = strerror(errno);
-	if (error != NULL)
-		printf("%s: %s: %s\n", cmd, argv, error);
-	return (FAIL);
-}
-
-t_env	*ft_iterate_env(t_list *envp, char *str)
-{
-	t_env	*env_node;
-
-	while (envp != NULL)
-	{
-		env_node = envp->content;
-		if (ft_strcmp(env_node->name, str) == 0)
-			return (env_node);
-		envp = envp->next;
-	}
-	return (NULL);
-}
-
-int	ft_valid_env_name(char *str)
-{
-	int i;
-
-	if (ft_isalpha(str[0]) == FAIL)
-		return (FAIL);
-	i = 1;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '=')
-			return (SUCCESS);
-		if (ft_isalnum(str[i]) == FAIL)
-			return (FAIL);
-		i++;
-	}
-	return (SUCCESS);
-}
-
-static void	*ft_create_envp_node(char *orig_envp, t_env *envp_node)
+static void	*ft_create_envp_node(char *o_envp, t_env *envp_node)
 {
 	int	i;
 	int	start;
 
 	i = 0;
 	start = 0;
-	while (orig_envp[i] != '\0')
+	while (o_envp[i] != '\0')
 	{
-		if ((orig_envp[i] == '=' && i > 0) || (orig_envp[i + 1] == '\0' && i > 0))
+		if ((o_envp[i] == '=' && i > 0) || (o_envp[i + 1] == '\0' && i > 0))
 		{
-			envp_node->name = ft_substr(orig_envp, start, (i - start));
+			envp_node->name = ft_substr(o_envp, start, (i - start));
 			if (envp_node->name == NULL)
 				return (NULL);
 			break ;
 		}
 		i++;
 	}
-	if (i > 0 && orig_envp[i] == '=')
+	if (i > 0 && o_envp[i] == '=')
 	{
 		start = i;
-		i = ft_strlen(orig_envp);
-		envp_node->arg = ft_substr(orig_envp, start, i);
+		i = ft_strlen(o_envp);
+		envp_node->arg = ft_substr(o_envp, start, i);
 		if (envp_node->arg == NULL)
 			return (NULL);
 	}
-	return (orig_envp);
+	return (o_envp);
 }
 
 void	*ft_set_envp_node(t_list **envp, char *orig_envp)
 {
-	int		i;
-	int		start;
 	t_env	*envp_node;
 	t_env	*check_double;
 
-	i = 0;
-	start = 0;
 	check_double = NULL;
 	envp_node = ft_malloc(sizeof(t_env) * 1);
 	if (envp_node == NULL)

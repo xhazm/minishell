@@ -23,7 +23,7 @@ LIBFT_DIR = ./libft/
 # Source files and object files
 SRC_FILES = main.c ft_cmd_struct.c ft_exec.c ft_free.c ft_prompt.c ft_lexer.c ft_var_expand.c ft_check_closing_quotes.c \
 			get_redirections.c ft_remove_quotes.c execv.c redirections.c heredoc.c signals.c \
-			../builtins/cd.c ../builtins/echo.c ../builtins/env.c ../builtins/export.c ../builtins/handle_builtins.c \
+			../builtins/cd.c ../builtins/echo.c ../builtins/env.c ../builtins/env_helper.c ../builtins/export.c ../builtins/handle_builtins.c \
 			../builtins/pwd.c ../builtins/unset.c ../builtins/exit.c\
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
