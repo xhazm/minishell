@@ -6,16 +6,15 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:45:27 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/05 19:41:20 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/13 17:36:29 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
 void	ft_terminal_echoctl(int echo_status)
 {
-	struct termios term;
+	struct termios	term;
 
 	tcgetattr(STDIN_FILENO, &term);
 	if (echo_status == DEACTIVATE)
@@ -33,7 +32,7 @@ int	ft_prompt(char **input)
 	(*input) = readline("Minishell $> ");
 	if ((*input) != NULL)
 	{
-		if(ft_strlen((*input)) > 0)
+		if (ft_strlen((*input)) > 0)
 			add_history(*input);
 		return (1);
 	}

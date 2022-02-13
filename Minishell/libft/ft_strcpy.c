@@ -1,41 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parser.c                                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/12 20:27:12 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/13 17:38:40 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/02/13 17:46:00 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/02/13 17:48:56 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	ft_parser(t_cmd *cmd)
+char	*ft_strcpy(char *s1, const char *s2)
 {
-	int		i;
-	t_cmd	*tmp;
+	size_t	i;
 
 	i = 0;
-	tmp = cmd;
-	while (tmp)
+	while (s2[i] != '\0')
 	{
-		if (tmp->part == NULL)
-			return (FAIL);
-		if (!ft_get_redirections(tmp)
-			|| !ft_var_expand(tmp)
-			|| !ft_rm_quotes(tmp))
-			return (FAIL);
-		tmp = tmp->next;
+		s1[i] = s2[i];
 		i++;
 	}
-	tmp = cmd->head;
-	while (tmp)
-	{
-		if (!ft_get_cmd_command_for_exec(tmp))
-			return (FAIL);
-		tmp = tmp->next;
-	}
-	return (SUCCESS);
+	s1[i] = '\0';
+	return (s1);
 }

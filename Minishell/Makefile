@@ -30,10 +30,12 @@ SRC_FILES = main.c  ft_exec.c ft_prompt.c \
 			../src/parser/ft_var_expand.c\
 			../src/parser/ft_remove_quotes.c\
 			../src/parser/ft_get_redirections.c\
+			../src/parser/ft_handling_varName.c\
 			../src/lexer/ft_lexer.c\
 			../src/lexer/ft_handle_input.c\
 			../src/utils/ft_check_closing_quotes.c\
 			../src/utils/ft_cmd_struct.c\
+
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

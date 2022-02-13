@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 17:32:35 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/12 21:29:47 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/13 18:14:39 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	dest = (char *) ft_malloc ((s1len + s2len + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		dest[i] = s1[i];
-		i++;
-	}
+	ft_strcpy(dest, s1);
+	i = s1len;
 	while (i - s1len < s2len)
 	{
 		dest[i] = s2[i - s1len];

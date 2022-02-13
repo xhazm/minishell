@@ -32,12 +32,7 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 					}
 					if (ft_exec(&all) == FAIL)
 						return (FAIL);
-					// close(cmd->std_in);
-					// close(cmd->std_out);
-					// dup2(cmd->out, STDOUT_FILENO);
-					// dup2(cmd->in, STDIN_FILENO);
 				}
-				//ft_check_struct(all.cmd_list);
 			}
 			ft_free(input);
 		}
