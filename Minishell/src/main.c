@@ -1,18 +1,21 @@
 #include "../includes/minishell.h"
 
-
+void	ft_init_standard(t_all *all, char **envp)
+{
+	ft_set_envp(envp);
+	all->cmd_list = NULL;
+	all->in = dup(STDIN_FILENO);
+	all->out = dup(STDOUT_FILENO);
+	exit_status = 0;
+}
 
 int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[], 
 	char **envp)
 {
 	char *input;
 	t_all	all;
-	all.in = dup(STDIN_FILENO);
-	all.out = dup(STDOUT_FILENO);
 
-	ft_set_envp(envp);
-	exit_status = 0;
-	all.cmd_list = NULL;
+	ft_init_standard(&all, envp);
 	while (1)
 	{
 		all.cmd_list = NULL;
@@ -24,14 +27,11 @@ int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[]
 				all.cmd_list= all.cmd_list->head;
 				if(ft_parser(all.cmd_list))
 				{
-					if (ft_redirect(all.cmd_list) == FAIL)
+					if (ft_redirect(all.cmd_list) == SUCCESS)
 					{
-						ft_free(input);
-						dup2(all.in, STDIN_FILENO);
-						continue ;
+						if (ft_exec(&all) == FAIL)
+							return (FAIL);
 					}
-					if (ft_exec(&all) == FAIL)
-						return (FAIL);
 				}
 			}
 			ft_free(input);

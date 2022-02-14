@@ -144,7 +144,9 @@ void	ft_handle_exec_builtin(t_cmd *cmd, t_all *all)
 }
 
 int	ft_exec(t_all *all)
-{
+{		
+	close(STDIN_FILENO);
+	dup2(all->in, STDIN_FILENO);
 	if (all->cmd_list->next == NULL)
 	{
 		if (all->cmd_list->argv == NULL || ft_handle_one_builtin(all) == FAIL)

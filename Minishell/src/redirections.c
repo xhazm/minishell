@@ -6,11 +6,24 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 19:41:14 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/14 16:10:45 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int	ft_fd_error_close(t_cmd *cmd)
+{
+	while(cmd != NULL)
+	{
+		if (cmd->std_in != STDIN_FILENO)
+			close(cmd->std_in);
+		if (cmd->std_out != STDOUT_FILENO)
+			close(cmd->std_out);
+		cmd = cmd->next;
+	}
+	return (FAIL);
+}
 
 static int	ft_open_fd_with_oflag(t_part *list)
 {
@@ -62,11 +75,13 @@ static int	ft_set_cmd_fd(t_cmd *cmd)
 	fd = ft_redirect_fd(cmd->redi->head, APPEND, REDIRECT_IN, REDIRECT_IN);
 	if (fd > 0)
 		cmd->std_out = fd;
+	else if (fd == -3 || fd == -1)
+		return (FAIL);
 	fd = 0;
 	fd = ft_redirect_fd(cmd->redi->head, REDIRECT_OUT, HEREDOC, HEREDOC_Q);
 	if (fd > 0)
 		cmd->std_in = fd;
-	else if (fd == -3)
+	else if (fd == -3 || fd == -1)
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -85,7 +100,7 @@ int	ft_redirect(t_cmd *cmd)
 		if (cmd->redi != NULL)
 		{
 			if (ft_set_cmd_fd(cmd) == FAIL)
-				return (FAIL);
+				return (ft_fd_error_close(cmd));
 		}
 		cmd = cmd->next;
 	}

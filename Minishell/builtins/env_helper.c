@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:40:40 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 15:54:39 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/14 15:56:59 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_print_perrno(char *argv, char *cmd)
 	error = strerror(errno);
 	if (error != NULL)
 		printf("%s: %s: %s\n", cmd, argv, error);
-	return (FAIL);
+	return (ERROR);
 }
 
 t_env	*ft_iterate_env(t_list *envp, char *str)
