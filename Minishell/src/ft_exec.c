@@ -5,14 +5,14 @@ static void	ft_waitpid(int pid)
 	int	status;
 
 	waitpid(pid, &status, 0);
-	exit_status = status;
+	g_exit_status = status;
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			write(STDERR_FILENO, "\rQuit: 3\n", 9);
 		if (WTERMSIG(status) == SIGINT)
 			write(STDERR_FILENO, "\n", 1);
-		exit_status = 128 + status;
+		g_exit_status = 128 + status;
 	}
 }
 
@@ -97,8 +97,7 @@ int	ft_fork_main(t_all *all)
 	while (all->cmd_list != NULL)
 	{
 		ft_terminal_echoctl(ACTIVATE);
-		if (ft_signal_handling(CHILD) == FAIL)
-			return (FAIL);
+		ft_signal_handling(CHILD);
 		if (all->cmd_list->next == NULL && first == 0)
 		{
 			ft_handle_single_exec(all);
@@ -116,7 +115,7 @@ int	ft_fork_main(t_all *all)
 int	ft_handle_one_builtin(t_all *all)
 {
 	if (ft_strcmp(all->cmd_list->argv[0], "exit") == 0)
-		ft_handle_exit(all);
+		ft_handle_exit(all, 0);
 	dup2(all->cmd_list->std_out, 1);
 	dup2(all->cmd_list->std_in, 0);
 	if (ft_handle_builtins(all->cmd_list) == FAIL)

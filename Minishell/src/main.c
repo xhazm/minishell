@@ -1,47 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 19:16:00 by lpfleide          #+#    #+#             */
+/*   Updated: 2022/02/14 19:19:18 by lpfleide         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-void	ft_init_standard(t_all *all, char **envp)
+static void	ft_init_standard(t_all *all, char **envp);
+
+int	main(__attribute__((unused))int argc, __attribute__((unused))char *argv[],
+		char **envp)
+{
+	t_all	all;
+	char	*input;
+
+	ft_init_standard(&all, envp);
+	while (ft_prompt(&input, &all))
+	{
+		ft_lexer(input, &all.cmd_list);
+		if (all.cmd_list != NULL && ft_parser(&all))
+		{
+			if (ft_redirect(all.cmd_list) == SUCCESS)
+				ft_exec(&all);
+		}
+		ft_free(input);
+	}
+	ft_handle_exit(&all, 0);
+	return (0);
+}
+
+static void	ft_init_standard(t_all *all, char **envp)
 {
 	ft_set_envp(envp);
 	all->cmd_list = NULL;
 	all->in = dup(STDIN_FILENO);
 	all->out = dup(STDOUT_FILENO);
-	exit_status = 0;
-}
-
-int main (__attribute__((unused)) int argc, __attribute__((unused)) char *argv[], 
-	char **envp)
-{
-	char *input;
-	t_all	all;
-
-	ft_init_standard(&all, envp);
-	while (1)
-	{
-		all.cmd_list = NULL;
-		if (ft_prompt(&input))
-		{
-			ft_lexer(input, &all.cmd_list);
-			if (all.cmd_list != NULL)
-			{
-				all.cmd_list= all.cmd_list->head;
-				if(ft_parser(all.cmd_list))
-				{
-					if (ft_redirect(all.cmd_list) == SUCCESS)
-					{
-						if (ft_exec(&all) == FAIL)
-							return (FAIL);
-					}
-				}
-			}
-			ft_free(input);
-		}
-		else
-			break;
-	}
-	close(all.in);
-	close(all.out);
-	ft_free_garbage(ft_garbage_lst_ptr(&all.cmd_list));
-	ft_garbage_lst_ptr(NULL);
-	return (0);
+	g_exit_status = 0;
 }

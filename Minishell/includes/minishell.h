@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/13 19:40:54 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/14 19:21:30 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define HEREDOC_Q 54
 # define RED_FILE 6
 
-int	exit_status;
+int	g_exit_status;
 
 typedef struct	s_cmd
 {
@@ -97,7 +97,7 @@ int		ft_print_env(t_list **envp);
 int		ft_builtin_unset(t_list **envp, char **argv);
 int		ft_valid_env_name(char *str);
 t_env	*ft_iterate_env(t_list *envp, char *str);
-void	ft_handle_exit(t_all *all);
+void	ft_handle_exit(t_all *all, int ret_value);
 void	ft_handle_exec_builtin(t_cmd *cmd, t_all *all);
 int		ft_handle_input(char *input, int *start, int end, t_cmd **cmd);
 
@@ -106,13 +106,13 @@ int		ft_redirect(t_cmd *cmd);
 int		ft_handle_heredoc(t_part *list);
 
 int		ft_get_cmd_command_for_exec(t_cmd *cmd);
-int		ft_signal_handling(int process);
+void	ft_signal_handling(int process);
 
-int		ft_parser(t_cmd *cmd);
+int		ft_parser(t_all *all);
 int		ft_generate_cmd(t_cmd **cmd);
 void	ft_terminal_echoctl(int echo_status);
 void	ft_free_all(t_cmd **cmd, char **input);
-int		ft_prompt(char **input);
+int		ft_prompt(char **input, t_all *all);
 int		ft_lexer(char *input, t_cmd **cmd);
 int		ft_store_cmd_argv(t_cmd *cmd, char *argv);
 int		ft_var_expand(t_cmd *cmd);
@@ -125,4 +125,5 @@ int		ft_set_cmd_flags(t_cmd *cmd);
 int		ft_generate_cmd_part(t_part **part);
 int		ft_set_cmd_flags(t_cmd *cmd);
 int		ft_check_var_name(char **str, int i, char flag, int flag2);
+
 #endif

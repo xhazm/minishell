@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 17:06:57 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/14 17:15:58 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/14 19:24:24 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int		ft_handle_execv(t_cmd	*cmd)
 			break ;
 		}
 		i++;
-		// if path[i] = null == error?
 	}
 	if (i == ft_strlen2D(path))
 	{

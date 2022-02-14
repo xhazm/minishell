@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_var_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:34:16 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/13 19:40:26 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/14 19:12:47 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_search_for_money(char **str, int flag2)
 		{
 			if ((*str)[i + 1] == '?')
 			{
-				if (!ft_insert_str(str, ft_itoa(exit_status), i, i + 2))
+				if (!ft_insert_str(str, ft_itoa(g_exit_status), i, i + 2))
 					return (FAIL);
 				i++;
 			}

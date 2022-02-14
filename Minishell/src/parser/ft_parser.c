@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:27:12 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/13 17:38:40 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/14 19:02:17 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_parser(t_cmd *cmd)
+int	ft_parser(t_all *all)
 {
 	int		i;
 	t_cmd	*tmp;
 
 	i = 0;
-	tmp = cmd;
+	all->cmd_list = all->cmd_list->head;
+	tmp = all->cmd_list;
 	while (tmp)
 	{
 		if (tmp->part == NULL)
@@ -30,7 +31,7 @@ int	ft_parser(t_cmd *cmd)
 		tmp = tmp->next;
 		i++;
 	}
-	tmp = cmd->head;
+	tmp = all->cmd_list->head;
 	while (tmp)
 	{
 		if (!ft_get_cmd_command_for_exec(tmp))
