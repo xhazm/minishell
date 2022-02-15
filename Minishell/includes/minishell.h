@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/15 13:18:27 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/15 19:41:54 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ int		ft_valid_env_name(char *str);
 t_env	*ft_iterate_env(t_list *envp, char *str);
 void	ft_handle_exit(t_all *all, int ret_value);
 void	ft_handle_exec_builtin(t_cmd *cmd, t_all *all);
+void	ft_waitpid(int pid);
+int		ft_fork_main(t_all *all);
 int		ft_handle_input(char *input, int *start, int end, t_cmd **cmd);
+
 
 void	ft_handle_child_fds(t_all *all, int fd[2]);
 void	ft_protected_close(int fd, int direction);

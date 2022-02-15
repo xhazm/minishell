@@ -30,7 +30,7 @@ SRC_FILES = main.c prompt.c signals.c\
 			../src/parser/ft_remove_quotes.c ../src/parser/ft_get_redirections.c ../src/parser/ft_handling_varName.c\
 			../src/lexer/ft_lexer.c ../src/lexer/ft_handle_input.c\
 			../src/utils/ft_check_closing_quotes.c ../src/utils/ft_cmd_struct.c\
-			../src/executor/exec.c ../src/executor/execv.c ../src/executor/fd_handling.c\
+			../src/executor/exec.c ../src/executor/exec2.c ../src/executor/execv_call.c ../src/executor/fd_handling.c\
 
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
