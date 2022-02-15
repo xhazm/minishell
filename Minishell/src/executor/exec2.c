@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec2.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/15 20:48:08 by lpfleide          #+#    #+#             */
+/*   Updated: 2022/02/15 20:48:48 by lpfleide         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	ft_waitpid(int pid)
@@ -58,7 +70,7 @@ static void	ft_handle_fork_exec(t_all *all)
 		close(fd[1]);
 		ft_protected_close(all->cmd_list->std_in, STDIN_FILENO);
 		ft_protected_close(all->cmd_list->std_out, STDOUT_FILENO);
-		if(all->cmd_list->next != NULL && all->cmd_list->next->std_in == 0)
+		if (all->cmd_list->next != NULL && all->cmd_list->next->std_in == 0)
 			all->cmd_list->next->std_in = dup(fd[0]);
 		close(fd[0]);
 		ft_waitpid(pid);
