@@ -21,20 +21,15 @@ LIBFT_DIR = ./libft/
 
 
 # Source files and object files
-SRC_FILES = main.c ft_prompt.c \
-			redirections.c heredoc.c signals.c \
-			../builtins/cd.c ../builtins/echo.c ../builtins/env.c ../builtins/env_helper.c ../builtins/export.c ../builtins/handle_builtins.c \
-			../builtins/pwd.c ../builtins/unset.c ../builtins/exit.c\
-			../src/parser/ft_parser.c\
-			../src/parser/ft_get_cmd_for_exec.c\
-			../src/parser/ft_var_expand.c\
-			../src/parser/ft_remove_quotes.c\
-			../src/parser/ft_get_redirections.c\
-			../src/parser/ft_handling_varName.c\
-			../src/lexer/ft_lexer.c\
-			../src/lexer/ft_handle_input.c\
-			../src/utils/ft_check_closing_quotes.c\
-			../src/utils/ft_cmd_struct.c\
+SRC_FILES = main.c prompt.c signals.c\
+			../builtins/cd.c ../builtins/echo.c ../builtins/env.c ../builtins/env_helper.c ../builtins/export.c\
+			../builtins/handle_builtins.c ../builtins/pwd.c ../builtins/unset.c ../builtins/exit.c\
+			../src/redirections/redirections.c ../src/redirections/heredoc.c\
+			../src/error/error_handling.c\
+			../src/parser/ft_parser.c ../src/parser/ft_get_cmd_for_exec.c ../src/parser/ft_var_expand.c\
+			../src/parser/ft_remove_quotes.c ../src/parser/ft_get_redirections.c ../src/parser/ft_handling_varName.c\
+			../src/lexer/ft_lexer.c ../src/lexer/ft_handle_input.c\
+			../src/utils/ft_check_closing_quotes.c ../src/utils/ft_cmd_struct.c\
 			../src/executor/exec.c ../src/executor/execv.c ../src/executor/fd_handling.c\
 
 

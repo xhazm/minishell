@@ -5,14 +5,17 @@ static void	ft_waitpid(int pid)
 	int	status;
 
 	waitpid(pid, &status, 0);
+	g_exit_status = status;
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			write(STDERR_FILENO, "\rQuit: 3\n", 9);
 		if (WTERMSIG(status) == SIGINT)
 			write(STDERR_FILENO, "\n", 1);
-		// g_exit_status = 128 + status;
+		g_exit_status = status + 128;
 	}
+	else if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
 }
 
 int	ft_handle_single_exec(t_all *all)
@@ -29,7 +32,7 @@ int	ft_handle_single_exec(t_all *all)
 		printf("cmd1: %s fd in: %d\n",all->cmd_list->argv[0], all->cmd_list->std_in);
 		printf("cmd1: %s fd out: %d\n",all->cmd_list->argv[0], all->cmd_list->std_out);
 		ft_handle_exec_builtin(all->cmd_list, all);
-		return (1);
+		return (SUCCESS);
 	}
 	else
 	{
@@ -107,8 +110,19 @@ int	ft_handle_one_builtin(t_all *all)
 
 void	ft_handle_exec_builtin(t_cmd *cmd, t_all *all)
 {
-	if (ft_handle_builtins(cmd) == FAIL)
-		ft_handle_execv(cmd);
+	int	ret_value;
+
+	ret_value = ft_handle_builtins(cmd);
+	if (ret_value == FAIL)
+	{
+		if (ft_handle_execv(cmd) == ERROR)
+		{
+			printf("ere\n");
+			g_exit_status = 126;
+		}
+	}
+	else if (ret_value == ERROR)
+		g_exit_status = 127;
 	exit (0);
 }
 

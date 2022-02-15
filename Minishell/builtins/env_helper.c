@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_helper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:40:40 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/15 16:32:33 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/15 19:34:08 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,6 @@ t_list	**ft_envp_pointer(void)
 {
 	static	t_list *envp;
 	return (&envp);
-}
-
-int	ft_print_error(char *cmd, char *argv, char *message)
-{
-	printf("%s: '%s': %s\n", cmd, argv, message);
-	return (FAIL);
-}
-
-int	ft_print_perrno(char *argv, char *cmd)
-{
-	char	*error;
-
-	error = NULL;
-	error = strerror(errno);
-	if (error != NULL)
-		printf("%s: %s: %s\n", cmd, argv, error);
-	return (ERROR);
 }
 
 t_env	*ft_iterate_env(t_list *envp, char *str)

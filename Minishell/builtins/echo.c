@@ -6,13 +6,13 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 15:39:54 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/15 18:51:50 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_is_option(char *arg, char option)
+static int	ft_is_option(char *arg, char option)
 {
 	int	i;
 	int	opt;
@@ -72,5 +72,5 @@ int	ft_builtin_echo(int argc, char **argv)
 	}
 	if (option == 0)
 		printf("\n");
-	return (0);
+	return (SUCCESS);
 }

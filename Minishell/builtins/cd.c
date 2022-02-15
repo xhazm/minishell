@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 15:36:41 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/15 18:47:49 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_builtin_cd(char **argv, int argc)
 	if (ft_strcmp(path, "~") == 0 || ft_strcmp(path, "-") == 0)
 		path = ft_check_path(path);
 	if (chdir(path) == -1)
-		ft_print_perrno(path, "cd");
+		return (ft_print_perrno(path, "cd"));
 	else
 	{
 		pwd = ft_iterate_env((t_list *)*(ft_envp_pointer()), "PWD");

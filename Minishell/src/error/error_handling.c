@@ -1,0 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_handling.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/15 19:34:12 by lpfleide          #+#    #+#             */
+/*   Updated: 2022/02/15 19:34:21 by lpfleide         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/minishell.h"
+
+int	ft_print_error(char *cmd, char *argv, char *message)
+{
+	if (cmd != NULL)
+	{
+		ft_putstr_fd(cmd, 2);
+		write(2 ,": ", 2);
+	}
+	if (argv != NULL)
+	{
+		ft_putstr_fd(argv, 2);
+		write(2 ,": ", 2);
+	}
+	if (message != NULL)
+		ft_putstr_fd(message, 2);
+	write(2 ,"\n", 1);
+	return (FAIL);
+}
+
+int	ft_print_perrno(char *argv, char *cmd)
+{
+	char	*error;
+
+	error = NULL;
+	error = strerror(errno);
+	if (error != NULL)
+	{
+		ft_putstr_fd(cmd, 2);
+		write(2 ,": ", 2);
+		ft_putstr_fd(argv, 2);
+		write(2 ,": ", 2);
+		ft_putstr_fd(error, 2);
+		write(2 ,"\n", 1);
+	}
+	return (ERROR);
+}

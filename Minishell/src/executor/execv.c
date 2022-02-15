@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 17:06:57 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/14 19:24:24 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/15 19:12:05 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ int		ft_handle_execv(t_cmd	*cmd)
 		i++;
 	}
 	if (i == ft_strlen2D(path))
-	{
-		ft_putstr_fd(cmd->argv[0], 2);
-		write(2, ": command not found\n", 20);
-	}
+		ft_print_error(NULL, cmd->argv[0], "command not found");
 	ft_free2darr((void **)path);
 	if (tmp != NULL)
 		ft_free(tmp);
