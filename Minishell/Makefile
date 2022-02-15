@@ -22,16 +22,16 @@ LIBFT_DIR = ./libft/
 
 
 # Source files and object files
-SRC_FILES = main.c prompt.c signals.c\
-			builtins/cd.c builtins/echo.c builtins/env.c builtins/env_helper.c builtins/export.c\
-			builtins/handle_builtins.c builtins/pwd.c builtins/unset.c builtins/exit.c\
-			redirections/redirections.c redirections/heredoc.c\
-			error/error_handling.c\
-			parser/ft_parser.c parser/ft_get_cmd_for_exec.c parser/ft_var_expand.c\
-			parser/ft_remove_quotes.c parser/ft_get_redirections.c parser/ft_handling_varName.c\
-			lexer/ft_lexer.c lexer/ft_handle_input.c\
-			utils/ft_check_closing_quotes.c utils/ft_cmd_struct.c\
-			executor/exec.c executor/exec2.c executor/execv_call.c executor/fd_handling.c\
+SRC_FILES = main.c prompt.c signals.c																						\
+			builtins/cd.c builtins/echo.c	builtins/env_helper.c		builtins/env.c				builtins/export.c		\
+			builtins/handle_builtins.c		builtins/unset.c			builtins/pwd.c				builtins/exit.c			\
+			parser/remove_quotes.c			parser/get_redirections.c	parser/handling_varName.c							\
+			parser/get_cmd_for_exec.c		parser/parser.c				parser/var_expand.c									\
+			executor/exec.c					executor/exec2.c			executor/execv_call.c		executor/fd_handling.c	\
+			redirections/redirections.c		redirections/heredoc.c															\
+			lexer/lexer.c					lexer/handle_input.c															\
+			utils/check_quotes.c			utils/cmd_struct.c																\
+			error/error_handling.c																							\
 
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
