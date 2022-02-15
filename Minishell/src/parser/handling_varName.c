@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handling_varName.c                              :+:      :+:    :+:   */
+/*   handling_varName.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:33:20 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/13 19:56:30 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/15 22:45:05 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,10 @@ char	*ft_expand(char *varValue, int start)
 	temp = ft_split(varValue, ' ');
 	while (temp[i] != NULL)
 	{
-		if (start != 0)
-			res = ft_strjoin(res, " ");
-		if (start == 0 && i != 0)
-			res = ft_strjoin(res, " ");
+		res = ft_strjoin(res, " ");
 		res = ft_strjoin(res, temp[i]);
 		i++;
 	}
-	res = ft_strjoin(res, " ");
 	return (res);
 }
 
@@ -77,11 +73,11 @@ int	ft_check_var_name(char **str, int i, char flag, int flag2)
 	{
 		if (flag2 != HEREDOC_Q)
 		{
-			if (ft_strchr(varValue, ' ') == NULL || (*str)[i] == '"')
+			 if (flag != 0)
 			{
 				if (!ft_insert_str(str, varValue, start, i))
-					return (FAIL);
-			}
+				return (FAIL);
+			} 
 			else if (!ft_insert_str(str, ft_expand(varValue, start), start, i))
 				return (FAIL);
 		}
