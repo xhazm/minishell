@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:21:13 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/12 20:24:57 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:17:10 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_split_conditions(char *sub, char *cpart, int *i)
 	while (sub[(*i)] != '\0')
 	{			
 		if (flag == 1 && (sub[(*i)] == ' ' || sub[(*i)] == '|'
-				|| sub[(*i)] == '>' || sub[(*i)] == '<'))
+				|| sub[(*i)] == '>' || sub[(*i)] == '<' || sub[(*i)] == '\t'))
 			return (cpart);
 		else if (sub[(*i)] == '\'' || sub[(*i)] == '"')
 		{
@@ -84,7 +84,7 @@ int	ft_split_input(char *sub, t_cmd *cmd)
 	while (sub[i] != '\0')
 	{
 		argv = NULL;
-		if (sub[i] != ' ')
+		if (sub[i] != ' ' && sub[i] != '\t')
 		{
 			argv = ft_split_conditions(sub, argv, &i);
 			if (!argv || !ft_generate_cmd_part(&cmd->part))
@@ -105,7 +105,7 @@ int	ft_handle_input(char *input, int *start, int end, t_cmd **cmd)
 {
 	char	*sub;
 
-	while (input[(*start)] == ' ')
+	while (input[(*start)] == ' ' || input[(*start)] == '\t')
 		(*start)++;
 	if ((*start) < end)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 15:06:04 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/14 19:21:20 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:23:29 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_child_signal(int signo)
 {
-	g_exit_status = signo;
+	g_exit_status = signo + 128;
 	return ;
 }
 
@@ -26,7 +26,7 @@ static void	ft_heredoc_signal(int signo)
 		close(STDIN_FILENO);
 		ft_signal_handling(PARENT);
 	}
-	g_exit_status = signo;
+	g_exit_status = signo - 1;
 	return ;
 }
 
@@ -39,7 +39,7 @@ static void	ft_parent_signal(int signo)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	g_exit_status = signo;
+	g_exit_status = signo - 1;
 	return ;
 }
 

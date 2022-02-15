@@ -5,14 +5,13 @@ static void	ft_waitpid(int pid)
 	int	status;
 
 	waitpid(pid, &status, 0);
-	g_exit_status = status;
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			write(STDERR_FILENO, "\rQuit: 3\n", 9);
 		if (WTERMSIG(status) == SIGINT)
 			write(STDERR_FILENO, "\n", 1);
-		g_exit_status = 128 + status;
+		// g_exit_status = 128 + status;
 	}
 }
 

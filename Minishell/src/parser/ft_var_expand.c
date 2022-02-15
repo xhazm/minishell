@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_var_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:34:16 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/14 19:12:47 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/15 16:21:56 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ int	ft_var_expand(t_cmd *cmd)
 		cmd->part = cmd->part->next;
 		i++;
 	}
+	g_exit_status = 0;
 	return (SUCCESS);
 }
