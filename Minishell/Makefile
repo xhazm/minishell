@@ -21,8 +21,8 @@ LIBFT_DIR = ./libft/
 
 
 # Source files and object files
-SRC_FILES = main.c  ft_exec.c ft_prompt.c \
-			execv.c redirections.c heredoc.c signals.c \
+SRC_FILES = main.c ft_prompt.c \
+			redirections.c heredoc.c signals.c \
 			../builtins/cd.c ../builtins/echo.c ../builtins/env.c ../builtins/env_helper.c ../builtins/export.c ../builtins/handle_builtins.c \
 			../builtins/pwd.c ../builtins/unset.c ../builtins/exit.c\
 			../src/parser/ft_parser.c\
@@ -35,6 +35,7 @@ SRC_FILES = main.c  ft_exec.c ft_prompt.c \
 			../src/lexer/ft_handle_input.c\
 			../src/utils/ft_check_closing_quotes.c\
 			../src/utils/ft_cmd_struct.c\
+			../src/executor/exec.c ../src/executor/execv.c ../src/executor/fd_handling.c\
 
 
 OBJ_FILES = $(SRC_FILES:.c=.o)

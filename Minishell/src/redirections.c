@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/14 16:10:45 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/15 13:37:51 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 static int	ft_fd_error_close(t_cmd *cmd)
 {
+	cmd = cmd->head;
 	while(cmd != NULL)
 	{
-		if (cmd->std_in != STDIN_FILENO)
-			close(cmd->std_in);
-		if (cmd->std_out != STDOUT_FILENO)
-			close(cmd->std_out);
+		ft_protected_close(cmd->std_in, STDIN_FILENO);
+		ft_protected_close(cmd->std_out, STDOUT_FILENO);
 		cmd = cmd->next;
 	}
 	return (FAIL);
@@ -75,13 +74,13 @@ static int	ft_set_cmd_fd(t_cmd *cmd)
 	fd = ft_redirect_fd(cmd->redi->head, APPEND, REDIRECT_IN, REDIRECT_IN);
 	if (fd > 0)
 		cmd->std_out = fd;
-	else if (fd == -3 || fd == -1)
+	else if (fd == -3 || fd == ERROR)
 		return (FAIL);
 	fd = 0;
 	fd = ft_redirect_fd(cmd->redi->head, REDIRECT_OUT, HEREDOC, HEREDOC_Q);
 	if (fd > 0)
 		cmd->std_in = fd;
-	else if (fd == -3 || fd == -1)
+	else if (fd == -3 || fd == ERROR)
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -99,7 +98,7 @@ int	ft_redirect(t_cmd *cmd)
 	{
 		if (cmd->redi != NULL)
 		{
-			if (ft_set_cmd_fd(cmd) == FAIL)
+			if (ft_set_cmd_fd(cmd) != SUCCESS)
 				return (ft_fd_error_close(cmd));
 		}
 		cmd = cmd->next;

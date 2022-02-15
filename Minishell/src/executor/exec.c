@@ -25,10 +25,8 @@ int	ft_handle_single_exec(t_all *all)
 	{
 		dup2(all->cmd_list->std_in, STDIN_FILENO);
 		dup2(all->cmd_list->std_out, STDOUT_FILENO);
-		if (all->cmd_list->std_in != STDIN_FILENO)
-			close(all->cmd_list->std_in);
-		if (all->cmd_list->std_out != STDOUT_FILENO)
-			close(all->cmd_list->std_out);
+		ft_protected_close(all->cmd_list->std_in, STDIN_FILENO);
+		ft_protected_close(all->cmd_list->std_out, STDOUT_FILENO);
 		printf("cmd1: %s fd in: %d\n",all->cmd_list->argv[0], all->cmd_list->std_in);
 		printf("cmd1: %s fd out: %d\n",all->cmd_list->argv[0], all->cmd_list->std_out);
 		ft_handle_exec_builtin(all->cmd_list, all);
@@ -53,35 +51,14 @@ int	ft_handle_fork_exec(t_all *all)
 	pid = fork();
 	if (pid == 0)
 	{
-		printf("cmd2: %s fd in: %d\n",all->cmd_list->argv[0], all->cmd_list->std_in);
-		printf("cmd2: %s fd out: %d\n",all->cmd_list->argv[0], all->cmd_list->std_out);
-		if (all->cmd_list->std_in != STDIN_FILENO)
-		{
-			dup2(all->cmd_list->std_in, STDIN_FILENO);
-			close(all->cmd_list->std_in);
-		}
-		if (all->cmd_list->std_out != STDOUT_FILENO)
-			dup2(all->cmd_list->std_out, STDOUT_FILENO);
-		else if (all->cmd_list->next != NULL)
-			dup2(fd[1], STDOUT_FILENO);
-		else if (all->cmd_list->next == NULL)
-		{
-			close(STDOUT_FILENO);
-			dup2(all->out, STDOUT_FILENO);
-		}
-		if (all->cmd_list->std_out != STDOUT_FILENO)
-			close(all->cmd_list->std_out);
-		close(fd[0]);
-		close(fd[1]);
+		ft_handle_child_fds(all, fd);
 		ft_handle_exec_builtin(all->cmd_list, all);
 	}
 	else
 	{
 		close(fd[1]);
-		if (all->cmd_list->std_in != STDIN_FILENO)
-			close(all->cmd_list->std_in);
-		if (all->cmd_list->std_out != STDOUT_FILENO)
-			close(all->cmd_list->std_out);
+		ft_protected_close(all->cmd_list->std_in, STDIN_FILENO);
+		ft_protected_close(all->cmd_list->std_out, STDOUT_FILENO);
 		if(all->cmd_list->next != NULL && all->cmd_list->next->std_in == 0)
 			all->cmd_list->next->std_in = dup(fd[0]);
 		close(fd[0]);
@@ -99,9 +76,7 @@ int	ft_fork_main(t_all *all)
 		ft_terminal_echoctl(ACTIVATE);
 		ft_signal_handling(CHILD);
 		if (all->cmd_list->next == NULL && first == 0)
-		{
 			ft_handle_single_exec(all);
-		}
 		else
 		{
 			first++;
@@ -114,25 +89,21 @@ int	ft_fork_main(t_all *all)
 
 int	ft_handle_one_builtin(t_all *all)
 {
+	int	ret;
+
+	ret = 0;
 	if (ft_strcmp(all->cmd_list->argv[0], "exit") == 0)
 		ft_handle_exit(all, 0);
-	dup2(all->cmd_list->std_out, 1);
-	dup2(all->cmd_list->std_in, 0);
-	if (ft_handle_builtins(all->cmd_list) == FAIL)
-	{
-		dup2(all->out, STDOUT_FILENO);
-		dup2(all->in, STDIN_FILENO);
-		return (FAIL);
-	}
-	if(all->cmd_list->std_out != 1)
-		close (all->cmd_list->std_out);
-	if(all->cmd_list->std_in != 0)
-		close (all->cmd_list->std_in);
+	dup2(all->cmd_list->std_out, STDOUT_FILENO);
+	dup2(all->cmd_list->std_in, STDIN_FILENO);
+	ret = ft_handle_builtins(all->cmd_list);
+	ft_protected_close(all->cmd_list->std_in, STDIN_FILENO);
+	ft_protected_close(all->cmd_list->std_out, STDOUT_FILENO);
 	close(STDOUT_FILENO);
 	close(STDIN_FILENO);
 	dup2(all->out, STDOUT_FILENO);
 	dup2(all->in, STDIN_FILENO);
-	return (SUCCESS);
+	return (ret);
 }
 
 void	ft_handle_exec_builtin(t_cmd *cmd, t_all *all)

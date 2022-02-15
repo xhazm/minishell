@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 15:58:46 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/31 12:51:13 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/15 13:26:44 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strmapi(char const *s, char (*f)(char))
 
 	if (!s || !f)
 		return (NULL);
-	dest = (char *) malloc ((ft_strlen(s) + 1) * sizeof(char));
+	dest = (char *) ft_malloc ((ft_strlen(s) + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
 	i = 0;

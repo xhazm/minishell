@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 18:23:48 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 19:56:50 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/15 13:26:49 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	end = slen;
 	while (s1[end - 1] && ft_strchr(set, s1[end - 1]) && end > beg)
 		end--;
-	arr = (char *) malloc ((end - beg + 1) * sizeof(char));
+	arr = (char *) ft_malloc ((end - beg + 1) * sizeof(char));
 	if (!arr)
 		return (0);
 	arr = ft_strncpy(arr, &s1[beg], (end - beg));
