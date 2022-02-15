@@ -15,6 +15,7 @@ CPFLAGS = -I$$HOME/.brew/opt/readline/include
 
 # Folders
 SRC_DIR = ./src/
+OBJSUB_DIR = parser error lexer redirections utils executor builtins
 OBJ_DIR = ./obj/
 INC_DIR = ./includes/
 LIBFT_DIR = ./libft/
@@ -22,15 +23,15 @@ LIBFT_DIR = ./libft/
 
 # Source files and object files
 SRC_FILES = main.c prompt.c signals.c\
-			../builtins/cd.c ../builtins/echo.c ../builtins/env.c ../builtins/env_helper.c ../builtins/export.c\
-			../builtins/handle_builtins.c ../builtins/pwd.c ../builtins/unset.c ../builtins/exit.c\
-			../src/redirections/redirections.c ../src/redirections/heredoc.c\
-			../src/error/error_handling.c\
-			../src/parser/ft_parser.c ../src/parser/ft_get_cmd_for_exec.c ../src/parser/ft_var_expand.c\
-			../src/parser/ft_remove_quotes.c ../src/parser/ft_get_redirections.c ../src/parser/ft_handling_varName.c\
-			../src/lexer/ft_lexer.c ../src/lexer/ft_handle_input.c\
-			../src/utils/ft_check_closing_quotes.c ../src/utils/ft_cmd_struct.c\
-			../src/executor/exec.c ../src/executor/exec2.c ../src/executor/execv_call.c ../src/executor/fd_handling.c\
+			builtins/cd.c builtins/echo.c builtins/env.c builtins/env_helper.c builtins/export.c\
+			builtins/handle_builtins.c builtins/pwd.c builtins/unset.c builtins/exit.c\
+			redirections/redirections.c redirections/heredoc.c\
+			error/error_handling.c\
+			parser/ft_parser.c parser/ft_get_cmd_for_exec.c parser/ft_var_expand.c\
+			parser/ft_remove_quotes.c parser/ft_get_redirections.c parser/ft_handling_varName.c\
+			lexer/ft_lexer.c lexer/ft_handle_input.c\
+			utils/ft_check_closing_quotes.c utils/ft_cmd_struct.c\
+			executor/exec.c executor/exec2.c executor/execv_call.c executor/fd_handling.c\
 
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
@@ -47,7 +48,7 @@ LNK  = -L $(LIBFT_DIR) -lft
 all: obj $(LIBFT) $(NAME)
 
 obj:
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(OBJSUB_DIR))
 $(OBJ_DIR)%.o:$(SRC_DIR)%.c
 	@gcc $(FLAGS) $(CPFLAGS) -I $(LIBFT_DIR) -I $(INC_DIR) -o $@ -c $<
 $(LIBFT):
@@ -55,20 +56,20 @@ $(LIBFT):
 
 # Compiling
 $(NAME): $(OBJ)
-	@echo "$(YELLOW)\n      -> Building $(NAME) ...$(RESET)"
+	@echo "$(YELLOW)\n		-> Building $(NAME) ...\n\n$(RESET)"
 	@gcc $(OBJ) $(LFLAGS) $(LNK) -lm -o $(NAME)
-	@echo "$(GREEN)***   Project $(NAME) successfully compiled   ***\n$(RESET)"
+	@echo "$(GREEN)***   Project $(NAME) successfully compiled    ✓    ***\n\n$(RESET)"
 
 # clean rule
 clean:
-	@echo "$(BLUE)***   Deleting all objects from $(NAME)   ...   ***$(RESET)"
+	@echo "$(BLUE)\n***   Deleting all objects from $(NAME)       ...   ***$(RESET)"
 	@rm -Rf $(OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean
 	@echo
 
 # fclean rule
 fclean: clean
-	@echo "$(BLUE)***   Deleting executable file from $(NAME)   ...   ***$(RESET)"
+	@echo "$(BLUE)\n***   Deleting executable file from $(NAME)   ...   ***$(RESET)"
 	@rm -f $(NAME)
 	@make -C $(LIBFT_DIR) fclean
 	@echo
