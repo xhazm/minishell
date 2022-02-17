@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/17 12:54:08 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/17 17:03:26 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		ft_builtin_pwd(void);
 int		ft_builtin_echo(int argc, char **argv);
 int		ft_builtin_cd(char **argv, int argc);
 int		ft_handle_builtins(t_cmd *cmd);
-int		ft_print_perrno(char *argv, char *cmd);
+int		ft_print_perrno(char *argv, char *cmd, int exit_status);
 int		ft_print_error(char *cmd, char *argv, char *message, int exit_status);
 int		ft_builtin_export(t_list **envp, char **argv);
 void	*ft_parse_envp(t_list **envp, char *orig_envp);

@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 17:06:57 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/17 12:52:51 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/17 17:07:30 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_is_direct_path(t_cmd *cmd)
 		if (execv(tmp, cmd->argv) == -1)
 		{
 			ft_free(tmp);
-			return (ft_print_perrno(cmd->argv[0], tmp));
+			return (ft_print_perrno(cmd->argv[0], tmp, 126));
 		}
 		ft_free(tmp);
 		return (SUCCESS);
@@ -66,7 +66,7 @@ static int	ft_execute(t_cmd *cmd, char *tmp_cmd, char **path)
 		if (access(ft_strjoin(path[i], tmp_cmd), X_OK) == 0)
 		{
 			if (execv(ft_strjoin(path[i], tmp_cmd), cmd->argv) == -1)
-				return (ft_print_perrno(cmd->argv[1], cmd->argv[0]));
+				return (ft_print_perrno(cmd->argv[1], cmd->argv[0], 126));
 			break ;
 		}
 		i++;
@@ -84,8 +84,9 @@ int	ft_handle_execv(t_cmd *cmd)
 	char	*tmp;
 
 	tmp = NULL;
-	if (ft_is_direct_path(cmd) == SUCCESS)
-		return (SUCCESS);
+	ret = ft_is_direct_path(cmd);
+	if (ret != FAIL)
+		return (ret);
 	path = ft_get_path(ft_envp_pointer());
 	tmp = ft_strmapi(cmd->argv[0], ft_tolower);
 	ret = ft_execute(cmd, tmp, path);

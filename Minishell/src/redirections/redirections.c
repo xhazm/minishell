@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/15 13:37:51 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/17 17:05:00 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	ft_redirect_fd(t_part *list, int flag, int flag2, int flag3)
 			else
 				fd = ft_open_fd_with_oflag(list);
 			if (fd == -1)
-				return (ft_print_perrno(list->argv, "open"));
+				return (ft_print_perrno(list->argv, "open", 1));
 			if (fd == -3)
 				return (-3);
 		}

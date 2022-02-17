@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 17:33:35 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/15 13:32:54 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/17 17:04:56 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_heredoc_fd(char	*input, int fd[2], t_part *list)
 	if (close(fd[1]) == -1)
 	{
 		ft_signal_handling(PARENT);
-		return (ft_print_perrno(list->argv, "close"));
+		return (ft_print_perrno(list->argv, "close", 1));
 	}
 	if (input != NULL)
 	{
@@ -43,7 +43,7 @@ int	ft_handle_heredoc(t_part *list)
 
 	input = NULL;
 	if (pipe(fd) == -1)
-		return (ft_print_perrno(list->argv, "pipe")); // better error handling
+		return (ft_print_perrno(list->argv, "pipe", 1)); // better error handling
 	ft_signal_handling(HEREDOC);
 	while (1)
 	{

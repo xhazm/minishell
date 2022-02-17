@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:48:31 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/17 12:50:17 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/17 16:08:42 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_redi_found(t_cmd *cmd, int flag)
 		|| cmd->part->next->argv[0] == '|'
 		|| ft_check_redirection(cmd->part->next->argv) > 0)
 	{
-		ft_print_error(NULL, NULL, "syntax error near unexpected token\n", 2);
+		ft_print_error(NULL, NULL, "syntax error near unexpected token", 2);
 		return (FAIL);
 	}
 	else
