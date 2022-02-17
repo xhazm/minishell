@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lexer.c                                         :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:21:40 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/14 18:57:46 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:51:17 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int	ft_lexer(char *input, t_cmd **cmd)
 		if (flag == 0 && (input[i] == '|' || input[i + 1] == '\0')
 			&& !ft_handle_input(input, &start, i + 1, cmd))
 		{
-			printf("Error: error occurred while handling input\n");
+			ft_print_error(NULL, NULL, "Error: error occurred while handling input\n", 2);
 			return (FAIL);
 		}
 		i++;
 	}
 	if (flag != 0)
 	{
-		printf("Error: argument\n");
+		ft_putstr_fd("Error: argument\n", 2);
 		return (FAIL);
 	}
 	return (SUCCESS);

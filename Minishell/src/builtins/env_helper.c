@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:40:40 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/15 19:34:08 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:40:11 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_valid_env_name(char *str)
 	{
 		if (str[i] == '=')
 			return (SUCCESS);
-		if (ft_isalnum(str[i]) == FAIL)
+		if (ft_isalnum(str[i]) == FAIL && str[i] != '_')
 			return (FAIL);
 		i++;
 	}

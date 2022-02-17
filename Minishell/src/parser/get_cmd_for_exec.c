@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_cmd_for_exec.c                              :+:      :+:    :+:   */
+/*   get_cmd_for_exec.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:30:25 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/12 20:36:23 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:50:53 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	ft_get_cmd_command_for_exec(t_cmd *cmd)
 	}
 	if (cmd->argv == NULL && cmd->redc == 0)
 	{
-		printf("syntax error near unexpected token\n");
+		ft_print_error(NULL, NULL, "syntax error near unexpected token\n", 2);
+		g_exit_status = 2;
 		return (FAIL);
 	}
 	return (SUCCESS);

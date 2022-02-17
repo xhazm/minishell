@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 19:53:23 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 15:58:44 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:52:21 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_builtin_unset(t_list **envp, char **argv)
 		if (ft_valid_env_name(argv[i]) == SUCCESS)
 			ft_unset_envp(envp, argv[i]);
 		else
-			return (ft_print_error(argv[0], argv[i], "not a valid identifier"));
+			return (ft_print_error(argv[0], argv[i], "not a valid identifier", 1));
 		i++;
 	}
 	return (SUCCESS);

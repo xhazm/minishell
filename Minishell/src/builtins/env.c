@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/12 15:45:29 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:32:12 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*ft_set_envp_node(t_list **envp, char *orig_envp)
 		check_double->arg = envp_node->arg;
 		ft_free(envp_node);
 	}
-	else if (ft_lstadd_back(envp, envp_node) == NULL)
+	if (ft_lstadd_back(envp, envp_node) == NULL)
 		return (NULL);
 	return (envp_node);
 }

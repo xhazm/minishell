@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/15 18:47:49 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:13:27 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	ft_builtin_cd(char **argv, int argc)
 		path = argv[1];
 	if (ft_strcmp(path, "~") == 0 || ft_strcmp(path, "-") == 0)
 		path = ft_check_path(path);
+	printf("%s\n", path);
 	if (chdir(path) == -1)
 		return (ft_print_perrno(path, "cd"));
 	else

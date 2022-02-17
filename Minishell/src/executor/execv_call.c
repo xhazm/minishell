@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 17:06:57 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/15 21:00:58 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/17 12:52:51 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	ft_execute(t_cmd *cmd, char *tmp_cmd, char **path)
 		i++;
 	}
 	if (i == ft_strlen2D(path))
-		return (ft_print_error(NULL, cmd->argv[0], "command not found"));
+		return (ft_print_error(NULL, cmd->argv[0], "command not found", 127));
 	else
 		return (SUCCESS);
 }

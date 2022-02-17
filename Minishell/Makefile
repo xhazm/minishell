@@ -42,7 +42,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 LIBFT = $(addprefix $(LIBFT_DIR), libft.a)
 
 # Libft linkers
-LNK  = -L $(LIBFT_DIR) -lft 
+LNK  = -L $(LIBFT_DIR) -lft
 
 # all rule
 all: obj $(LIBFT) $(NAME)
