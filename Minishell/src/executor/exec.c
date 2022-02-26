@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:48:05 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/17 16:19:13 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:17:06 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_handle_one_builtin(t_all *all)
 
 	ret = 0;
 	if (ft_strcmp(all->cmd_list->argv[0], "exit") == 0)
-		ft_handle_exit(all, g_exit_status);
+		ft_handle_exit(all, g_exit_status, all->cmd_list->argv);
 	if (all->cmd_list->std_in != STDIN_FILENO)
 		dup2(all->cmd_list->std_in, STDIN_FILENO);
 	if (all->cmd_list->std_out != STDOUT_FILENO)

@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen2D.c                                      :+:      :+:    :+:   */
+/*   ft_strdup2D.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 21:13:23 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/18 21:16:04 by vmiseiki         ###   ########.fr       */
+/*   Created: 2022/01/18 21:16:47 by vmiseiki          #+#    #+#             */
+/*   Updated: 2022/02/26 12:08:14 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen2D(char **str)
+char	**ft_strdup_2d(char **str1, char **str2)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] != NULL)
+	while (str1[i] != NULL)
+	{
+		str2[i] = str1[i];
 		i++;
-	return (i);
+	}
+	str2[i] = NULL;
+	return (str2);
 }

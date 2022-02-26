@@ -6,14 +6,23 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 16:42:31 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/16 22:00:34 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:26:43 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_handle_exit(t_all *all, int ret_value)
+void	ft_handle_exit(t_all *all, int ret_value, char **argv)
 {
+	int	argc;
+
+	argc = 0;
+	if (argv != NULL)
+		argc = ft_strlen_2d(argv);
+	if (argc == 2 && ft_str_isnum(argv[1]) == 1)
+		ret_value = ft_atoi(argv[1]);
+	if (argc > 2 || ret_value > 255)
+		ret_value = 1;
 	close(all->in);
 	close(all->out);
 	ft_free_garbage(ft_garbage_lst_ptr(&all->cmd_list));

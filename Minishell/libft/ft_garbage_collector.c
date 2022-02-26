@@ -6,11 +6,12 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:13:17 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/28 20:51:17 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:07:28 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 static t_list	*ft_add_node(t_list **lst, void *content)
 {
 	t_list	*new;
@@ -21,15 +22,6 @@ static t_list	*ft_add_node(t_list **lst, void *content)
 	new->next = *lst;
 	*lst = new;
 	return (new);
-}
-
-t_list	**ft_garbage_lst_ptr(void *ptr)
-{
-	static t_list	*malloced;
-
-	if (ptr == NULL)
-		malloced = NULL;
-	return (&malloced);
 }
 
 static t_list	**ft_garbage_collector(void *ptr)
@@ -69,7 +61,7 @@ void	*ft_malloc(size_t size)
 void	*ft_free_garbage(t_list	**malloced)
 {
 	t_list	*temp;
-	
+
 	if ((*malloced) == NULL)
 		return (NULL);
 	while ((*malloced) != NULL)

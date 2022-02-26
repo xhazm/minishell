@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:40:40 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/17 13:40:11 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:01:20 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 t_list	**ft_envp_pointer(void)
 {
-	static	t_list *envp;
+	static t_list	*envp;
+
 	return (&envp);
 }
 
@@ -34,7 +35,7 @@ t_env	*ft_iterate_env(t_list *envp, char *str)
 
 int	ft_valid_env_name(char *str)
 {
-	int i;
+	int	i;
 
 	if (ft_isalpha(str[0]) == FAIL)
 		return (FAIL);

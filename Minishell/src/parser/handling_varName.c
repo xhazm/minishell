@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handling_varName.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:33:20 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/15 22:45:05 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:04:12 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*ft_var_data(t_list **envp, char *varName)
+char	*ft_var_data(t_list **envp, char *var_name)
 {
 	t_env	*envp_node;
 	t_list	*temp;
@@ -21,14 +21,14 @@ char	*ft_var_data(t_list **envp, char *varName)
 	while (temp != NULL)
 	{
 		envp_node = temp->content;
-		if (ft_strcmp(envp_node->name, varName) == 0)
+		if (ft_strcmp(envp_node->name, var_name) == 0)
 			return (ft_substr(envp_node->arg, 1, ft_strlen(envp_node->arg)));
 		temp = temp->next;
 	}
 	return (NULL);
 }
 
-char	*ft_expand(char *varValue, int start)
+char	*ft_expand(char *var_value, int start)
 {
 	char	**temp;
 	char	*res;
@@ -37,7 +37,7 @@ char	*ft_expand(char *varValue, int start)
 	i = 0;
 	res = NULL;
 	temp = NULL;
-	temp = ft_split(varValue, ' ');
+	temp = ft_split(var_value, ' ');
 	while (temp[i] != NULL)
 	{
 		res = ft_strjoin(res, " ");
@@ -47,15 +47,15 @@ char	*ft_expand(char *varValue, int start)
 	return (res);
 }
 
-int	ft_get_varName(char **str, int *start, int *i, char **varName)
+int	ft_get_var_name(char **str, int *start, int *i, char **var_name)
 {
 	(*start) = (*i);
 	(*i)++;
 	while ((*str)[(*i)] != ' ' && (*str)[(*i)] != '\'' && (*str)[(*i)] != '"'
 		&& (*str)[(*i)] != '\0' && (*str)[(*i)] != '$' && (*str)[(*i)] != '?')
 		(*i)++;
-	(*varName) = ft_substr((*str), (*start) + 1, (*i));
-	if (!(*varName))
+	(*var_name) = ft_substr((*str), (*start) + 1, (*i));
+	if (!(*var_name))
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -63,25 +63,25 @@ int	ft_get_varName(char **str, int *start, int *i, char **varName)
 int	ft_check_var_name(char **str, int i, char flag, int flag2)
 {
 	int		start;
-	char	*varName;
-	char	*varValue;
+	char	*var_name;
+	char	*var_value;
 
-	if (!ft_get_varName(str, &start, &i, &varName))
+	if (!ft_get_var_name(str, &start, &i, &var_name))
 		return (FAIL);
-	varValue = ft_var_data(ft_envp_pointer(), varName);
-	if (varValue != NULL)
+	var_value = ft_var_data(ft_envp_pointer(), var_name);
+	if (var_value != NULL)
 	{
 		if (flag2 != HEREDOC_Q)
 		{
-			 if (flag != 0)
+			if (flag != 0)
 			{
-				if (!ft_insert_str(str, varValue, start, i))
-				return (FAIL);
-			} 
-			else if (!ft_insert_str(str, ft_expand(varValue, start), start, i))
+				if (!ft_insert_str(str, var_value, start, i))
+					return (FAIL);
+			}
+			else if (!ft_insert_str(str, ft_expand(var_value, start), start, i))
 				return (FAIL);
 		}
-		else if (!ft_insert_str(str, varValue, start, i))
+		else if (!ft_insert_str(str, var_value, start, i))
 			return (FAIL);
 	}
 	else if (!ft_insert_str(str, NULL, start, i))

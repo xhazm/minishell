@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 19:53:05 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/17 13:37:16 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:00:48 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	ft_builtin_export(t_list **envp, char **argv)
 				return (FAIL);
 		}
 		else
-			return (ft_print_error(argv[0], argv[i], "not a valid identifier", 1));
+			return (ft_print_error(argv[0], argv[i],
+					"not a valid identifier", 1));
 		i++;
 	}
 	return (SUCCESS);

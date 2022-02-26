@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/17 17:05:00 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:09:56 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	ft_fd_error_close(t_cmd *cmd)
 {
 	cmd = cmd->head;
-	while(cmd != NULL)
+	while (cmd != NULL)
 	{
 		ft_protected_close(cmd->std_in, STDIN_FILENO);
 		ft_protected_close(cmd->std_out, STDOUT_FILENO);

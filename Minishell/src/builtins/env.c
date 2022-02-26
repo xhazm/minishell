@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/17 12:32:12 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:08:55 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	ft_set_envp(char **orig_envp)
 	t_list	**new_envp;
 
 	i = 0;
-	env_len = ft_strlen2D(orig_envp);
+	env_len = ft_strlen_2d(orig_envp);
 	new_envp = ft_envp_pointer();
 	while (i < env_len)
 	{

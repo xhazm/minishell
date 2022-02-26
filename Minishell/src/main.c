@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 19:16:00 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/17 16:18:52 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:16:30 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	ft_init_standard(t_all *all, char **envp);
 static char	*minishell_gnl_free_line(char *line);
-
 
 int	main(__attribute__((unused))int argc, __attribute__((unused))char *argv[],
 		char **envp)
@@ -33,7 +32,7 @@ int	main(__attribute__((unused))int argc, __attribute__((unused))char *argv[],
 		}
 		ft_free(input);
 	}
-	ft_handle_exit(&all, g_exit_status);
+	ft_handle_exit(&all, g_exit_status, NULL);
 	return (0);
 }
 
