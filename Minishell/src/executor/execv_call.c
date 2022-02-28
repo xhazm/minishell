@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 17:06:57 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/26 12:08:55 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:35:39 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	**ft_get_path(t_list **envp)
 	i = 0;
 	path = NULL;
 	env_node = ft_iterate_env(*envp, "PATH");
+	if (env_node == NULL)
+		return (NULL);
 	path = ft_split(&env_node->arg[1], ':');
 	if (path == NULL)
 		return (NULL);
@@ -88,6 +90,8 @@ int	ft_handle_execv(t_cmd *cmd)
 	if (ret != FAIL)
 		return (ret);
 	path = ft_get_path(ft_envp_pointer());
+	if (path == NULL)
+		return (FAIL);
 	tmp = ft_strmapi(cmd->argv[0], ft_tolower);
 	ret = ft_execute(cmd, tmp, path);
 	ft_free2darr((void **)path);
