@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 16:15:03 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/01/21 19:56:50 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 14:01:41 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_itoa(int n)
 		i++;
 	}
 	i = ft_intlen(n, i);
-	str = (char *) malloc(i + 1 * sizeof(char));
+	str = (char *) ft_malloc(i + 1 * sizeof(char));
 	if (!str)
 		return (0);
 	str = ft_assign_to_str(str, n, i, sign);

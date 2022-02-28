@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doubly_linked_list.c                               :+:      :+:    :+:   */
+/*   ft_doubly_linked_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 21:13:17 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/12 21:13:31 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/28 14:04:00 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,66 +58,3 @@ int	ft_detache_node(t_part **list, t_part *detache_node)
 		(*list) = NULL;
 	return (0);
 }
-
-// static int	ft_init_node(t_part *node, int num, int *asize)
-// {
-// 	if (node == NULL)
-// 		return (0);
-// 	node->asize = asize;
-// 	node->num = num;
-// 	node->swap = -1;
-// 	return (1);
-// }
-
-// void	ft_free_(*list)(t_part **(*list))
-// {
-// 	t_part	*freeNode;
-
-// 	if ((*list) == NULL)
-// 		return ;
-// 	while (*(*list) != NULL)
-// 	{
-// 		if ((*(*list))->next == *(*list) || (*(*list))->next == NULL)
-// 		{
-// 			free (*(*list));
-// 			(*list) = NULL;
-// 			return ;
-// 		}
-// 		else
-// 		{
-// 			freeNode = *(*list);
-// 			ft_detache_node((*list), freeNode);
-// 			free (freeNode);
-// 		}
-// 	}	
-// }
-
-// /* creates node, sets it as the first element of the (*list) */
-// int	ft_create_node(t_part **(*list), int num, int *astacksize)
-// {
-// 	t_part	*node;
-// 	t_part	*prev_node;
-
-// 	prev_node = *(*list);
-// 	node = ft_calloc(1, sizeof(t_part) * 1);
-// 	if (ft_init_node(node, num, astacksize) == 0)
-// 		return (0);
-// 	if (*(*list) == NULL)
-// 		*(*list) = node;
-// 	else
-// 	{
-// 		node->next = *(*list);
-// 		(*(*list))->prev = node;
-// 		if (prev_node->next == NULL)
-// 			prev_node->next = node;
-// 		else
-// 		{
-// 			while (prev_node->next != *(*list))
-// 				prev_node = prev_node->next;
-// 			prev_node->next = node;
-// 		}
-// 		node->prev = prev_node;
-// 	}
-// 	(*node->asize)++;
-// 	return (1);
-// }

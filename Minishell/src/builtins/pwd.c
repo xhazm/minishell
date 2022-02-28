@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 18:17:46 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/01/31 19:49:45 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 14:03:40 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_builtin_pwd(void)
 	if (pwd != NULL)
 	{
 		printf("%s\n", pwd);
-		free(pwd);
+		ft_free(pwd);
 		return (SUCCESS);
 	}
 	else
