@@ -6,13 +6,13 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 17:06:57 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/28 16:35:39 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 19:42:08 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	ft_is_direct_path(t_cmd *cmd)
+static int	ft_is_direct_path(t_cmd *cmd, char **env_char)
 {
 	char	*tmp;
 	int		len;
@@ -25,7 +25,7 @@ static int	ft_is_direct_path(t_cmd *cmd)
 			len--;
 		tmp = cmd->argv[0];
 		cmd->argv[0] = ft_substr(cmd->argv[0], len, ft_strlen(cmd->argv[0]));
-		if (execv(tmp, cmd->argv) == -1)
+		if (execve(tmp, cmd->argv, env_char) == -1)
 		{
 			ft_free(tmp);
 			return (ft_print_perrno(cmd->argv[0], tmp, 126));
@@ -58,16 +58,22 @@ char	**ft_get_path(t_list **envp)
 	return (path);
 }
 
-static int	ft_execute(t_cmd *cmd, char *tmp_cmd, char **path)
+static int	ft_execute(t_cmd *cmd, char *tmp_cmd, char **path, char **env_char)
 {
 	int	i;
 
 	i = 0;
+	if (path == NULL)
+	{
+		access(ft_strjoin(cmd->argv[1], tmp_cmd), F_OK);
+		ft_free2darr((void **)env_char);
+		return (ft_print_perrno(cmd->argv[1], cmd->argv[0], 126));
+	}
 	while (path[i] != NULL)
 	{
-		if (access(ft_strjoin(path[i], tmp_cmd), X_OK) == 0)
+		if (access(ft_strjoin(path[i], tmp_cmd), F_OK) == 0)
 		{
-			if (execv(ft_strjoin(path[i], tmp_cmd), cmd->argv) == -1)
+			if (execve(ft_strjoin(path[i], tmp_cmd), cmd->argv, env_char) == -1)
 				return (ft_print_perrno(cmd->argv[1], cmd->argv[0], 126));
 			break ;
 		}
@@ -83,18 +89,19 @@ int	ft_handle_execv(t_cmd *cmd)
 {
 	int		ret;
 	char	**path;
+	char	**env_char;
 	char	*tmp;
 
 	tmp = NULL;
-	ret = ft_is_direct_path(cmd);
+	env_char = ft_list_to_doublepointer(ft_envp_pointer());
+	ret = ft_is_direct_path(cmd, env_char);
 	if (ret != FAIL)
 		return (ret);
 	path = ft_get_path(ft_envp_pointer());
-	if (path == NULL)
-		return (FAIL);
 	tmp = ft_strmapi(cmd->argv[0], ft_tolower);
-	ret = ft_execute(cmd, tmp, path);
+	ret = ft_execute(cmd, tmp, path, env_char);
 	ft_free2darr((void **)path);
+	ft_free2darr((void **)env_char);
 	if (tmp != NULL)
 		ft_free(tmp);
 	return (ret);

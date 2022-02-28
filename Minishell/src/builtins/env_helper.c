@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:40:40 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/26 12:01:20 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 19:43:52 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,50 @@ int	ft_valid_env_name(char *str)
 		i++;
 	}
 	return (SUCCESS);
+}
+
+char	**ft_copy_env(t_list **env, int env_len)
+{
+	int		i;
+	t_env	*env_node;
+	char	**char_env;
+
+	i = 0;
+	env_node = NULL;
+	char_env = NULL;
+	char_env = ft_malloc(sizeof(char *) * env_len);
+	if (char_env == NULL)
+		return (NULL);
+	while (*env != NULL)
+	{
+		env_node = (*env)->content;
+		char_env[i] = ft_strdup(env_node->name);
+		if (char_env[i] == NULL)
+			return (NULL);
+		if (env_node->arg != NULL)
+			char_env[i] = ft_strjoin(char_env[i], env_node->arg);
+		if (char_env[i] == NULL)
+			return (NULL);
+		*env = (*env)->next;
+	}
+	return (char_env);
+}
+
+char	**ft_list_to_doublepointer(t_list **env)
+{
+	t_list	*head;
+	char	**char_env;
+	int		env_len;
+
+	env_len = 0;
+	char_env = NULL;
+	head = NULL;
+	if (*env == NULL)
+		return (NULL);
+	head = *env;
+	env_len = ft_lstsize(*env);
+	*env = head;
+	char_env = ft_copy_env(env, env_len);
+	*env = head;
+	return (char_env);
 }

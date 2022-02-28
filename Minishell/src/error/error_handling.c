@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 19:34:12 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/26 12:00:38 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 17:52:15 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,11 @@ int	ft_print_perrno(char *argv, char *cmd, int exit_status)
 	{
 		ft_putstr_fd(cmd, 2);
 		write(2, ": ", 2);
-		ft_putstr_fd(argv, 2);
-		write(2, ": ", 2);
+		if (argv != NULL)
+		{
+			ft_putstr_fd(argv, 2);
+			write(2, ": ", 2);
+		}
 		ft_putstr_fd(error, 2);
 		write(2, "\n", 1);
 	}

@@ -27,7 +27,7 @@ SRC_FILES = main.c prompt.c signals.c																						\
 			builtins/handle_builtins.c		builtins/unset.c			builtins/pwd.c				builtins/exit.c			\
 			parser/remove_quotes.c			parser/get_redirections.c	parser/get_redirections_2.c	parser/handling_varName.c\
 			parser/get_cmd_for_exec.c		parser/parser.c				parser/var_expand.c									\
-			executor/exec.c					executor/exec2.c			executor/execv_call.c		executor/fd_handling.c	\
+			executor/exec.c					executor/exec2.c			executor/execve_call.c		executor/fd_handling.c	\
 			redirections/redirections.c		redirections/heredoc.c															\
 			lexer/lexer.c					lexer/handle_input.c															\
 			utils/check_quotes.c			utils/cmd_struct.c																\

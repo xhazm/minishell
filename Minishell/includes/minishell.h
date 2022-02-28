@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/28 17:19:18 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/28 19:26:40 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		ft_print_error(char *cmd, char *argv, char *message, int exit_status);
 int		ft_builtin_export(t_list **envp, char **argv);
 void	*ft_parse_envp(t_list **envp, char *orig_envp);
 int		ft_print_env(t_list **envp);
+char	**ft_list_to_doublepointer(t_list **env);
 int		ft_builtin_unset(t_list **envp, char **argv);
 int		ft_valid_env_name(char *str);
 t_env	*ft_iterate_env(t_list *envp, char *str);
