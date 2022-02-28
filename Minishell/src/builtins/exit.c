@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 16:42:31 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/26 12:26:43 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:13:33 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ void	ft_handle_exit(t_all *all, int ret_value, char **argv)
 		ret_value = 1;
 	close(all->in);
 	close(all->out);
-	ft_free_garbage(ft_garbage_lst_ptr(&all->cmd_list));
+	ft_free_garbage(ft_garbage_lst_ptr(&argc));
 	ft_garbage_lst_ptr(NULL);
 	if (isatty(STDIN_FILENO))
 		write(1, "exit\n", 5);
+	system("leaks minishell");
 	exit(ret_value);
 }

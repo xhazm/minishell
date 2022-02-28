@@ -9,7 +9,7 @@ YELLOW	= \033[33m
 BLUE	= \033[34m
 
 # Compiling flags
-FLAGS = #-Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 LFLAGS = -L$$HOME/.brew/opt/readline/lib -lreadline
 CPFLAGS = -I$$HOME/.brew/opt/readline/include
 

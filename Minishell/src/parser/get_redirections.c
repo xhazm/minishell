@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:48:31 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/17 16:08:42 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:38:52 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ void	ft_exchange_two_nodes(t_cmd *cmd, t_part *tmp1, t_part *tmp2)
 
 int	ft_redi_found(t_cmd *cmd, int flag)
 {
-	t_part	*tmp1;
-	t_part	*tmp2;
-
 	if (cmd->part->next == cmd->part->head
 		|| cmd->part->next->argv[0] == '|'
 		|| ft_check_redirection(cmd->part->next->argv) > 0)
@@ -94,7 +91,6 @@ int	ft_redi_found(t_cmd *cmd, int flag)
 		if (cmd->part->next->argv[0] == '\''
 			|| cmd->part->next->argv[0] == '"')
 			cmd->part->next->flag = HEREDOC_Q;
-		ft_exchange_two_nodes(cmd, tmp1, tmp2);
 		if (cmd->argc == 0)
 			cmd->part = NULL;
 		else if (cmd->part->head == cmd->redi->head)

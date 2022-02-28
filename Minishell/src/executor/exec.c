@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:48:05 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/26 12:17:06 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:39:43 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	ft_handle_one_builtin(t_all *all)
 	return (ret);
 }
 
-void	ft_handle_exec_builtin(t_cmd *cmd, t_all *all)
+void	ft_handle_exec_builtin(t_cmd *cmd)
 {
 	int	ret_value;
 

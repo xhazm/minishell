@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/26 12:16:41 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:40:23 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <sys/ioctl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <signal.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -99,7 +101,7 @@ int		ft_builtin_unset(t_list **envp, char **argv);
 int		ft_valid_env_name(char *str);
 t_env	*ft_iterate_env(t_list *envp, char *str);
 void	ft_handle_exit(t_all *all, int ret_value, char **argv);
-void	ft_handle_exec_builtin(t_cmd *cmd, t_all *all);
+void	ft_handle_exec_builtin(t_cmd *cmd);
 int		ft_waitpid(int pid);
 int		ft_fork_main(t_all *all);
 int		ft_handle_input(char *input, int *start, int end, t_cmd **cmd);
