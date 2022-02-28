@@ -25,7 +25,7 @@ LIBFT_DIR = ./libft/
 SRC_FILES = main.c prompt.c signals.c																						\
 			builtins/cd.c builtins/echo.c	builtins/env_helper.c		builtins/env.c				builtins/export.c		\
 			builtins/handle_builtins.c		builtins/unset.c			builtins/pwd.c				builtins/exit.c			\
-			parser/remove_quotes.c			parser/get_redirections.c	parser/handling_varName.c							\
+			parser/remove_quotes.c			parser/get_redirections.c	parser/get_redirections_2.c	parser/handling_varName.c\
 			parser/get_cmd_for_exec.c		parser/parser.c				parser/var_expand.c									\
 			executor/exec.c					executor/exec2.c			executor/execv_call.c		executor/fd_handling.c	\
 			redirections/redirections.c		redirections/heredoc.c															\

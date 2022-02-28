@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/28 13:40:23 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:57:25 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int		ft_handle_input(char *input, int *start, int end, t_cmd **cmd);
 void	ft_handle_child_fds(t_all *all, int fd[2]);
 void	ft_protected_close(int fd, int direction);
 
-
+void	ft_change_head(t_cmd *cmd);
 
 int		ft_redirect(t_cmd *cmd);
 int		ft_handle_heredoc(t_part *list);
