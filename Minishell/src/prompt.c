@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 21:45:27 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/16 21:43:58 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:54:25 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	ft_terminal_echoctl(int echo_status)
 {
 	struct termios	term;
 
-	tcgetattr(STDIN_FILENO, &term);
+	if (tcgetattr(STDIN_FILENO, &term) == -1)
+		return ;
 	if (echo_status == DEACTIVATE)
 		term.c_lflag &= ~ECHOCTL;
 	else if (echo_status == ACTIVATE)
@@ -38,12 +39,6 @@ int	ft_prompt(char **input, t_all *all)
 	ft_signal_handling(PARENT);
 	if (isatty(STDIN_FILENO))
 		(*input) = readline("Minishell $> ");
-	else
-	{
-		*input = minishell_get_next_line(STDIN_FILENO);
-		if (*input != NULL)
-			(*input)[ft_strlen(*input) - 1] = '\0';
-	}
 	if ((*input) != NULL)
 	{
 		if (ft_strlen((*input)) > 0)

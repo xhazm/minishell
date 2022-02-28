@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:33:20 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/26 12:04:12 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:52:19 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_var_data(t_list **envp, char *var_name)
 	return (NULL);
 }
 
-char	*ft_expand(char *var_value, int start)
+static char	*ft_expand(char *var_value)
 {
 	char	**temp;
 	char	*res;
@@ -78,7 +78,7 @@ int	ft_check_var_name(char **str, int i, char flag, int flag2)
 				if (!ft_insert_str(str, var_value, start, i))
 					return (FAIL);
 			}
-			else if (!ft_insert_str(str, ft_expand(var_value, start), start, i))
+			else if (!ft_insert_str(str, ft_expand(var_value), start, i))
 				return (FAIL);
 		}
 		else if (!ft_insert_str(str, var_value, start, i))

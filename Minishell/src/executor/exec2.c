@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:48:08 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/17 18:10:58 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:53:18 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	ft_waitpid(int pid)
 	int	ret;
 
 	ret = waitpid(pid, &status, 0);
+	if (ret == -1)
+		return (FAIL);
 	g_exit_status = status;
 	if (WIFSIGNALED(status))
 	{
@@ -45,7 +47,7 @@ static int	ft_handle_single_exec(t_all *all)
 			dup2(all->cmd_list->std_out, STDOUT_FILENO);
 		ft_protected_close(all->cmd_list->std_in, STDIN_FILENO);
 		ft_protected_close(all->cmd_list->std_out, STDOUT_FILENO);
-		ft_handle_exec_builtin(all->cmd_list, all);
+		ft_handle_exec_builtin(all->cmd_list);
 	}
 	else
 	{
@@ -66,7 +68,7 @@ static int	ft_handle_fork_exec(t_all *all)
 	if (pid == 0)
 	{
 		ft_handle_child_fds(all, fd);
-		ft_handle_exec_builtin(all->cmd_list, all);
+		ft_handle_exec_builtin(all->cmd_list);
 	}
 	else
 	{
