@@ -6,7 +6,7 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:55:52 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/13 16:06:50 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:06:47 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_helper_set_lenght(char *str2)
 int	ft_helper_realloc(char **str1, char **tmp, int len)
 {
 	(*tmp) = ft_strdup((*str1));
-	ft_free((*str1));
+	if (!(*str1))
+		ft_free((*str1));
 	(*str1) = (char *)ft_malloc(sizeof(char *) * (len + 1));
 	if (!(*str1) || !(*tmp) || len < 0)
 		return (FAIL);

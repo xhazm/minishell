@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:24:54 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/26 12:09:56 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 14:03:24 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ static int	ft_redirect_fd(t_part *list, int flag, int flag2, int flag3)
 static int	ft_set_cmd_fd(t_cmd *cmd)
 {
 	int		fd;
-	t_part	*list;
 
-	list = cmd->redi->head;
 	fd = 0;
 	fd = ft_redirect_fd(cmd->redi->head, APPEND, REDIRECT_IN, REDIRECT_IN);
 	if (fd > 0)

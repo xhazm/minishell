@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 16:42:31 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/28 13:13:33 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 14:02:42 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,5 @@ void	ft_handle_exit(t_all *all, int ret_value, char **argv)
 	ft_garbage_lst_ptr(NULL);
 	if (isatty(STDIN_FILENO))
 		write(1, "exit\n", 5);
-	system("leaks minishell");
 	exit(ret_value);
 }
