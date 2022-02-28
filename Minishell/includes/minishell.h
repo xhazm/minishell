@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/28 13:57:25 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 17:19:18 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 
 int	g_exit_status;
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	int				argc;
 	int				redc;
@@ -58,24 +58,22 @@ typedef struct	s_cmd
 	int				type;
 	int				fd[2];
 	int				pid;
-	
 	int				std_in;
 	int				std_out;
-	
 	t_part			*redi;
 	t_part			*part;
-	struct s_cmd 	*head;
-	struct s_cmd 	*next;
+	struct s_cmd	*head;
+	struct s_cmd	*next;
 }	t_cmd;
 
-typedef struct	s_all
+typedef struct s_all
 {
 	int				in;
 	int				out;
 	t_cmd			*cmd_list;
 }					t_all;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*name;
 	char			*arg;
@@ -87,7 +85,6 @@ t_list	**ft_envp_pointer(void);
 int		ft_handle_execv(t_cmd *cmd);
 int		ft_set_envp(char **orig_envp);
 void	*ft_set_envp_node(t_list **envp, char *orig_envp);
-
 int		ft_builtin_pwd(void);
 int		ft_builtin_echo(int argc, char **argv);
 int		ft_builtin_cd(char **argv, int argc);
@@ -105,19 +102,13 @@ void	ft_handle_exec_builtin(t_cmd *cmd);
 int		ft_waitpid(int pid);
 int		ft_fork_main(t_all *all);
 int		ft_handle_input(char *input, int *start, int end, t_cmd **cmd);
-
-
 void	ft_handle_child_fds(t_all *all, int fd[2]);
 void	ft_protected_close(int fd, int direction);
-
 void	ft_change_head(t_cmd *cmd);
-
 int		ft_redirect(t_cmd *cmd);
 int		ft_handle_heredoc(t_part *list);
-
 int		ft_get_cmd_command_for_exec(t_cmd *cmd);
 void	ft_signal_handling(int process);
-
 int		ft_parser(t_all *all);
 int		ft_generate_cmd(t_cmd **cmd);
 void	ft_terminal_echoctl(int echo_status);
@@ -135,10 +126,5 @@ int		ft_set_cmd_flags(t_cmd *cmd);
 int		ft_generate_cmd_part(t_part **part);
 int		ft_set_cmd_flags(t_cmd *cmd);
 int		ft_check_var_name(char **str, int i, char flag, int flag2);
-
-
-
 char	*minishell_get_next_line(int fd);
-
-
 #endif
