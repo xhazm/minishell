@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:48:05 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/28 13:57:28 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/03/01 15:40:09 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static int	ft_handle_one_builtin(t_all *all)
 
 	ret = 0;
 	if (ft_strcmp(all->cmd_list->argv[0], "exit") == 0)
-		ft_handle_exit(all, g_exit_status, all->cmd_list->argv);
+	{
+		if (ft_handle_exit(all, g_exit_status, all->cmd_list->argv) == ERROR)
+			return (ERROR);
+	}
 	if (all->cmd_list->std_in != STDIN_FILENO)
 		dup2(all->cmd_list->std_in, STDIN_FILENO);
 	if (all->cmd_list->std_out != STDOUT_FILENO)
@@ -45,12 +48,19 @@ void	ft_handle_exec_builtin(t_cmd *cmd)
 }
 
 int	ft_exec(t_all *all)
-{		
+{
+	int	ret;
+
+	ret = 0;
 	close(STDIN_FILENO);
 	dup2(all->in, STDIN_FILENO);
 	if (all->cmd_list->next == NULL)
 	{
-		if (all->cmd_list->argv == NULL || ft_handle_one_builtin(all) == FAIL)
+		if (all->cmd_list->argv == NULL)
+			ft_fork_main(all);
+		else
+			ret = ft_handle_one_builtin(all);
+		if (ret == FAIL)
 			ft_fork_main(all);
 	}
 	else

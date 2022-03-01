@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 20:21:26 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/28 19:26:40 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/03/01 15:33:14 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**ft_list_to_doublepointer(t_list **env);
 int		ft_builtin_unset(t_list **envp, char **argv);
 int		ft_valid_env_name(char *str);
 t_env	*ft_iterate_env(t_list *envp, char *str);
-void	ft_handle_exit(t_all *all, int ret_value, char **argv);
+int		ft_handle_exit(t_all *all, int ret_value, char **argv);
 void	ft_handle_exec_builtin(t_cmd *cmd);
 int		ft_waitpid(int pid);
 int		ft_fork_main(t_all *all);
