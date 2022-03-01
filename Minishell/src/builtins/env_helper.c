@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:40:40 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/28 19:43:52 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/03/01 16:15:55 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ t_list	**ft_envp_pointer(void)
 t_env	*ft_iterate_env(t_list *envp, char *str)
 {
 	t_env	*env_node;
+	t_list	*env_head;
 
+	env_head = envp;
 	while (envp != NULL)
 	{
 		env_node = envp->content;
@@ -30,6 +32,7 @@ t_env	*ft_iterate_env(t_list *envp, char *str)
 			return (env_node);
 		envp = envp->next;
 	}
+	envp = env_head;
 	return (NULL);
 }
 
@@ -60,7 +63,7 @@ char	**ft_copy_env(t_list **env, int env_len)
 	i = 0;
 	env_node = NULL;
 	char_env = NULL;
-	char_env = ft_malloc(sizeof(char *) * env_len);
+	char_env = ft_malloc(sizeof(char *) * env_len + 1);
 	if (char_env == NULL)
 		return (NULL);
 	while (*env != NULL)
@@ -74,7 +77,9 @@ char	**ft_copy_env(t_list **env, int env_len)
 		if (char_env[i] == NULL)
 			return (NULL);
 		*env = (*env)->next;
+		i++;
 	}
+	char_env[i] = NULL;
 	return (char_env);
 }
 

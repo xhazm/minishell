@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execv_call.c                                       :+:      :+:    :+:   */
+/*   execve_call.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 17:06:57 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/28 19:42:08 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/03/01 16:18:18 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ char	**ft_get_path(t_list **envp)
 	if (env_node == NULL)
 		return (NULL);
 	path = ft_split(&env_node->arg[1], ':');
-	if (path == NULL)
-		return (NULL);
-	while (path[i] != NULL)
+	while (path != NULL && path[i] != NULL)
 	{
 		path[i] = ft_str_join_c(path[i], '/');
 		i++;
@@ -65,7 +63,7 @@ static int	ft_execute(t_cmd *cmd, char *tmp_cmd, char **path, char **env_char)
 	i = 0;
 	if (path == NULL)
 	{
-		access(ft_strjoin(cmd->argv[1], tmp_cmd), F_OK);
+		access(tmp_cmd, F_OK);
 		ft_free2darr((void **)env_char);
 		return (ft_print_perrno(cmd->argv[1], cmd->argv[0], 126));
 	}
