@@ -6,11 +6,9 @@
 /*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:34:16 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/28 17:19:37 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/03/01 14:01:56 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../../includes/minishell.h"
 
 #include "../../includes/minishell.h"
 
@@ -22,7 +20,8 @@ int	ft_normal_expantion_cases(char **str, int *i, char flag)
 			return (FAIL);
 		(*i)++;
 	}
-	else if ((*str)[(*i) + 1] == ' ' || (*str)[(*i) + 1] == '\0')
+	else if ((*str)[(*i) + 1] == ' ' || (*str)[(*i) + 1] == '\0'
+			|| (*str)[(*i) + 1] == '$')
 		(*i)++;
 	else
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_varName.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:33:20 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/28 13:57:41 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/02/28 18:35:20 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static char	*ft_expand(char *var_value)
 	temp = ft_split(var_value, ' ');
 	while (temp[i] != NULL)
 	{
-		res = ft_strjoin(res, " ");
+		if (i != 0)
+			res = ft_strjoin(res, " ");
 		res = ft_strjoin(res, temp[i]);
 		i++;
 	}

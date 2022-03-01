@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_for_exec.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:30:25 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/17 16:07:47 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/03/01 13:55:35 by vmiseiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,39 @@ int	ft_get_cmd_command_for_exec(t_cmd *cmd)
 	}
 	return (SUCCESS);
 }
+
+
+
+
+// int	ft_get_cmd_command_for_exec(t_cmd *cmd)
+// {
+// 	int	i;
+// 	char *temp;
+
+// 	i = 0;
+// 	temp = NULL;
+// 	while (i < cmd->argc && cmd->part->flag != PIPE)
+// 	{
+// 		temp = ft_strjoin(temp, cmd->part->argv);
+// 		temp = ft_str_join_c(temp, ' ');
+// 		cmd->part = cmd->part->next;
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (temp[i] != '\0')
+// 	{
+// 		if (temp[i] == '\t' || temp[i] == '\n')
+// 			temp[i] = ' ';
+// 		i++;
+// 	}
+// 	cmd->argv = ft_split(temp, ' ');
+// 	if (temp != NULL)
+// 		ft_free(temp);
+// 	if (cmd->argv == NULL && cmd->redc == 0)
+// 	{
+// 		ft_print_error(NULL, NULL, "syntax error near unexpected token", 2);
+// 		g_exit_status = 2;
+// 		return (FAIL);
+// 	}
+// 	return (SUCCESS);
+// }
