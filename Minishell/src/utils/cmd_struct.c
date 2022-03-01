@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmd_struct.c                                    :+:      :+:    :+:   */
+/*   cmd_struct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:21:34 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/12 20:21:35 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/03/01 16:39:49 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_cmd	*ft_new_cmd(void)
+static t_cmd	*ft_new_cmd(void)
 {
 	t_cmd	*new;
 
@@ -27,6 +27,20 @@ t_cmd	*ft_new_cmd(void)
 	new->redi = NULL;
 	new->std_in = 0;
 	new->std_out = 1;
+	return (new);
+}
+
+static t_part	*ft_new_cmd_part(void)
+{
+	t_part	*new;
+
+	new = (t_part *)ft_malloc(sizeof(t_part));
+	if (!new)
+		return (NULL);
+	new->argv = NULL;
+	new->flag = 0;
+	new->next = new;
+	new->prev = new;
 	return (new);
 }
 
@@ -56,20 +70,6 @@ int	ft_generate_cmd(t_cmd **cmd)
 		(*cmd)->head = head;
 	}
 	return (SUCCESS);
-}
-
-t_part	*ft_new_cmd_part(void)
-{
-	t_part	*new;
-
-	new = (t_part *)ft_malloc(sizeof(t_part));
-	if (!new)
-		return (NULL);
-	new->argv = NULL;
-	new->flag = 0;
-	new->next = new;
-	new->prev = new;
-	return (new);
 }
 
 int	ft_generate_cmd_part(t_part **part)

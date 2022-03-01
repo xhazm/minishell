@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmiseiki <vmiseiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:21:13 by vmiseiki          #+#    #+#             */
-/*   Updated: 2022/02/28 19:21:07 by vmiseiki         ###   ########.fr       */
+/*   Updated: 2022/03/01 16:43:43 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*ft_redirection_found(char *sub, char *cpart, int *i)
+static char	*ft_redirection_found(char *sub, char *cpart, int *i)
 {
 	if (sub[(*i)] == '>')
 	{
@@ -38,7 +38,7 @@ char	*ft_redirection_found(char *sub, char *cpart, int *i)
 	}
 }
 
-char	*ft_pipe_or_redirection_found(char *sub, char *cpart, int *i)
+static char	*ft_pipe_or_redirection_found(char *sub, char *cpart, int *i)
 {
 	if (sub[(*i)] == '|')
 	{
@@ -50,7 +50,7 @@ char	*ft_pipe_or_redirection_found(char *sub, char *cpart, int *i)
 		return (ft_redirection_found(sub, cpart, i));
 }
 
-char	*ft_split_conditions(char *sub, char *cpart, int *i)
+static char	*ft_split_conditions(char *sub, char *cpart, int *i)
 {
 	char	flag;
 
@@ -76,7 +76,7 @@ char	*ft_split_conditions(char *sub, char *cpart, int *i)
 	return (cpart);
 }
 
-int	ft_split_input(char *sub, t_cmd *cmd)
+static int	ft_split_input(char *sub, t_cmd *cmd)
 {
 	int		i;
 	char	*argv;
