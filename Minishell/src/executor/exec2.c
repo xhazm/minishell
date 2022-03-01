@@ -6,7 +6,7 @@
 /*   By: lpfleide <lpfleide@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 20:48:08 by lpfleide          #+#    #+#             */
-/*   Updated: 2022/02/28 13:57:21 by lpfleide         ###   ########.fr       */
+/*   Updated: 2022/03/01 20:34:35 by lpfleide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	ft_fork_main(t_all *all)
 		all->cmd_list = all->cmd_list->next;
 	}
 	ft_waitpid(pid);
-	while (ft_waitpid(-1) == SUCCESS)
+	while (ft_waitpid(-1) != FAIL)
 		pid++;
 	return (SUCCESS);
 }
